@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import static java.time.LocalDateTime.now;
 
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,6 +18,7 @@ import static java.time.LocalDateTime.now;
 public class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long requestId;
 
     @Column(nullable = false, unique = true)
