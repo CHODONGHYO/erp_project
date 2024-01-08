@@ -9,6 +9,8 @@ import org.hibernate.Length;
 
 import java.time.LocalDateTime;
 
+import static java.time.LocalDateTime.now;
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -27,11 +29,11 @@ public class Plan {
     private Long productId;
 
     @Column(nullable = false)
-    private Long planNumber;
+    private Long planNumber = 0L;
 
     @Column(nullable = false)
-    private LocalDateTime completeDate;
+    private LocalDateTime completeDate = now();
 
     @Column(length = 1000, nullable = false)
-    private String planStatus;
+    private String planStatus = "미정";
 }

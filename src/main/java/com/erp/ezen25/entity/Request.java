@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static java.time.LocalDateTime.now;
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -20,28 +22,27 @@ public class Request {
     private Long requestId;
 
     @Column(nullable = false, unique = true)
-    private LocalDateTime requestDate;
+    private LocalDateTime requestDate = now();
 
     @Column(nullable = false)
     private Long productId;
 
     @Column(nullable = false)
-    private Long requestNum;
+    private Long requestNum = 0L;
 
     @Column(length = 1000)
     private String requestDescription;
 
     @Column(nullable = false)
-    private LocalDateTime requestOutDate;
+    private LocalDateTime requestOutDate = now();
 
     @Column(length = 1000, nullable = false)
-    private String requestStatus;
+    private String requestStatus = "미정";
 
     @Column(nullable = false)
     private Long brandId;
 
     @Column(length = 1000, nullable = false, unique = true)
-    private String requestCode;
-
+    private String requestCode = "0";
 
 }
