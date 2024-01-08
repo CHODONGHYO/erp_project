@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 
@@ -15,33 +18,39 @@ import static java.time.LocalDateTime.now;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Table(name = "order")
+@DynamicUpdate
+@DynamicInsert
+@Table(name = "ordering")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "orderId")
     private Long orderId;
 
     @Column(nullable = false)
     private Long memberId;
 
     @Column(nullable = false)
-    private LocalDateTime orderDate = now();
+    private LocalDateTime orderDate;
 
     @Column(nullable = false)
     private Long productId;
 
     @Column(nullable = false)
-    private Long orderNum = 0L;
+    @ColumnDefault("0")
+    private Long orderNum;
 
     @Column(length = 1000)
     private String orderDescription;
 
     @Column(nullable = false)
-    private LocalDateTime orderOutDate = now();
+    private LocalDateTime orderOutDate;
 
     @Column(length = 1000, nullable = false)
-    private String orderStatus = "미정";
+    @ColumnDefault("'미정'")
+    private String orderStatus;
 
     @Column(length = 1000, nullable = false, unique = true)
-    private String orderCode = "0";
+    @ColumnDefault("'0'")
+    private String orderCode;
 }
