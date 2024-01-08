@@ -20,10 +20,10 @@ public class Product_Stock {
     @Column(nullable = false)
     private Long productId;
 
-    private Long productNum;
+    private Long productNum = 0L;
 
     @Column(nullable = false)
     private Long memberId;
 
-    private Long totalPrice;
+    private Long totalPrice = 0L;
 }
