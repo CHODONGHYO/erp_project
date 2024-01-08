@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class Ezen25Controller {
     @GetMapping("/main")
     public String mainView() {
-        return "ezen25/login";
+        return "bootstrapHTML/index";
     }
 }
