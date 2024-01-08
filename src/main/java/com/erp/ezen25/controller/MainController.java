@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 // 메인 관련 Controller
 public class MainController {
     @GetMapping("/")
-    public String mainView() {
-        return "bootstrapHTML/index";
+    public String mainGet() {
+        return "ezen25/main/main";
     }
 }
