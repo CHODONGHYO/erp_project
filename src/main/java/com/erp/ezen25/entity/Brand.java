@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class Brand {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "brandId")
     private Long brandId;
 
     @Column(length = 1000, nullable = false, unique = true)
