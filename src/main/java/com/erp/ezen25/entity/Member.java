@@ -33,7 +33,7 @@ public class Member {
     private String name;
 
     @Column(nullable = false)
-    private Long percent;
+    private Long percent = 0L;
 
 
 }

@@ -30,14 +30,14 @@ public class Product_Info {
     private String mCategory;
 
     @Column(length = 1000)
-    private String sCategory;
+    private String sCategory = "없음";
 
     @Column(nullable = false)
-    private Long originalPrice;
+    private Long originalPrice = 0L;
 
     @Column(nullable = false)
-    private Long sellPrice;
+    private Long sellPrice = 0L;
 
     @Column(length = 1000)
-    private String image;
+    private String image = "없는 이미지";
 }

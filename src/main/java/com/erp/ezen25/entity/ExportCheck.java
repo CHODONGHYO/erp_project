@@ -21,10 +21,10 @@ public class ExportCheck {
     private Long productId;
 
     @Column(nullable = false)
-    private Long orderNum;
+    private Long orderNum = 0L;
 
     @Column(length = 1000, nullable = false)
-    private String exportCheckStatus;
+    private String exportCheckStatus = "미정";
 
     @Column(length = 1000, nullable = false, unique = true)
     private String orderCode;

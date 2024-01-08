@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static java.time.LocalDateTime.now;
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -29,11 +31,9 @@ public class Contract {
     private Long brandId;
 
     @Column(nullable = false)
-    private LocalDateTime contractDate;
+    private LocalDateTime contractDate = now();
 
-    @Column(nullable = false)
-    private String contractDescription;
-
-
+    @Column(length = 1000, nullable = false)
+    private String contractFile = "없음";
 
 }

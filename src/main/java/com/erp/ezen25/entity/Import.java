@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static java.time.LocalDateTime.now;
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -23,15 +25,15 @@ public class Import {
     private Long productId;
 
     @Column(nullable = false)
-    private Long importNum;
+    private Long importNum = 0L;
 
     @Column(nullable = false)
-    private LocalDateTime importDate;
+    private LocalDateTime importDate = now();
 
     @Column(length = 1000, nullable = false, unique = true)
     private String requestCode;
 
     @Column(length = 1000, nullable = false)
-    private String importStatus;
+    private String importStatus = "미정";
 
 }

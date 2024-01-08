@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import static java.time.LocalDateTime.now;
+
 @Entity
 @Builder
 @AllArgsConstructor
@@ -23,17 +25,15 @@ public class Export {
     private Long productId;
 
     @Column(nullable = false)
-    private Long exportNum;
+    private Long exportNum = 0L;
 
     @Column(nullable = false)
-    private LocalDateTime exportDate;
+    private LocalDateTime exportDate = now();
 
     @Column(length = 1000, nullable = false)
-    private String exportStatus;
+    private String exportStatus = "미정";
 
     @Column(length = 1000, nullable = false)
     private String orderCode;
-
-
 
 }

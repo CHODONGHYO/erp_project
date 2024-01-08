@@ -17,10 +17,13 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
+    @Column(nullable = false)
     private Long memberId;
 
-    private Long money;
+    @Column(nullable = false)
+    private Long money = 0L;
 
-    private Long netMoney;
+    @Column(nullable = false)
+    private Long netMoney = 0L;
 
 }
