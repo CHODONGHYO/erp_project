@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequiredArgsConstructor
 @Controller
-@RequestMapping("/ezen25/headquarters/product")
+@RequestMapping("/ezen25/product")
 public class ProductController {
     @GetMapping("/productList")
     public void getProductList () {
