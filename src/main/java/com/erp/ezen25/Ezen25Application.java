@@ -1,0 +1,14 @@
+package com.erp.ezen25;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Ezen25Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Ezen25Application.class, args);
+	}
+
+}
+
