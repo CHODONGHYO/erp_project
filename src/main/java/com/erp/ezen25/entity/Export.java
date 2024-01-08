@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 
@@ -15,23 +18,28 @@ import static java.time.LocalDateTime.now;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "export")
 public class Export {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "exportId")
     private Long exportId;
 
     @Column(nullable = false)
     private Long productId;
 
     @Column(nullable = false)
-    private Long exportNum = 0L;
+    @ColumnDefault("0")
+    private Long exportNum;
 
     @Column(nullable = false)
-    private LocalDateTime exportDate = now();
+    private LocalDateTime exportDate;
 
     @Column(length = 1000, nullable = false)
-    private String exportStatus = "미정";
+    @ColumnDefault("'미정'")
+    private String exportStatus;
 
     @Column(length = 1000, nullable = false)
     private String orderCode;

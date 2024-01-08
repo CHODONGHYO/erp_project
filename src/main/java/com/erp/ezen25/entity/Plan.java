@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.Length;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 
@@ -16,10 +19,13 @@ import static java.time.LocalDateTime.now;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "plan")
 public class Plan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "planId")
     private Long planId;
 
     @Column(nullable = false)
@@ -29,11 +35,13 @@ public class Plan {
     private Long productId;
 
     @Column(nullable = false)
-    private Long planNumber = 0L;
+    @ColumnDefault("0")
+    private Long planNumber;
 
     @Column(nullable = false)
-    private LocalDateTime completeDate = now();
+    private LocalDateTime completeDate;
 
     @Column(length = 1000, nullable = false)
-    private String planStatus = "미정";
+    @ColumnDefault("'미정'")
+    private String planStatus;
 }
