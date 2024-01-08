@@ -9,12 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Log4j2
 @RequiredArgsConstructor
-public class Ezen25Controller {
+// 메인 관련 Controller
+public class MainController {
     @GetMapping("/")
-    public String IndexView() {
-        return "ex";
-    }
-    @GetMapping("/main")
     public String mainView() {
         return "bootstrapHTML/index";
     }
