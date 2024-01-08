@@ -5,16 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "member")
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "memberId")
     private Long memberId;
 
     @Column(length = 1000, nullable = false, unique = true)
@@ -33,7 +39,8 @@ public class Member {
     private String name;
 
     @Column(nullable = false)
-    private Long percent = 0L;
+    @ColumnDefault("0")
+    private Long percent;
 
 
 }

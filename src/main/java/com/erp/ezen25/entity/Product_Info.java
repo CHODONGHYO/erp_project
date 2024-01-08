@@ -5,16 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@DynamicUpdate
+@DynamicInsert
 @Table(name = "product_info")
 public class Product_Info {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "productId")
     private Long productId;
 
     @Column(length = 1000, nullable = false, unique = true)
@@ -30,14 +36,18 @@ public class Product_Info {
     private String mCategory;
 
     @Column(length = 1000)
-    private String sCategory = "없음";
+    @ColumnDefault("'없음'")
+    private String sCategory;
 
     @Column(nullable = false)
-    private Long originalPrice = 0L;
+    @ColumnDefault("0")
+    private Long originalPrice;
 
     @Column(nullable = false)
-    private Long sellPrice = 0L;
+    @ColumnDefault("0")
+    private Long sellPrice;
 
     @Column(length = 1000)
-    private String image = "없는 이미지";
+    @ColumnDefault("'없음'")
+    private String image;
 }
