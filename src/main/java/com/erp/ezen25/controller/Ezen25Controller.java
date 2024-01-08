@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Log4j2
 @RequiredArgsConstructor
 public class Ezen25Controller {
-
     @GetMapping("/")
     public String IndexView() {
         return "ex";
