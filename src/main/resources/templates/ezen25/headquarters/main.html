@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <h1>프로젝트 시작</h1>
-</body>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+
+    <th:block layout:fragment="content">
+        <!-- Begin Page Content -->
+        <div id="layoutSidenav_content">
+            <h1>레이아웃을 사용해 페이지 구성하기!</h1>
+        </div>
+    </th:block>
 </html>
