@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+#datatablesSimple th {
+    text-align: center
+}
+
+.cellStyle {
+    width: 100%;
+    height: 40px;
+    display: grid;
+    place-items: center;
+}
+.cellStyle img{
+    width: 40px;
+}

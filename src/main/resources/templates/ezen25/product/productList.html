@@ -25,35 +25,44 @@
                         품목 리스트
                     </div>
                     <div class="card-body">
-                        <table id="datatablesSimple">
+                        <table id="datatablesSimple" class="dataTableStyle">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th style="text-align: center;">이미지</th>
+                                <th>이름</th>
+                                <th>브랜드</th>
+                                <th>대분류</th>
+                                <th>소분류</th>
+                                <th>생산가격</th>
+                                <th>판매가격</th>
+                                <th>상세</th>
+                                <th>삭제</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>이미지</th>
+                                <th>이름</th>
+                                <th>브랜드</th>
+                                <th>대분류</th>
+                                <th>소분류</th>
+                                <th>생산가격</th>
+                                <th>판매가격</th>
+                                <th>상세</th>
+                                <th>삭제</th>
                             </tr>
                             </tfoot>
-                            <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
+                            <tbody >
+                            <tr th:each="product : ${pList}">
+                                <td><div class="cellStyle"><img  th:src="@{/image/NoImg.png}" alt="이미지"/></div></td>
+                                <td><div class="cellStyle" th:text="${product.productName}"></div></td>
+                                <td><div class="cellStyle" th:text="${product.brandName}"></div></td>
+                                <td><div class="cellStyle" th:text="${product.mCategory}"></div></td>
+                                <td><div class="cellStyle" th:text="${product.sCategory}"></div></td>
+                                <td><div class="cellStyle" th:text="${#numbers.formatInteger(product.originalPrice,3,'COMMA')}"></div></td>
+                                <td><div class="cellStyle" th:text="${product.sellPrice}"></div></td>
+                                <td><div class="cellStyle"><a href="#">상세</a></div></td>
+                                <td><div class="cellStyle"><a href="#">삭제</a></div></td>
                             </tr>
                             </tbody>
                         </table>

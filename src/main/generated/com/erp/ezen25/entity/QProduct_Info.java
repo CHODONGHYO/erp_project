@@ -21,7 +21,7 @@ public class QProduct_Info extends EntityPathBase<Product_Info> {
 
     public final NumberPath<Long> brandId = createNumber("brandId", Long.class);
 
-    public final StringPath image = createString("image");
+    public final StringPath image = createString("static/image");
 
     public final StringPath mCategory = createString("mCategory");
 
