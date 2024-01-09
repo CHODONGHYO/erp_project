@@ -31,22 +31,20 @@ public class StockController {
     }
 
     // 출고처리 페이지로 이동
-    @GetMapping("/dispatch")
-    public String dispatchGET() {
-        return "ezen25/stock/dispatch";
+    @GetMapping("/export")
+    public String exportGET() {
+        return "ezen25/stock/export";
     }
 
     // 출고처리 페이지에서 확인 버튼 클릭 시 처리 (alert창 추가)
-    @PostMapping("/dispatch")
-    public String dispatchPOST() {
-        return "";
+    @PostMapping("/export")
+    public String exportPOST() {
+        return "ezen25/stock/exportList";
     }
 
-    // 출고완료내역 페이지로 이동
-    @GetMapping("/dispatchCompleted")
-    public String dispatchCompletedGET() {
-        return "";
+    // 출고리스트 페이지로 이동
+    @GetMapping("/exportList")
+    public String exportListGET() {
+        return "ezen25/stock/exportList";
     }
-
-
 }
