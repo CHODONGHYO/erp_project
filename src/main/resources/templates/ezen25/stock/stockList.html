@@ -5,23 +5,48 @@
       layout:decorate="~{/layout/layout}">
 
 <th:block layout:fragment="content">
+
     <h1 class="mt-4">재고 리스트</h1>
-    <table>
-        <tr>
-            <th></th>
-            <th>이미지</th>
-            <th>상품코드</th>
-            <th>상품명</th>
-            <th>상품 분류</th>
-            <th>단위</th>
-            <th>입고가</th>
-            <th>판매가</th>
-            <th>재고수량</th>
-            <th>입고일</th>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">이미지</th>
+                <th scope="col">상품코드</th>
+                <th scope="col">상품명</th>
+                <th scope="col">상품 분류</th>
+                <th scope="col">입고가</th>
+                <th scope="col">판매가</th>
+                <th scope="col">재고수량</th>
+                <th scope="col">입고일</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="dto : ${result.dtoList}">
+                <th scope="row">[[${dto.pNumId}]]</th>
+                <td>product_info.image</td>
+                <td>[[${dto.productId}]]</td>
+                <td>product_info.productName</td>
+                <td>product_info.mCategory / product_info.sCategory</td>
+                <td>product_info.originalPrice</td>
+                <td>product_info.sellPrice</td>
+                <td>[[${dto.productNum}]]</td>
+                <td>import.importDate</td>
+            </tr>
+        </tbody>
     </table>
+
+    <ul class="pagination h-100 justify-content-center align-items-center">
+        <li class="page-item " th:if="${result.prev}">
+            <a class="page-link" th:href="@{/stock/list(page= ${result.start -1})}" tabindex="-1">◀</a>
+        </li>
+        <li th:class=" 'page-item ' + ${result.page == page? 'active':''} "
+        th:each="page: ${result.pageList}">
+            <a class="page-link" th:href="@{/stock/list(page= ${page})}">[[${page}]]</a>
+        </li>
+        <li class="page-item" th:if="${result.next}">
+            <a class="page-link" th:href="@{/stock/list(page= ${result.end +1})}">▶</a>
+        </li>
+    </ul>
 </th:block>
 </html>

@@ -1,8 +1,7 @@
 package com.erp.ezen25.repository;
 
 import com.erp.ezen25.entity.Product_Info;
-import com.erp.ezen25.entity.Product_Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface StockRepository extends JpaRepository<Product_Stock, Long> {
+public interface ProductRepository extends JpaRepository<Product_Info, Long> {
 }
