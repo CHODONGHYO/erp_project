@@ -10,7 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RequiredArgsConstructor
 // 메인 관련 Controller
 public class MainController {
+
     @GetMapping("/")
+    public String loginGet() {
+        return "ezen25/main/login";
+    }
+    @GetMapping("/main")
     public String mainGet() {
         return "ezen25/main/main";
     }
