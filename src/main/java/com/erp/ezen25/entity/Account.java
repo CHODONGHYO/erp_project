@@ -23,7 +23,8 @@ public class Account {
     @Column(name = "accountId")
     private Long accountId;
 
-    @Column(nullable = false)
+    @OneToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="member_id", nullable = false)
     private Long memberId;
 
     @Column(nullable = false)

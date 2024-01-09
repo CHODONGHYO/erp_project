@@ -30,7 +30,8 @@ public class Request {
     @Column(nullable = false, unique = true)
     private LocalDateTime requestDate;
 
-    @Column(nullable = false)
+    @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="product_id", nullable = false)
     private Long productId;
 
     @Column(nullable = false)
