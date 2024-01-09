@@ -23,13 +23,15 @@ public class Product_Stock {
     @Column(name = "pNumId")
     private Long pNumId;
 
-    @Column(nullable = false)
+    @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="product_id", nullable = false)
     private Long productId;
 
     @ColumnDefault("0")
     private Long productNum;
 
-    @Column(nullable = false)
+    @OneToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="member_id", nullable = false)
     private Long memberId;
 
     @ColumnDefault("0")

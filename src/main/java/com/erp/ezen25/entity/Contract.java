@@ -11,8 +11,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 
-import static java.time.LocalDateTime.now;
-
 @Entity
 @Builder
 @AllArgsConstructor
@@ -27,13 +25,12 @@ public class Contract {
     @Column(name = "contractId")
     private Long contractId;
 
-    @Column(length = 1000, nullable = false)
-    private String contractType;
+    @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="product_id", nullable = false)
+    private Long productId;
 
-    @Column(nullable = false)
-    private Long contractTotalMoney;
-
-    @Column(nullable = false)
+    @ManyToOne(targetEntity = Brand.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="brand_id", nullable = false)
     private Long brandId;
 
     @Column(nullable = false)
