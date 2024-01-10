@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -16,6 +17,8 @@ import com.querydsl.core.types.Path;
 public class QExportCheck extends EntityPathBase<ExportCheck> {
 
     private static final long serialVersionUID = 73977790L;
+
+    private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QExportCheck exportCheck = new QExportCheck("exportCheck");
 
@@ -27,18 +30,27 @@ public class QExportCheck extends EntityPathBase<ExportCheck> {
 
     public final NumberPath<Long> orderNum = createNumber("orderNum", Long.class);
 
-    public final NumberPath<Long> productId = createNumber("productId", Long.class);
+    public final QProduct_Info productId;
 
     public QExportCheck(String variable) {
-        super(ExportCheck.class, forVariable(variable));
+        this(ExportCheck.class, forVariable(variable), INITS);
     }
 
     public QExportCheck(Path<? extends ExportCheck> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QExportCheck(PathMetadata metadata) {
-        super(ExportCheck.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QExportCheck(PathMetadata metadata, PathInits inits) {
+        this(ExportCheck.class, metadata, inits);
+    }
+
+    public QExportCheck(Class<? extends ExportCheck> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
     }
 
 }
