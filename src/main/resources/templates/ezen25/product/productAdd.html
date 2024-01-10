@@ -5,5 +5,41 @@
       layout:decorate="~{/layout/layout}">
 <th:block layout:fragment="content">
     <!-- 여기에 생성할 페이지 코드 작성 -->
+    <main class="productAdd">
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">품목등록</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item">품목관리</li>
+                <li class="breadcrumb-item active">품목등록</li>
+            </ol>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div>
+                        <i class="fas fa-table me-1"></i>
+                        입력란
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="inputLine"><label for="productId">품목코드</label><input class="form-control" id="productId" name="productId" placeholder="자동기입" disabled></div>
+                    <div class="inputLine"><label for="image">품목 이미지</label><input class="form-control" id="image" name="image"></div>
+                    <div class="inputLine"><label for="productName">이름</label><input class="form-control" id="productName" name="productName"></div>
+                    <div class="inputLine"><label for="brand">브랜드</label><input class="form-control" id="brand" name="brand"></div>
+                    <div class="inputLine"><label for="mCategory">대분류</label><input class="form-control" id="mCategory" name="mCategory"></div>
+                    <div class="inputLine"><label for="sCategory">소분류</label><input class="form-control" id="sCategory" name="sCategory"></div>
+                    <div class="inputLine"><label for="originalPrice">생산가격</label><input class="form-control" id="originalPrice" name="originalPrice"></div>
+                    <div class="inputLine"><label for="sellPrice">판매가격</label><input class="form-control" id="sellPrice" name="sellPrice"></div>
+                    <div class="inputLine"><label for="productDescription">설명</label><textarea rows="5" class="form-control" id="productDescription" name="productDescription"></textarea></div>
+                    <div class="btnGroup">
+                        <div class="card bg-primary text-white mb-2 prodBtn">
+                            <div class="card-body resetLink">품목 등록</div>
+                        </div>
+                        <div class="card bg-primary text-white mb-2 prodBtn">
+                            <a href="productList" class="card-body resetLink">목록</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 </th:block>
 </html>
