@@ -47,9 +47,10 @@ a.resetLink {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+    gap: 10px;
 }
 .productAdd .inputLine label{
-    min-width: 120px;
+    min-width: 90px;
 }
 .productAdd .inputLine input {
     text-align: center;
@@ -66,4 +67,10 @@ a.resetLink {
 .productAdd .btnGroup .card-body:hover {
     color: white;
     background-color: var(--bs-link-hover-color);
+}
+.productAdd select {
+    width: 30%;
+    padding-left: 0;
+    appearance: auto;
+    -webkit-appearance: auto;
 }
