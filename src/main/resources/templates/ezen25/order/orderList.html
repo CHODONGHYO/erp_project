@@ -43,7 +43,7 @@
                                 <td>[[${dto.orderCode}]]</td>
                                 <td>[[${dto.orderDate}]]</td>
                                 <td>
-                                    <a th:if="${dto.orderStatus == '0'}" class="btn btn-primary" onclick="#">불출하기</a>
+                                    <a th:if="${dto.orderStatus == '0'}" class="btn btn-primary" href="#">불출하기</a>
                                     <a th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" href="#">출고준비</a>
                                     <a th:if="${dto.orderStatus == '2'}" class="btn btn-danger" href="#">출고완료</a>
                                 </td>
