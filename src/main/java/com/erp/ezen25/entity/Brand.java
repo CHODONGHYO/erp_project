@@ -30,4 +30,19 @@ public class Brand {
     @Column(length = 1000)
     private String brandDescription;
 
+    public void changeBrandName(String brandName) {
+        this.brandName = brandName;
+    }
+
+    public void changeBrandPhone(String brandPhone) {
+        this.brandPhone = brandPhone;
+    }
+
+    public void changeBrandEmail(String brandEmail) {
+        this.brandEmail = brandEmail;
+    }
+
+    public void changeBrandDescription(String brandDescription) {
+        this.brandDescription = brandDescription;
+    }
 }

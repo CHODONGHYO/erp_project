@@ -11,16 +11,20 @@ import org.springframework.data.domain.Sort;
 @AllArgsConstructor
 @Data
 public class PageRequestDTO {
-
-    private int page;  // 페이지 수
-    private int size;  // 페이지 당 보일 목록의 개수
-
+    private int page;
+    private int size;
+    private String type;
+    private String keyword;
     public PageRequestDTO() {
         this.page = 1;
-        this.size = 20;
+        this.size = 10;
     }
 
     public Pageable getPageable(Sort sort) {
-        return PageRequest.of(page -1, size, sort);
+        return PageRequest.of(page-1, size, sort);
     }
+
+
+
+
 }

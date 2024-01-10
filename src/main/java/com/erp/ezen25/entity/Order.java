@@ -11,8 +11,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 
-import static java.time.LocalDateTime.now;
-
 @Entity
 @Builder
 @AllArgsConstructor
@@ -27,13 +25,15 @@ public class Order {
     @Column(name = "orderId")
     private Long orderId;
 
-    @Column(nullable = false)
+    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="member_id", nullable = false)
     private Long memberId;
 
     @Column(nullable = false)
     private LocalDateTime orderDate;
 
-    @Column(nullable = false)
+    @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="product_id", nullable = false)
     private Long productId;
 
     @Column(nullable = false)

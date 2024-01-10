@@ -10,36 +10,53 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Data
-public class PageResultDTO<DTO, ENTITY> {
+public class PageResultDTO<DTO, EN> {
 
-    private List<DTO> dtoList; //DTO 리스트
+    // DTO 리스트
+    private List<DTO> dtoList;
 
-    private int totalPage; //총 페이지 번호
+    // 총 페이지 번호
+    private int totalPage;
 
-    private  int page; //현재 페이지 번호
+    // 현재 페이지 번호
+    private int page;
+    // 목록 사이즈
+    private int size;
 
-    private int size; //페이지 당 보일 목록의 개수
+    // 시작 페이지 번호, 끝 페이지 번호
+    private int start, end;
 
-    private int start, end; //시작, 끝 페이지 번호
+    // 이전, 다음
+    private boolean prev, next;
 
-    private boolean prev, next; //이전, 다음
+    // 페이지 번호 목록
+    private List<Integer> pageList;
 
-    private List<Integer> pageList; //페이지 번호목록
-
-    public PageResultDTO(Page<ENTITY> result, Function<ENTITY, DTO> fn) {
+    public PageResultDTO(Page<EN> result, Function<EN, DTO> fn) {
         dtoList = result.stream().map(fn).collect(Collectors.toList());
+
         totalPage = result.getTotalPages();
+
         makePageList(result.getPageable());
     }
 
     private void makePageList(Pageable pageable) {
-        this.page = pageable.getPageNumber() + 1;
+        this.page = pageable.getPageNumber() + 1; // 0부터 시작 -> +1
         this.size = pageable.getPageSize();
-        int tempEnd = (int)(Math.ceil(page/10.0)*10);
+
+        // tempEndPage
+        int tempEnd = (int)(Math.ceil(page / 10.0)) * 10;
+
         start = tempEnd - 9;
+
         prev = start > 1;
-        end = totalPage > tempEnd ? tempEnd : totalPage;
+
+        end = Math.min(totalPage, tempEnd);
+        /* end = totalPage > tempEnd ? tempEnd : totalPage; */
+
         next = totalPage > tempEnd;
+
         pageList = IntStream.rangeClosed(start, end).boxed().collect(Collectors.toList());
+
     }
 }
