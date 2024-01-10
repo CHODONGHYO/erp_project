@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,11 +18,13 @@ public class QRequest extends EntityPathBase<Request> {
 
     private static final long serialVersionUID = -294107751L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QRequest request = new QRequest("request");
 
     public final NumberPath<Long> brandId = createNumber("brandId", Long.class);
 
-    public final NumberPath<Long> productId = createNumber("productId", Long.class);
+    public final QProduct_Info productId;
 
     public final StringPath requestCode = createString("requestCode");
 
@@ -38,15 +41,24 @@ public class QRequest extends EntityPathBase<Request> {
     public final StringPath requestStatus = createString("requestStatus");
 
     public QRequest(String variable) {
-        super(Request.class, forVariable(variable));
+        this(Request.class, forVariable(variable), INITS);
     }
 
     public QRequest(Path<? extends Request> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QRequest(PathMetadata metadata) {
-        super(Request.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QRequest(PathMetadata metadata, PathInits inits) {
+        this(Request.class, metadata, inits);
+    }
+
+    public QRequest(Class<? extends Request> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
     }
 
 }
