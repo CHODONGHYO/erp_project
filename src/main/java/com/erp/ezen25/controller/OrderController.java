@@ -1,5 +1,6 @@
 package com.erp.ezen25.controller;
 
+import com.erp.ezen25.dto.OrderDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/order")
@@ -18,9 +21,10 @@ public class OrderController {
 
     private final OrderService service;
     @GetMapping("/list")
-    public String orderList(PageRequestDTO pageRequestDTO, Model model) {
-        log.info("발주요청목록 페이지로 이동........" + pageRequestDTO);
-        model.addAttribute("result", service.getList(pageRequestDTO));
+    public String orderList(Model model) {
+        log.info("발주요청목록 페이지로 이동........");
+        List<OrderDTO> dtoList = service.getList();
+        model.addAttribute("result", dtoList);
         return "ezen25/order/orderList";
     }
 

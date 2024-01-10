@@ -14,7 +14,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -24,15 +26,13 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository repository;
 
     @Override
-    public PageResultDTO<OrderDTO, Order> getList(PageRequestDTO requestDTO) {
+    public List<OrderDTO> getList() {
 
-        Pageable pageable = requestDTO.getPageable(Sort.by("orderId").descending());
+        List<Order> result = repository.findAll();
 
-        Page<Order> result = repository.findAll(pageable);
-
-        Function<Order, OrderDTO> fn = (entity -> entityToDto(entity));
-
-        return new PageResultDTO<>(result, fn);
+        return result.stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
     }
 
 }

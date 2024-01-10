@@ -47,7 +47,7 @@ public class Order {
     private LocalDateTime orderOutDate;
 
     @Column(length = 1000, nullable = false)
-    @ColumnDefault("'미정'")
+    @ColumnDefault("'0'")
     private String orderStatus;
 
     @Column(length = 1000, nullable = false, unique = true)

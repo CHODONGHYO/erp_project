@@ -5,39 +5,55 @@
       layout:decorate="~{/layout/layout}">
 
 <th:block layout:fragment="content">
-    <h1 class="mt-4">발주 요청리스트</h1>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col"></th>
-            <th scope="col">지점명</th>
-            <th scope="col">발주서 코드</th>
-            <th scope="col">발주일자</th>
-            <th scope="col">상태</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="dto : ${result.dtoList}">
-            <th scope="row">[[${dto.orderId}]]</th>
-            <td>[[${dto.memberId}]]</td>
-            <td>[[${dto.orderCode}]]</td>
-            <td>[[${dto.orderDate}]]</td>
-            <td>[[${dto.orderStatus}]]</td>
-        </tr>
-        </tbody>
-    </table>
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">발주관리</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a th:href="@{/order/list}">발주 요청리스트</a></li>
+                <li class="breadcrumb-item active">발주관리</li>
+            </ol>
+            <div class="card mb-4">
+                <div class="card-body">
+                    DataTables is a third party plugin that is used to generate the demo table below. For more information
+                    about DataTables, please visit the
+                    <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                    .
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    발주 요청리스트
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>지점명</th>
+                                <th>발주서 코드</th>
+                                <th>발주일자</th>
+                                <th>상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="dto : ${result}">
+                                <th>[[${dto.orderId}]]</th>
+                                <td>[[${dto.memberId}]]</td>
+                                <td>[[${dto.orderCode}]]</td>
+                                <td>[[${dto.orderDate}]]</td>
+                                <td>
+                                    <a th:if="${dto.orderStatus == '0'}" class="btn btn-primary" href="#">불출하기</a>
+                                    <a th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" href="#">출고준비</a>
+                                    <a th:if="${dto.orderStatus == '2'}" class="btn btn-danger" href="#">출고완료</a>
+                                </td>
 
-    <ul class="pagination h-100 justify-content-center align-items-center">
-        <li class="page-item " th:if="${result.prev}">
-            <a class="page-link" th:href="@{/order/list(page= ${result.start -1})}" tabindex="-1">◀</a>
-        </li>
-        <li th:class=" 'page-item ' + ${result.page == page? 'active':''} "
-            th:each="page: ${result.pageList}">
-            <a class="page-link" th:href="@{/order/list(page= ${page})}">[[${page}]]</a>
-        </li>
-        <li class="page-item" th:if="${result.next}">
-            <a class="page-link" th:href="@{/order/list(page= ${result.end +1})}">▶</a>
-        </li>
-    </ul>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
 </th:block>
 </html>

@@ -1,14 +1,13 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.OrderDTO;
-import com.erp.ezen25.dto.PageRequestDTO;
-import com.erp.ezen25.dto.PageResultDTO;
-import com.erp.ezen25.dto.StockDTO;
 import com.erp.ezen25.entity.Order;
-import com.erp.ezen25.entity.Product_Stock;
+
+
+import java.util.List;
 
 public interface OrderService {
-    PageResultDTO<OrderDTO, Order> getList(PageRequestDTO requestDTO);
+    List<OrderDTO> getList();
 
     default Order dtoToEntity(OrderDTO dto) {
         Order entity = Order.builder()
@@ -34,6 +33,7 @@ public interface OrderService {
                 .orderDescription(entity.getOrderDescription())
                 .orderOutDate(entity.getOrderOutDate())
                 .orderCode(entity.getOrderCode())
+                .orderStatus(entity.getOrderStatus())
                 .build();
         return dto;
     }
