@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<th:block layout:fragment="content">
+    <!-- 여기에 생성할 페이지 코드 작성 -->
+    <h1 class="mt-4">브랜드 상세보기</h1>
+    <div class="form-group">
+        <label>#</label>
+        <input type="text" class="form-control" name="brandId" th:value="${dto.brandId}" readonly>
+    </div>
+    <div class="form-group">
+        <label>브랜드 이름</label>
+        <input type="text" class="form-control" name="brandName" th:value="${dto.brandName}" readonly>
+    </div>
+    <div class="form-group">
+        <label>연락처</label>
+        <input type="text" class="form-control" name="brandPhone" th:value="${dto.brandPhone}" readonly>
+    </div>
+
+    <div class="form-group">
+        <label>이메일</label>
+        <input type="text" class="form-control" name="brandEmail" th:value="${dto.brandEmail}" readonly>
+    </div>
+    <div class="form-group">
+        <label>설명</label>
+        <textarea class="form-control" rows="5" name="brandDescription" readonly>[[${dto.brandDescription}]]</textarea>
+    </div>
+
+    <!--버튼 처리-->
+    <div>
+    <a th:href="@{/ezen25/brand/modify(brandId = ${dto.brandId}, page = ${requestDTO.page},
+         type = ${requestDTO.type}, keyword = ${requestDTO.keyword})}">
+        <button type="button" class="btn btn-primary">Modify</button>
+    </a>
+    <a th:href="@{/ezen25/brand/list(page=${requestDTO.page}, type = ${requestDTO.type},
+         keyword = ${requestDTO.keyword})}">
+        <button type="button" class="btn btn-info">List</button>
+    </a>
+    </div>
+</th:block>
+</html>

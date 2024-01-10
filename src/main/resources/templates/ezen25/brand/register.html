@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+
+<th:block layout:fragment="content">
+    <h1 class="mt-4">GuestBook Register Page</h1>
+    <form th:action="@{/ezen25/brand/register}" th:method="post">
+        <div class="form-group">
+            <label>브랜드 이름</label>
+            <input type="text" class="form-control" name="brandName" placeholder="업체 명 입력">
+        </div>
+        <div class="form-group">
+            <label>연락처</label>
+            <input type="text" class="form-control" name="brandPhone" placeholder="연락처 입력">
+        </div>
+        <div class="form-group">
+            <label>이메일</label>
+            <input type="text" class="form-control" name="brandEmail" placeholder="이메일 입력">
+        </div>
+        <div class="form-group">
+            <label>기타</label>
+            <textarea class="form-control" name="brandDescription" placeholder="계약 내용 혹은 특이사항 입력"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">제출하기</button>
+        <button type="reset" class="btn btn-primary">다시하기</button>
+
+    </form>
+
+
+
+
+
+
+
+</th:block>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>

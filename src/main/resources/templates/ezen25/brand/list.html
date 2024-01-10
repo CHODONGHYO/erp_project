@@ -7,22 +7,21 @@
   <!-- 여기에 생성할 페이지 코드 작성 -->
   <main>
     <div class="container-fluid px-4">
-      <h1 class="mt-4">품목관리</h1>
+      <h1 class="mt-4">협력업체 관리</h1>
       <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="index.html">품목관리</a></li>
-        <li class="breadcrumb-item active">품목리스트</li>
+        <li class="breadcrumb-item"><a href="index.html">협력업체 관리</a></li>
+        <li class="breadcrumb-item active">협력업체 리스트</li>
       </ol>
+
       <div class="card mb-4">
-        <div class="card-body">
-          DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-          <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-          .
-        </div>
-      </div>
-      <div class="card mb-4">
-        <div class="card-header">
+        <div class="card-header" >
+          <div style="">
           <i class="fas fa-table me-1"></i>
           품목 리스트
+          </div>
+          <a th:href="@{/ezen25/brand/register}">
+            <button style="float:right;" type="button" class="btn btn-outline-primary">등록하기</button>
+          </a>
         </div>
         <div class="card-body">
 
@@ -47,7 +46,12 @@
             </tfoot>
             <tbody>
             <tr th:each="dto : ${brand.dtoList}">
-              <th>[[${dto.brandId}]]</th>
+              <th>
+                <a th:href="@{/ezen25/brand/read(brandId = ${dto.brandId}, page= ${brand.page}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}">
+                [[${dto.brandId}]]
+                </a>
+              </th>
               <th>[[${dto.brandName}]]</th>
               <th>[[${dto.brandPhone}]]</th>
               <th>[[${dto.brandEmail}]]</th>

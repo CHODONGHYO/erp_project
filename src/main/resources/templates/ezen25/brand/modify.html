@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+
+<th:block layout:fragment="content">
+    <h1 class="mt-4">브랜드 수정</h1>
+    <form action="/ezen25/brand/modify" method="post">
+        <!--페이지 번호 hidden으로 받기-->
+        <input type="hidden" name="page" th:value="${requestDTO.page}">
+        <input type="hidden" name="type" th:value="${requestDTO.type}">
+        <input type="hidden" name="keyword" th:value="${requestDTO.keyword}">
+
+        <div class="form-group">
+            <label>#</label>
+            <input type="text" class="form-control" name="brandId" th:value="${dto.brandId}" readonly>
+        </div>
+        <div class="form-group">
+            <label>브랜드 이름</label>
+            <input type="text" class="form-control" name="brandName" th:value="${dto.brandName}">
+        </div>
+        <div class="form-group">
+            <label>연락처</label>
+            <input class="form-control" rows="5" name="brandPhone" th:value="${dto.brandPhone}">
+        </div>
+        <div class="form-group">
+            <label>이메일</label>
+            <input type="text" class="form-control" name="brandEmail" th:value="${dto.brandEmail}">
+        </div>
+        <div class="form-group">
+            <label>기타</label>
+            <textarea type="text" class="form-control" name="brandDescription">[[${dto.brandDescription}]]</textarea>
+        </div>
+    </form>
+
+    <button type="button" class="btn btn-primary modifyBtn">Modify</button>
+
+    <button type="button" class="btn btn-info listBtn">List</button>
+
+    <button type="button" class="btn btn-danger removeBtn">Remove</button>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script th:inline="javascript">
+        var actionForm = $("form");
+
+        $(".removeBtn").click(function(){
+
+            actionForm
+                .attr("action", "/ezen25/brand/remove")
+                .attr("method", "post");
+
+            actionForm.submit();
+
+        });
+
+        $(".modifyBtn").click(function() {
+
+        if(!confirm("수정하겠습니까?")) {
+            return ;
+        }
+
+        actionForm
+            .attr("action", "/ezen25/brand/modify")
+            .attr("method", "post")
+            .submit();
+        });
+
+        $('.listBtn').click(function() {
+
+        <!--var pageInfo = $("input[name='page']");-->
+        var page = $("input[name='page']");
+        var type = $("input[name='type']");
+        var keyword = $("input[name='keyword']");
+
+        actionForm.empty(); <!--form 태그의 모든 내용 지움-->
+        <!--actionForm.append(pageInfo); &lt;!&ndash;목록 페이지 이동에 필요한 내용을 다시 추가&ndash;&gt;-->
+        actionForm.append(page);
+        actionForm.append(type);
+        actionForm.append(keyword);
+
+        actionForm
+            .attr("action", "/ezen25/brand/list")
+            .attr("method", "get");
+
+        console.log(actionForm.html()); <!--먼저 확인 후 주석처리-->
+        actionForm.submit(); <!--확인 후 주석 해제-->
+
+        });
+    </script>
+</th:block>
+</html>
