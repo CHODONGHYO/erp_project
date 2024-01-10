@@ -51,4 +51,9 @@ public class Product_Info {
     @Column(length = 1000)
     @ColumnDefault("'없음'")
     private String image;
+
+    public Product_Info setProductId(Long productId) {
+        this.productId = productId;
+        return this;
+    }
 }

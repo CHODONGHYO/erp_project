@@ -25,16 +25,16 @@ public class Order {
     @Column(name = "orderId")
     private Long orderId;
 
-    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id", nullable = false)
-    private Long memberId;
+    private Member member;
 
     @Column(nullable = false)
     private LocalDateTime orderDate;
 
-    @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
-    private Long productId;
+    private Product_Info product;
 
     @Column(nullable = false)
     @ColumnDefault("0")

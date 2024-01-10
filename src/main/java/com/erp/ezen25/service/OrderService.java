@@ -1,7 +1,9 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.OrderDTO;
+import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.Order;
+import com.erp.ezen25.entity.Product_Info;
 
 
 import java.util.List;
@@ -12,9 +14,9 @@ public interface OrderService {
     default Order dtoToEntity(OrderDTO dto) {
         Order entity = Order.builder()
                 .orderId(dto.getOrderId())
-                .memberId(dto.getMemberId())
+                .member(new Member().setMemberId(dto.getMemberId()))
                 .orderDate(dto.getOrderDate())
-                .productId(dto.getProductId())
+                .product(new Product_Info().setProductId(dto.getProductId()))
                 .orderNum(dto.getOrderNum())
                 .orderDescription(dto.getOrderDescription())
                 .orderOutDate(dto.getOrderOutDate())
@@ -26,9 +28,9 @@ public interface OrderService {
     default OrderDTO entityToDto(Order entity) {
         OrderDTO dto = OrderDTO.builder()
                 .orderId(entity.getOrderId())
-                .memberId(entity.getMemberId())
+                .memberId(entity.getMember().getMemberId())
                 .orderDate(entity.getOrderDate())
-                .productId(entity.getProductId())
+                .productId(entity.getProduct().getProductId())
                 .orderNum(entity.getOrderNum())
                 .orderDescription(entity.getOrderDescription())
                 .orderOutDate(entity.getOrderOutDate())

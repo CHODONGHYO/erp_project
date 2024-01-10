@@ -42,5 +42,9 @@ public class Member {
     @ColumnDefault("0")
     private Long percent;
 
+    public Member setMemberId(Long memberId) {
+        this.memberId = memberId;
+        return this;
+    }
 
 }

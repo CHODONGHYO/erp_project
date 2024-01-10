@@ -52,48 +52,48 @@
                     <div class="datatable-container">
                         <table id="datatablesSimple" class="datatable-table">
                             <thead>
-                                <tr>
-                                    <th data-sortable="true" style="width: 3%;">
-                                        <button class="datatable-sorter">#</button>
-                                    </th>
-                                    <th data-sortable="true" style="width: 7%;">
-                                        <button class="datatable-sorter">이미지</button>
-                                    </th>
-                                    <th data-sortable="true" style="width: 15%;">
-                                        <button class="datatable-sorter">상품코드</button>
-                                    </th>
-                                    <th data-sortable="true" style="width: 20%;">
-                                        <button class="datatable-sorter">상품명</button>
-                                    </th>
-                                    <th data-sortable="true" style="width: 10%;">
-                                        <button class="datatable-sorter">상품분류</button>
-                                    </th>
-                                    <th data-sortable="true" style="width: 10%;">
-                                        <button class="datatable-sorter">입고가</button>
-                                    </th>
-                                    <th data-sortable="true" style="width: 10%;">
-                                        <button class="datatable-sorter">판매가</button>
-                                    </th>
-                                    <th data-sortable="true" style="width: 10%;">
-                                        <button class="datatable-sorter">재고수량</button>
-                                    </th>
-                                    <th data-sortable="true" style="width: 10%;">
-                                        <button class="datatable-sorter">입고일</button>
-                                    </th>
-                                </tr>
+                            <tr>
+                                <th data-sortable="true" style="width: 3%;">
+                                    <button class="datatable-sorter">#</button>
+                                </th>
+                                <th data-sortable="true" style="width: 7%;">
+                                    <button class="datatable-sorter">이미지</button>
+                                </th>
+                                <th data-sortable="true" style="width: 15%;">
+                                    <button class="datatable-sorter">상품코드</button>
+                                </th>
+                                <th data-sortable="true" style="width: 20%;">
+                                    <button class="datatable-sorter">상품명</button>
+                                </th>
+                                <th data-sortable="true" style="width: 10%;">
+                                    <button class="datatable-sorter">상품분류</button>
+                                </th>
+                                <th data-sortable="true" style="width: 10%;">
+                                    <button class="datatable-sorter">입고가</button>
+                                </th>
+                                <th data-sortable="true" style="width: 10%;">
+                                    <button class="datatable-sorter">판매가</button>
+                                </th>
+                                <th data-sortable="true" style="width: 10%;">
+                                    <button class="datatable-sorter">재고수량</button>
+                                </th>
+                                <th data-sortable="true" style="width: 10%;">
+                                    <button class="datatable-sorter">입고일</button>
+                                </th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="dto : ${result.dtoList}">
-                                    <th scope="row">[[${dto.pNumId}]]</th>
-                                    <td>product_info.image</td>
-                                    <td>[[${dto.productId}]]</td>
-                                    <td>product_info.productName</td>
-                                    <td>product_info.mCategory / product_info.sCategory</td>
-                                    <td>product_info.originalPrice</td>
-                                    <td>product_info.sellPrice</td>
-                                    <td>[[${dto.productNum}]]</td>
-                                    <td>import.importDate</td>
-                                </tr>
+                            <tr th:each="dto : ${result.dtoList}">
+                                <th scope="row">[[${dto.pNumId}]]</th>
+                                <td>product_info.image</td>
+                                <td>[[${dto.productId}]]</td>
+                                <td>product_info.productName</td>
+                                <td>product_info.mCategory / product_info.sCategory</td>
+                                <td>product_info.originalPrice</td>
+                                <td>product_info.sellPrice</td>
+                                <td>[[${dto.productNum}]]</td>
+                                <td>import.importDate</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>

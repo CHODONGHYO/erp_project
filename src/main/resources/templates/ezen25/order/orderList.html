@@ -29,7 +29,7 @@
                     <table id="datatablesSimple">
                         <thead>
                             <tr>
-                                <th>#</th>
+                                <th>No</th>
                                 <th>지점명</th>
                                 <th>발주서 코드</th>
                                 <th>발주일자</th>
@@ -43,7 +43,7 @@
                                 <td>[[${dto.orderCode}]]</td>
                                 <td>[[${dto.orderDate}]]</td>
                                 <td>
-                                    <a th:if="${dto.orderStatus == '0'}" class="btn btn-primary" href="#">불출하기</a>
+                                    <a th:if="${dto.orderStatus == '0'}" class="btn btn-primary" onclick="#">불출하기</a>
                                     <a th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" href="#">출고준비</a>
                                     <a th:if="${dto.orderStatus == '2'}" class="btn btn-danger" href="#">출고완료</a>
                                 </td>
@@ -54,5 +54,6 @@
             </div>
         </div>
     </main>
+
 </th:block>
 </html>
