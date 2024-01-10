@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -16,6 +17,8 @@ import com.querydsl.core.types.Path;
 public class QExport extends EntityPathBase<Export> {
 
     private static final long serialVersionUID = 1298413418L;
+
+    private static final PathInits INITS = PathInits.DIRECT2;
 
     public static final QExport export = new QExport("export");
 
@@ -29,18 +32,27 @@ public class QExport extends EntityPathBase<Export> {
 
     public final StringPath orderCode = createString("orderCode");
 
-    public final NumberPath<Long> productId = createNumber("productId", Long.class);
+    public final QProduct_Info productId;
 
     public QExport(String variable) {
-        super(Export.class, forVariable(variable));
+        this(Export.class, forVariable(variable), INITS);
     }
 
     public QExport(Path<? extends Export> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QExport(PathMetadata metadata) {
-        super(Export.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QExport(PathMetadata metadata, PathInits inits) {
+        this(Export.class, metadata, inits);
+    }
+
+    public QExport(Class<? extends Export> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
     }
 
 }

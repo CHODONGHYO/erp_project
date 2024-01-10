@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,9 +18,11 @@ public class QContract extends EntityPathBase<Contract> {
 
     private static final long serialVersionUID = -701096120L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QContract contract = new QContract("contract");
 
-    public final NumberPath<Long> brandId = createNumber("brandId", Long.class);
+    public final QBrand brandId;
 
     public final DateTimePath<java.time.LocalDateTime> contractDate = createDateTime("contractDate", java.time.LocalDateTime.class);
 
@@ -27,20 +30,28 @@ public class QContract extends EntityPathBase<Contract> {
 
     public final NumberPath<Long> contractId = createNumber("contractId", Long.class);
 
-    public final NumberPath<Long> contractTotalMoney = createNumber("contractTotalMoney", Long.class);
-
-    public final StringPath contractType = createString("contractType");
+    public final QProduct_Info productId;
 
     public QContract(String variable) {
-        super(Contract.class, forVariable(variable));
+        this(Contract.class, forVariable(variable), INITS);
     }
 
     public QContract(Path<? extends Contract> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QContract(PathMetadata metadata) {
-        super(Contract.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QContract(PathMetadata metadata, PathInits inits) {
+        this(Contract.class, metadata, inits);
+    }
+
+    public QContract(Class<? extends Contract> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.brandId = inits.isInitialized("brandId") ? new QBrand(forProperty("brandId")) : null;
+        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
     }
 
 }
