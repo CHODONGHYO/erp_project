@@ -96,6 +96,15 @@ public class BrandServiceImpl implements BrandService {
         if (type.contains("n")) {
                sBuilder.or(qBrand.brandName.contains(keyword));
         }
+        if (type.contains("p")) {
+            sBuilder.or(qBrand.brandPhone.contains(keyword));
+        }
+        if (type.contains("e")) {
+            sBuilder.or(qBrand.brandEmail.contains(keyword));
+        }
+        if (type.contains("d")) {
+            sBuilder.or(qBrand.brandDescription.contains(keyword));
+        }
 
         builder.and(sBuilder);
 
