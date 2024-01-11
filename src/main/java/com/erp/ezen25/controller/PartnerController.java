@@ -30,7 +30,7 @@ public class PartnerController {
         log.info("brandList. ");
         log.info(requestDTO);
 
-        model.addAttribute("brand", brandService.getList(requestDTO));
+        model.addAttribute("result", brandService.getList(requestDTO));
     }
 
     @GetMapping("/register")
@@ -61,7 +61,7 @@ public class PartnerController {
     }
 
     @PostMapping("/remove")
-    public String remove(Long brandId, RedirectAttributes redirectAttributes) {
+    public String remove(@RequestParam("brandId") Long brandId, RedirectAttributes redirectAttributes) {
         log.info("Post Remove. brandId : " + brandId);
 
         brandService.remove(brandId);
