@@ -4,6 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout}">
 <th:block layout:fragment="content">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <link rel="stylesheet" href="/pluto/css/bootstrap.min.css" />
   <!-- responsive css -->
   <link rel="stylesheet" href="/pluto/css/responsive.css" />
@@ -38,7 +39,36 @@
               </div>
               <div class="full graph_head">
                 <div>
+                  <form action="/ezen25/brand/list" method="get" id="searchForm">
+                    <div class="input-group">
+                      <input type="hidden" name="page" value="1">
+                      <div class="input-group-prepend">
+                        <select class="custom-select" name="type">
+                          <option value="nped" th:selected="${pageRequestDTO.type == 'nped'}">
+                            전체
+                          </option>
+                          <option value="n" th:selected="${pageRequestDTO.type == 'n'}">
+                            이름
+                          </option>
+                          <option value="p" th:selected="${pageRequestDTO.type == 'p'}">
+                            연락처
+                          </option>
+                          <option value="e" th:selected="${pageRequestDTO.type == 'e'}">
+                            이메일
+                          </option>
+                          <option value="d" th:selected="${pageRequestDTO.type == 'd'}">
+                            설명
+                          </option>
 
+                        </select>
+                      </div>
+                      <input type="text" class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}">
+                      <div class="input-group-append" id="button-addon4">
+                        <button class="btn btn-outline-secondary btn-search" type="button">Search</button>
+                        <button class="btn btn-outline-secondary btn-clear" type="button">Clear</button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
                 <div>
 
@@ -92,7 +122,23 @@
           </div>
         </div>
       </div>
+    <script th:inline="javascript">
 
+      var searchForm = $("#searchForm");
+
+      $('.btn-search').click(function(e) {
+
+          searchForm.submit();
+
+      });
+
+      $('.btn-clear').click(function(e) {
+
+          searchForm.empty().submit();
+
+      });
+
+    </script>
   </main>
 </th:block>
 </html>
