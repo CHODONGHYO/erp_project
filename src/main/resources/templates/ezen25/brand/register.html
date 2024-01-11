@@ -1,53 +1,57 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout}">
+      xmlns:th="http://www.thymeleaf.org">
 
 <th:block layout:fragment="content">
-    <h1 class="mt-4">GuestBook Register Page</h1>
-    <form th:action="@{/ezen25/brand/register}" th:method="post">
-        <div class="form-group">
-            <label>브랜드 이름</label>
-            <input type="text" class="form-control" name="brandName" placeholder="업체 명 입력">
+    <main>
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>협력업체 등록</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <!-- table section -->
+                <div class="col-md-12">
+                    <form th:action="@{/ezen25/brand/register}" th:method="post">
+                        <div class="white_shd full margin_bottom_30">
+                            <div class="full graph_head">
+                                <label>이름</label>
+                                <input class="form-control" name="brandName" placeholder="업체 명 입력" type="text">
+                            </div>
+                            <div class="full graph_head">
+                                <label>연락처</label>
+                                <input class="form-control" name="brandPhone" placeholder="연락처 입력" type="text">
+                            </div>
+                            <div class="full graph_head">
+                                <label>이메일</label>
+                                <input class="form-control" name="brandEmail" placeholder="이메일 입력" type="text">
+                            </div>
+                            <div class="full graph_head">
+                                <label>기타</label>
+                                <textarea class="form-control" name="brandDescription"
+                                          placeholder="계약 내용 혹은 특이사항 입력"></textarea>
+                            </div>
+                        </div>
+                        <div style="float:right;">
+                            <a th:href="@{/ezen25/brand/list?page=1}">
+                                <button class="btn btn-primary">목록으로</button>
+                            </a>
+                            <button class="btn btn-primary" type="submit">등록하기</button>
+                            <button class="btn btn-primary" type="reset">다시하기</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label>연락처</label>
-            <input type="text" class="form-control" name="brandPhone" placeholder="연락처 입력">
-        </div>
-        <div class="form-group">
-            <label>이메일</label>
-            <input type="text" class="form-control" name="brandEmail" placeholder="이메일 입력">
-        </div>
-        <div class="form-group">
-            <label>기타</label>
-            <textarea class="form-control" name="brandDescription" placeholder="계약 내용 혹은 특이사항 입력"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary">제출하기</button>
-        <button type="reset" class="btn btn-primary">다시하기</button>
-
-    </form>
-
-
-
-
-
+    </main>
 
 
 </th:block>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </html>
