@@ -5,6 +5,7 @@
       layout:decorate="~{/layout/layout}">
 
 <th:block layout:fragment="content">
+
     <main>
         <div class="container-fluid px-4">
             <h1 class="mt-4">발주관리</h1>
@@ -43,9 +44,9 @@
                                 <td>[[${dto.orderCode}]]</td>
                                 <td>[[${dto.orderDate}]]</td>
                                 <td>
-                                    <a th:if="${dto.orderStatus == '0'}" class="btn btn-primary" href="#">불출하기</a>
-                                    <a th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" href="#">출고준비</a>
-                                    <a th:if="${dto.orderStatus == '2'}" class="btn btn-danger" href="#">출고완료</a>
+                                    <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary" data-toggle="modal" data-target="#withdrawalModal">불출하기</button>
+                                    <button th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" onclick="#">출고준비</button>
+                                    <button th:if="${dto.orderStatus == '2'}" class="btn btn-danger" onclick="#">출고완료</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -54,6 +55,30 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="withdrawalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">재고불출</h3>
+                </div>
+                <div class="modal-body">
+                    <th:block th:replace="/ezen25/stock/withdrawal :: withdrawal"></th:block>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        $(document).ready(function() {
+            $('#withdrawalModal').modal('show');
+        });
+    </script>
 
 </th:block>
 </html>

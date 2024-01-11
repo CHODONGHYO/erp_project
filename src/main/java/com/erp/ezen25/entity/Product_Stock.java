@@ -25,14 +25,14 @@ public class Product_Stock {
 
     @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
-    private Long productId;
+    private Product_Info product;
 
     @ColumnDefault("0")
     private Long productNum;
 
     @OneToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
     @JoinColumn(name="member_id", nullable = false)
-    private Long memberId;
+    private Member member;
 
     @ColumnDefault("0")
     private Long totalPrice;

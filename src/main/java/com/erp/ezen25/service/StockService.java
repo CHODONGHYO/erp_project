@@ -3,18 +3,22 @@ package com.erp.ezen25.service;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.dto.StockDTO;
+import com.erp.ezen25.entity.Member;
+import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.Product_Stock;
+
+import java.util.List;
 
 public interface StockService {
 
-    PageResultDTO<StockDTO, Product_Stock> getList(PageRequestDTO requestDTO);
+    List<StockDTO> getList();
 
     default Product_Stock dtoToEntity(StockDTO dto) {
         Product_Stock entity = Product_Stock.builder()
                 .pNumId(dto.getPNumId())
-                .productId(dto.getProductId())
+                .product(new Product_Info().setProductId(dto.getProductId()))
                 .productNum(dto.getProductNum())
-                .memberId(dto.getMemberId())
+                .member(new Member().setMemberId(dto.getMemberId()))
                 .totalPrice(dto.getTotalPrice())
                 .build();
         return entity;
@@ -23,9 +27,9 @@ public interface StockService {
     default StockDTO entityToDto(Product_Stock entity) {
         StockDTO dto = StockDTO.builder()
                 .pNumId(entity.getPNumId())
-                .productId(entity.getProductId())
+                .productId(entity.getProduct().getProductId())
                 .productNum(entity.getProductNum())
-                .memberId(entity.getMemberId())
+                .memberId(entity.getMember().getMemberId())
                 .totalPrice(entity.getTotalPrice())
                 .build();
         return dto;

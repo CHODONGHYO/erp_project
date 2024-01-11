@@ -1,6 +1,5 @@
 package com.erp.ezen25.repository;
 
-import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.Product_Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 

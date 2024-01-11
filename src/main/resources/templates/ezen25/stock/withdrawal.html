@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="withdrawal">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <p><span style="font-weight:bold;">member.name</span>점</p>
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>이미지</th>
+                            <th>상품코드</th>
+                            <th>상품명</th>
+                            <th>상품분류</th>
+                            <th>수량</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="dto : ${result}">
+                            <th><input type="checkbox"></th>
+                            <td>dto.image</td>
+                            <td>[[${dto.productId}]]</td>
+                            <td>dto.productName</td>
+                            <td>dto.mCategory / dto.sCategory</td>
+                            <td>[[${dto.orderNum}]]</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table-responsive -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
+
+

@@ -1,6 +1,8 @@
 package com.erp.ezen25.controller;
 
+import com.erp.ezen25.dto.OrderDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
+import com.erp.ezen25.dto.StockDTO;
 import com.erp.ezen25.service.StockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -9,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/stock")
@@ -20,15 +24,20 @@ public class StockController {
     private final StockService service;
     // 재고리스트 페이지로 이동
     @GetMapping("/list")
-    public String stockList(PageRequestDTO pageRequestDTO, Model model) {
-        log.info("재고리스트 페이지로 이동........" + pageRequestDTO);
-        model.addAttribute("result", service.getList(pageRequestDTO));
+    public String stockList(Model model) {
+        log.info("재고리스트 페이지로 이동........");
+        List<StockDTO> dtoList = service.getList();
+        model.addAttribute("result", dtoList);
         return "ezen25/stock/stockList";
     }
 
     // 재고불출 페이지로 이동(모달)
     @GetMapping("/withdrawal")
-    public String withdrawalGET() {
+    public String withdrawalGET(Model model) {
+        log.info("재고불출 모달페이지로 이동........");
+        /*List<OrderDTO> dtoList = service.getList();
+        model.addAttribute("result", dtoList);*/
+
         return "ezen25/stock/withdrawal";
     }
 
