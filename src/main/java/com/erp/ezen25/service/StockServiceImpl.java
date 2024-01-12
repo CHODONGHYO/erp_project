@@ -10,7 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -33,13 +37,32 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<StockDTO> getListWithProduct() {
-
-        List<Product_Stock> result = repository.findAll();
-
+        List<Object[]> result = repository.getImportDateWithImport();
         return result.stream()
-                .map(this::entityToDtoWithProduct)
+                .map(this::objectArrayToStockDTO)
                 .collect(Collectors.toList());
+    }
+
+    private StockDTO objectArrayToStockDTO(Object[] objects) {
+        Product_Stock productStock = (Product_Stock) objects[0];
+        Object importDate = objects[1];
+
+        return StockDTO.builder()
+                .pNumId(productStock.getPNumId())
+                .productId(productStock.getProduct().getProductId())
+                .productNum(productStock.getProductNum())
+                .memberId(productStock.getMember().getMemberId())
+                .totalPrice(productStock.getTotalPrice())
+                .productName(productStock.getProduct().getProductName())
+                .mCategory(productStock.getProduct().getMCategory())
+                .sCategory(productStock.getProduct().getSCategory())
+                .originalPrice(String.valueOf(productStock.getProduct().getOriginalPrice()))
+                .sellPrice(String.valueOf(productStock.getProduct().getSellPrice()))
+                .image(productStock.getProduct().getImage())
+                .importDate(LocalDateTime.parse(importDate.toString()))
+                .build();
     }
 
     private StockDTO entityToDtoWithProduct(Product_Stock entity) {

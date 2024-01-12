@@ -11,19 +11,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class StockDTO {
-
-    private Long pNumId;
+public class ImportDTO {
+    private Long importId;
     private Long productId;
     private Long productNum;
-    private Long memberId;
-    private Long totalPrice;
-    private String productName;
-    private String mCategory;
-    private String sCategory;
-    private String originalPrice;
-    private String sellPrice;
-    private String image;
     private LocalDateTime importDate;
-
+    private String requestCode;
+    private String importStatus;
 }

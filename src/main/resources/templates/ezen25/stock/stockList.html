@@ -51,7 +51,7 @@
                                 <td>[[${dto.originalPrice}]]</td>
                                 <td>[[${dto.sellPrice}]]</td>
                                 <td>[[${dto.productNum}]]</td>
-                                <td>import.importDate</td>
+                                <td th:text="${#temporals.format(dto.importDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                             </tr>
                         </tbody>
                     </table>

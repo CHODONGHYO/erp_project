@@ -42,9 +42,9 @@
                                 <th>[[${dto.orderId}]]</th>
                                 <td>[[${dto.memberId}]]</td>
                                 <td>[[${dto.orderCode}]]</td>
-                                <td>[[${dto.orderDate}]]</td>
+                                <td th:text="${#temporals.format(dto.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                 <td>
-                                    <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary" data-toggle="modal" data-target="#withdrawalModal">불출하기</button>
+                                    <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary" data-toggle="modal" data-target="#withdrawalModal" id="withdrawalBtn">불출하기</button>
                                     <button th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" onclick="#">출고준비</button>
                                     <button th:if="${dto.orderStatus == '2'}" class="btn btn-danger" onclick="#">출고완료</button>
                                 </td>
@@ -75,10 +75,13 @@
     </div>
 
     <script th:inline="javascript">
-        $(document).ready(function() {
+        $('#withdrawalBtn').click(function() {
             $('#withdrawalModal').modal('show');
         });
     </script>
+    <!--<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>-->
 
 </th:block>
 </html>

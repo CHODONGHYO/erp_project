@@ -27,7 +27,7 @@ public class Import {
 
     @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
-    private Long productId;
+    private Product_Info product;
 
     @Column(nullable = false)
     @ColumnDefault("0")
@@ -36,7 +36,7 @@ public class Import {
     @Column(nullable = false)
     private LocalDateTime importDate;
 
-    @Column(length = 1000, nullable = false, unique = true)
+    @Column(length = 1000, nullable = false)
     private String requestCode;
 
     @Column(length = 1000, nullable = false)

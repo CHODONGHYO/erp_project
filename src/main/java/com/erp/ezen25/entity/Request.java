@@ -25,7 +25,7 @@ public class Request {
     @Column(name = "requestId")
     private Long requestId;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private LocalDateTime requestDate;
 
     @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
@@ -49,7 +49,7 @@ public class Request {
     @Column(nullable = false)
     private Long brandId;
 
-    @Column(length = 1000, nullable = false, unique = true)
+    @Column(length = 1000, nullable = false)
     @ColumnDefault("'0'")
     private String requestCode;
 

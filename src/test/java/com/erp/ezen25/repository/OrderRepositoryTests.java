@@ -18,7 +18,7 @@ public class OrderRepositoryTests {
 
     @Test
     public void insertDummies() {
-        IntStream.rangeClosed(1, 300).forEach(i -> {
+        IntStream.rangeClosed(1, 100).forEach(i -> {
             Order order = Order.builder()
                     .member(new Member().setMemberId(1L))
                     .orderDate(LocalDateTime.now())
