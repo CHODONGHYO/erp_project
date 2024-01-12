@@ -26,7 +26,7 @@ public class ProductController {
         List<ProductListResponseDTO> pList = productService.getproductList();
 
         model.addAttribute("pList", pList);
-        System.out.println("상품리스트 도착");
+        System.out.println("상품리스트  도착");
     }
 
     @GetMapping("/productAdd")
