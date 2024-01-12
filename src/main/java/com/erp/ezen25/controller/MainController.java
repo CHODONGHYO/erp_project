@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -11,6 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 // 메인 관련 Controller
 public class MainController {
+    @GetMapping("/login")
+    public String showLogin() {
+        return "ezen25/main/login";
+    }
+
+    @PostMapping("/loginProcess")
+    public String postLogin() {
+        return null;
+    }
     @GetMapping("/")
     public String mainView() {
         return "bootstrapHTML/index";
@@ -35,10 +45,7 @@ public class MainController {
         return "bootstrapHTML/500";
     }
 
-    @GetMapping("/login")
-    public String showLogin() {
-        return "bootstrapHTML/login";
-    }
+
     @GetMapping("/password")
     public String showPassword() {
         return "bootstrapHTML/password";
