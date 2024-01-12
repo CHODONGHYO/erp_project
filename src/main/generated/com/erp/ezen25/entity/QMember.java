@@ -29,7 +29,7 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath password = createString("password");
 
-    public final NumberPath<Long> percent = createNumber("percent", Long.class);
+    public final NumberPath<Integer> percent = createNumber("percent", Integer.class);
 
     public final StringPath userId = createString("userId");
 

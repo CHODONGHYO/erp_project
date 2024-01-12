@@ -4,17 +4,22 @@ import com.erp.ezen25.dto.BrandDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.entity.Brand;
+import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.QBrand;
+import com.erp.ezen25.etc.KorToEng;
 import com.erp.ezen25.repository.BrandRepository;
+import com.erp.ezen25.repository.MemberRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -25,6 +30,9 @@ public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;
 
+    private final MemberRepository memberRepository;
+
+    private final KorToEng converter;
     @Override
     public Long register(BrandDTO brandDTO) {
         log.info("-----------------------");
@@ -33,6 +41,18 @@ public class BrandServiceImpl implements BrandService {
         Brand brand = dtoToEntity(brandDTO);
 
         brandRepository.save(brand);
+        String convertedBrandName = converter.convertToRoman(brand.getBrandName());
+        String password = convertedBrandName + LocalDateTime.now().getYear();
+        Member member = Member.builder()
+                .userId(brand.getBrandPhone())
+                .password(password)
+                .authority("PARTNER")
+                .email(brand.getBrandEmail())
+                .name(brand.getBrandName())
+                .percent(0)
+                .build();
+
+        memberRepository.save(member);
 
         return brand.getBrandId();
     }
