@@ -44,12 +44,12 @@
                         <tbody>
                             <tr th:each="dto : ${result}">
                                 <th>[[${dto.pNumId}]]</th>
-                                <td>product_info.image</td>
+                                <td>[[${dto.image}]]</td>
                                 <td>[[${dto.productId}]]</td>
-                                <td>product_info.productName</td>
-                                <td>product_info.mCategory / product_info.sCategory</td>
-                                <td>product_info.originalPrice</td>
-                                <td>product_info.sellPrice</td>
+                                <td>[[${dto.productName}]]</td>
+                                <td>[[${dto.mCategory}]] / [[${dto.sCategory}]]</td>
+                                <td>[[${dto.originalPrice}]]</td>
+                                <td>[[${dto.sellPrice}]]</td>
                                 <td>[[${dto.productNum}]]</td>
                                 <td>import.importDate</td>
                             </tr>

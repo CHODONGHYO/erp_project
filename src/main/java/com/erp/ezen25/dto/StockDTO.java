@@ -16,5 +16,11 @@ public class StockDTO {
     private Long productNum;
     private Long memberId;
     private Long totalPrice;
+    private String productName;
+    private String mCategory;
+    private String sCategory;
+    private String originalPrice;
+    private String sellPrice;
+    private String image;
 
 }

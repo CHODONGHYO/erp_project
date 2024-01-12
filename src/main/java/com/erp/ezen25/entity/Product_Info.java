@@ -31,7 +31,7 @@ public class Product_Info {
 
     @ManyToOne(targetEntity = Brand.class, fetch=FetchType.LAZY)
     @JoinColumn(name="brand_id",nullable = false)
-    private Long brandId;
+    private Brand brandId;
 
     @Column(length = 1000, nullable = false)
     private String mCategory;

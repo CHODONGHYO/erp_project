@@ -26,7 +26,7 @@ public class StockController {
     @GetMapping("/list")
     public String stockList(Model model) {
         log.info("재고리스트 페이지로 이동........");
-        List<StockDTO> dtoList = service.getList();
+        List<StockDTO> dtoList = service.getListWithProduct();
         model.addAttribute("result", dtoList);
         return "ezen25/stock/stockList";
     }
