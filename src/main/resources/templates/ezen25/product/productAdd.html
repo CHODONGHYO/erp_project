@@ -19,9 +19,9 @@
                         입력란
                     </div>
                 </div>
-                <div class="card-body">
+                <form method="post" class="card-body" enctype="multipart/form-data">
                     <div class="inputLine">
-                        <label for="productId">품목코드</label><input class="form-control" id="productId" name="productId" placeholder="자동기입" disabled>
+                        <label for="productId">품목코드</label><input class="form-control" id="productId" placeholder="자동기입" disabled>
                     </div>
                     <div class="inputLine">
                         <label for="image">품목 이미지</label><input class="form-control" id="image" name="image">
@@ -31,30 +31,30 @@
                         <label for="productName">이름</label><input class="form-control" id="productName" name="productName">
                     </div>
                     <div class="inputLine">
-                        <label for="brand">브랜드</label><input class="form-control" id="brand" name="brand">
+                        <label for="brand">브랜드</label><input type="text" class="form-control" id="brand" name="brand">
                         <select class="form-control" name="brandList" id="brandList">
-                            <option value="1">직접입력</option>
-                            <option value="2">라면/즉석식품</option>
-                            <option value="3">빵</option>
-                            <option value="4">스낵/쿠키</option>
+                            <option value="0">직접입력</option>
+                            <option th:each=" bList: ${brandList}" th:value="${bList.brandName}">
+                                [[${bList.brandName}]]
+                            </option>
                         </select>
                     </div>
                     <div class="inputLine">
-                        <label for="mCategory">대분류</label><input class="form-control" id="mCategory" name="mCategory">
+                        <label for="mCategory">대분류</label><input type="text" class="form-control" id="mCategory" name="mCategory">
                         <select class="form-control" name="mCategoryList" id="mCategoryList">
-                            <option>직접입력</option>
-                            <option>라면/즉석식품</option>
-                            <option>빵</option>
-                            <option>스낵/쿠키</option>
+                            <option value="0">직접입력</option>
+                            <option th:each=" mList: ${mCateList}" th:value="${mList.m_category}">
+                                [[${mList.m_category}]]
+                            </option>
                         </select>
                     </div>
                     <div class="inputLine">
-                        <label for="sCategory">소분류</label><input class="form-control" id="sCategory" name="sCategory">
+                        <label for="sCategory">소분류</label><input type="text" class="form-control" id="sCategory" name="sCategory">
                         <select class="form-control" name="sCategoryList" id="sCategoryList">
-                            <option>직접입력</option>
-                            <option>라면/즉석식품</option>
-                            <option>빵</option>
-                            <option>스낵/쿠키</option>
+                            <option value="0">직접입력</option>
+                            <option th:each=" sList: ${sCateList}" th:value="${sList.s_category}">
+                                [[${sList.s_category}]]
+                            </option>
                         </select>
                     </div>
                     <div class="inputLine">
@@ -68,15 +68,30 @@
                     </div>
                     <div class="btnGroup">
                         <div class="card bg-primary text-white mb-2 prodBtn">
-                            <div class="card-body resetLink">품목 등록</div>
+                            <div class="card-body resetLink registerBtn">품목 등록</div>
                         </div>
                         <div class="card bg-primary text-white mb-2 prodBtn">
                             <a href="productList" class="card-body resetLink">목록</a>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </main>
+
+    <script>
+    $("select").on("change", (e) => {
+        let $select = $(e.target);
+        let insertValue = $select.val();
+        if ($select.val() == 0) {
+            $select.prev().val("");
+            $select.prev().focus();
+            $select.prev().removeAttr("readonly");
+        } else {
+            $select.prev().val(insertValue);
+            $select.prev().attr("readonly","readonly")
+        }
+    });
+    </script>
 </th:block>
 </html>

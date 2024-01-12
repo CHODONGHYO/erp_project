@@ -4,7 +4,7 @@ import com.erp.ezen25.entity.Product_Info;
 import lombok.Getter;
 
 @Getter
-public class ProductListResponse {
+public class ProductListResponseDTO {
     private final Long productId;
     private final String productName;
     private final String mCategory;
@@ -13,7 +13,7 @@ public class ProductListResponse {
     private final Long sellPrice;
     private final String image;
     private final String brandName;
-    public ProductListResponse(Product_Info pInfo) {
+    public ProductListResponseDTO(Product_Info pInfo) {
         this.productId = pInfo.getProductId();
         this.productName = pInfo.getProductName();
         this.brandName = pInfo.getBrand().getBrandName();
