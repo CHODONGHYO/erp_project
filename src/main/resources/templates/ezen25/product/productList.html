@@ -5,55 +5,63 @@
       layout:decorate="~{/layout/layout}">
     <th:block layout:fragment="content">
         <!-- 여기에 생성할 페이지 코드 작성 -->
-        <main>
+        <main class="productList">
             <div class="container-fluid px-4">
-                <h1 class="mt-4">품목관리</h1>
+                <h1 class="mt-4">품목리스트</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.html">품목관리</a></li>
+                    <li class="breadcrumb-item">품목관리</li>
                     <li class="breadcrumb-item active">품목리스트</li>
                 </ol>
-                <div class="card mb-4">
-                    <div class="card-body">
-                        DataTables is a third party plugin that is used to generate the demo table below. For more information about DataTables, please visit the
-                        <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
-                        .
-                    </div>
-                </div>
+
                 <div class="card mb-4">
                     <div class="card-header">
-                        <i class="fas fa-table me-1"></i>
-                        품목 리스트
+                        <div>
+                            <i class="fas fa-table me-1"></i>
+                            품목 리스트
+                        </div>
+                        <div class="card bg-primary text-white mb-2 prodBtn">
+                            <a href="productAdd" class="card-body resetLink">품목 등록</a>
+                        </div>
                     </div>
                     <div class="card-body">
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th style="text-align: center;">이미지</th>
+                                <th>이름</th>
+                                <th>브랜드</th>
+                                <th>대분류</th>
+                                <th>소분류</th>
+                                <th>생산가격</th>
+                                <th>판매가격</th>
+                                <th>상세</th>
+                                <th>삭제</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
-                                <th>Age</th>
-                                <th>Start date</th>
-                                <th>Salary</th>
+                                <th>이미지</th>
+                                <th>이름</th>
+                                <th>브랜드</th>
+                                <th>대분류</th>
+                                <th>소분류</th>
+                                <th>생산가격</th>
+                                <th>판매가격</th>
+                                <th>상세</th>
+                                <th>삭제</th>
                             </tr>
                             </tfoot>
-                            <tbody>
-                            <tr>
-                                <td>Tiger Nixon</td>
-                                <td>System Architect</td>
-                                <td>Edinburgh</td>
-                                <td>61</td>
-                                <td>2011/04/25</td>
-                                <td>$320,800</td>
+                            <tbody >
+                            <tr th:each="product : ${pList}">
+                                <td><div class="cellStyle"><img  th:src="@{/image/NoImg.png}" alt="이미지"/></div></td>
+                                <td><div class="cellStyle" th:text="${product.productName}"></div></td>
+                                <td><div class="cellStyle" th:text="${product.brandName}"></div></td>
+                                <td><div class="cellStyle" th:text="${product.mCategory}"></div></td>
+                                <td><div class="cellStyle" th:text="${product.sCategory}"></div></td>
+                                <td><div class="cellStyle" th:text="${#numbers.formatInteger(product.originalPrice,3,'COMMA')}"></div></td>
+                                <td><div class="cellStyle" th:text="${product.sellPrice}"></div></td>
+                                <td><div class="cellStyle"><a href="#">상세</a></div></td>
+                                <td><div class="cellStyle"><a href="#">삭제</a></div></td>
                             </tr>
                             </tbody>
                         </table>
