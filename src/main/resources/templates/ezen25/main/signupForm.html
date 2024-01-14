@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="content">
+    <main>
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>회원가입</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <!-- table section -->
+                <div class="col-md-12">
+                    <form th:action="@{/ezen25/main/signup}" th:method="post">
+                        <div class="white_shd full margin_bottom_30">
+                            <div class="full graph_head">
+                                <label>아이디</label>
+                                <input class="form-control" name="userId" placeholder="아이디 입력" type="text">
+                            </div>
+                            <div class="full graph_head">
+                                <label>비밀번호</label>
+                                <input class="form-control" name="password1" placeholder="비밀번호 입력" type="password">
+                            </div>
+                            <div class="full graph_head">
+                                <label>비밀번호 확인</label>
+                                <input class="form-control" name="password2" placeholder="비밀번호 입력" type="password">
+                            </div>
+                            <div class="full graph_head">
+                                <label>이름</label>
+                                <input class="form-control" name="name" placeholder="이름 입력" type="text">
+                            </div>
+                            <div class="full graph_head">
+                                <label>이메일</label>
+                                <input class="form-control" name="email" placeholder="이메일 입력" type="email">
+                            </div>
+                        </div>
+                        <div style="float:right;">
+                            <button class="btn btn-primary" type="submit">등록하기</button>
+                            <button class="btn btn-primary" type="reset">다시하기</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+</th:block>
+
+
+</html>

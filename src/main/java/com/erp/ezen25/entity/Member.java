@@ -7,11 +7,14 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.Set;
+
 @Entity
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Getter
+@Setter
 @DynamicUpdate
 @DynamicInsert
 @Table(name = "member")
@@ -29,9 +32,6 @@ public class Member {
     private String password;
 
     @Column(length = 1000, nullable = false)
-    private String authority;
-
-    @Column(length = 1000, nullable = false)
     private String email;
 
     @Column(length = 1000, nullable = false)
@@ -40,10 +40,6 @@ public class Member {
     @Column(nullable = false)
     @ColumnDefault("0")
     private Integer percent;
-
-    public void changeAuthority(String authority) {
-        this.authority = authority;
-    }
 
     public void changePassword(String password) {
         this.password = password;
@@ -59,5 +55,12 @@ public class Member {
 
     public void changePercent(Integer percent) {
         this.percent = percent;
+    }
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    private Set<MemberRole> roleSet;
+
+    public void addMemberRole(MemberRole memberRole) {
+        roleSet.add(memberRole);
     }
 }

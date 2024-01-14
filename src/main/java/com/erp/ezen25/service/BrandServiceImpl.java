@@ -46,7 +46,7 @@ public class BrandServiceImpl implements BrandService {
         Member member = Member.builder()
                 .userId(brand.getBrandPhone())
                 .password(password)
-                .authority("PARTNER")
+                /*.authority("PARTNER")*/
                 .email(brand.getBrandEmail())
                 .name(brand.getBrandName())
                 .percent(0)
