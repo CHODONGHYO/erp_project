@@ -22,9 +22,9 @@ public class QProduct_Info extends EntityPathBase<Product_Info> {
 
     public static final QProduct_Info product_Info = new QProduct_Info("product_Info");
 
-    public final QBrand brandId;
+    public final QBrand brand;
 
-    public final StringPath image = createString("static/image");
+    public final StringPath image = createString("image");
 
     public final StringPath mCategory = createString("mCategory");
 
@@ -58,7 +58,7 @@ public class QProduct_Info extends EntityPathBase<Product_Info> {
 
     public QProduct_Info(Class<? extends Product_Info> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.brandId = inits.isInitialized("brandId") ? new QBrand(forProperty("brandId")) : null;
+        this.brand = inits.isInitialized("brand") ? new QBrand(forProperty("brand")) : null;
     }
 
 }
