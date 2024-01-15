@@ -25,13 +25,26 @@
                         <tr th:each="dto : ${result}">
                             <th><input type="checkbox"></th>
                             <td>dto.image</td>
-                            <td>[[${dto.productId}]]</td>
+                            <td th:text="${dto.productId}"></td>
                             <td>dto.productName</td>
                             <td>dto.mCategory / dto.sCategory</td>
-                            <td>[[${dto.orderNum}]]</td>
+                            <td th:text="${dto.orderNum}"></td>
                         </tr>
                     </tbody>
                 </table>
+
+                <ul class="pagination h-100 justify-content-center align-items-center">
+                    <li class="page-item " th:if="${prev}">
+                        <a class="page-link" href="#" tabindex="-1">◀</a>
+                    </li>
+                    <li th:class=" 'page-item ' + ${result.page == page? 'active':''} "
+                        th:each="page: ${pageList}">
+                        <a class="page-link" href="#">[[${page]]</a>
+                    </li>
+                    <li class="page-item " th:if="${next}">
+                        <a class="page-link" href="#">▶</a>
+                    </li>
+                </ul>
             </div>
             <!-- /.table-responsive -->
         </div>

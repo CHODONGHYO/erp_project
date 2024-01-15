@@ -67,21 +67,33 @@
                     <th:block th:replace="/ezen25/stock/withdrawal :: withdrawal"></th:block>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                    <button type="button" class="btn btn-primary">출고하기</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script th:inline="javascript">
-        $('#withdrawalBtn').click(function() {
-            $('#withdrawalModal').modal('show');
+        $(document).ready(function() {
+            $('[data-toggle="modal"]').click(function() {
+                var modalId = $(this).data('target');
+                $(modalId).modal('show');
+            });
+
+            // 닫기버튼 클릭
+            $('.btn-secondary[data-dismiss="modal"]').click(function() {
+                $(this).closest('.modal').modal('hide');
+            });
+
+            // 출고하기버튼 클릭
+            $('#saveChangesBtn').click(function() {
+                // TODO: 저장 동작을 추가하세요.
+                // 모달을 닫고 저장 처리를 수행하는 코드를 여기에 추가하세요.
+                $('#withdrawalModal').modal('hide');
+            });
         });
     </script>
-    <!--<link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css}">
-    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js}"></script>
-    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js}"></script>-->
 
 </th:block>
 </html>

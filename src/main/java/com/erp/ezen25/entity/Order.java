@@ -50,7 +50,7 @@ public class Order {
     @ColumnDefault("'0'")
     private String orderStatus;
 
-    @Column(length = 1000, nullable = false, unique = true)
+    @Column(length = 1000, nullable = false)
     @ColumnDefault("'0'")
     private String orderCode;
 }

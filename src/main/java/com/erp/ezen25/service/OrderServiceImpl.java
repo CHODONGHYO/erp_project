@@ -35,4 +35,12 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public PageResultDTO<OrderDTO, Order> getWithdrawalList(PageRequestDTO requestDTO) {
+        Pageable pageable = requestDTO.getPageable(Sort.by("OrderId").descending());
+        Page<Order> result = repository.findAll(pageable);
+        Function<Order, OrderDTO> fn = (entity -> entityToDto(entity));
+        return new PageResultDTO<>(result, fn);
+    }
+
 }
