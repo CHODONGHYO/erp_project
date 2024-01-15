@@ -19,42 +19,37 @@
                         입력란
                     </div>
                 </div>
-                <form method="post" class="card-body" enctype="multipart/form-data">
+                <form method="post" class="card-body" id="productAddForm" enctype="multipart/form-data">
                     <div class="inputLine">
                         <label for="productId">품목코드</label><input class="form-control" id="productId" placeholder="자동기입" disabled>
                     </div>
                     <div class="inputLine">
                         <label for="image">품목 이미지</label><input class="form-control" id="image" name="image">
-                        <input type="file" class="form-control">
+                        <input type="file" class="form-control" id="imageSelect" name="imageSelect">
                     </div>
                     <div class="inputLine">
                         <label for="productName">이름</label><input class="form-control" id="productName" name="productName">
                     </div>
                     <div class="inputLine">
-                        <label for="brand">브랜드</label><input type="text" class="form-control" id="brand" name="brand">
+                        <label for="brandName">브랜드</label><input type="text" class="form-control" id="brandName" name="brandName" readonly>
                         <select class="form-control" name="brandList" id="brandList">
-                            <option value="0">직접입력</option>
-                            <option th:each=" bList: ${brandList}" th:value="${bList.brandName}">
-                                [[${bList.brandName}]]
-                            </option>
+                            <option>--선택--</option>
+                            <option th:each=" bList: ${brandList}" th:value="${bList.brandId}">[[${bList.brandName}]]</option>
                         </select>
+                        <input type="hidden" id="brand" name="brand">
                     </div>
                     <div class="inputLine">
                         <label for="mCategory">대분류</label><input type="text" class="form-control" id="mCategory" name="mCategory">
                         <select class="form-control" name="mCategoryList" id="mCategoryList">
                             <option value="0">직접입력</option>
-                            <option th:each=" mList: ${mCateList}" th:value="${mList.m_category}">
-                                [[${mList.m_category}]]
-                            </option>
+                            <option th:each=" mList: ${mCateList}" th:value="${mList.m_category}">[[${mList.m_category}]]</option>
                         </select>
                     </div>
                     <div class="inputLine">
                         <label for="sCategory">소분류</label><input type="text" class="form-control" id="sCategory" name="sCategory">
                         <select class="form-control" name="sCategoryList" id="sCategoryList">
                             <option value="0">직접입력</option>
-                            <option th:each=" sList: ${sCateList}" th:value="${sList.s_category}">
-                                [[${sList.s_category}]]
-                            </option>
+                            <option th:each=" sList: ${sCateList}" th:value="${sList.s_category}">[[${sList.s_category}]]</option>
                         </select>
                     </div>
                     <div class="inputLine">
@@ -83,15 +78,22 @@
     $("select").on("change", (e) => {
         let $select = $(e.target);
         let insertValue = $select.val();
+        let insertOption = $select.find(`option[value="${insertValue}"]`).text();
+        console.log(insertOption);
         if ($select.val() == 0) {
             $select.prev().val("");
             $select.prev().focus();
             $select.prev().removeAttr("readonly");
         } else {
-            $select.prev().val(insertValue);
+            $select.next().val(insertValue);
+            $select.prev().val(insertOption);
             $select.prev().attr("readonly","readonly")
         }
     });
+    $(".registerBtn").on("click", (e) => {
+        console.log("ddd");
+        $("#productAddForm").submit();
+    })
     </script>
 </th:block>
 </html>

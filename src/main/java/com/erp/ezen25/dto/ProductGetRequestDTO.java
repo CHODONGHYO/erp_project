@@ -1,5 +1,6 @@
 package com.erp.ezen25.dto;
 
+import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.service.BrandService;
 import lombok.Data;
@@ -7,11 +8,9 @@ import lombok.Data;
 @Data
 public class ProductGetRequestDTO {
 
-    private BrandService brandService;
-
     private String productName;
     private String productDescription;
-    private Long brandId;
+    private Brand brand;
     private String mCategory;
     private String sCategory;
     private Long originalPrice;
@@ -23,7 +22,7 @@ public class ProductGetRequestDTO {
         return Product_Info.builder()
                 .productName(productName)
                 .productDescription(productDescription)
-                .brand(brandService.dtoToEntity(brandService.read(brandId)))
+                .brand(brand)
                 .mCategory(mCategory)
                 .sCategory(sCategory)
                 .originalPrice(originalPrice)
