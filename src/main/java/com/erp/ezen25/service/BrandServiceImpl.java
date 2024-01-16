@@ -14,7 +14,6 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -82,8 +80,35 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @Transactional
     public void remove(Long brandId) {
-        brandRepository.deleteById(brandId);
+        String brandName = "";
+        Brand brand = new Brand();
+        Member member = new Member();
+        Long memberId = 0L;
+        String name = "";
+
+        Optional<Brand> oBrand = brandRepository.findById(brandId);
+
+        if (oBrand.isPresent()) {
+            brand = oBrand.get();
+            brandName = brand.getBrandName();
+        }
+        Optional<Member> oMember = memberRepository.findByName(brandName);
+        if (oMember.isPresent()) {
+            member = oMember.get();
+            name = member.getName();
+            memberId = member.getMemberId();
+        }
+        if (brandName.equals(name)) {
+            memberRepository.deleteById(memberId);
+            brandRepository.deleteById(brandId);
+            member.removeMemberRole(MemberRole.PARTNER);
+        } else {
+            brandRepository.deleteById(brandId);
+        }
+
+
     }
 
     @Override

@@ -1,10 +1,8 @@
 package com.erp.ezen25.service;
 
-import com.erp.ezen25.dto.BrandDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.dto.RequestDTO;
-import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.entity.Request;
 
 public interface RequestService {
@@ -24,6 +22,7 @@ public interface RequestService {
                 .productId(requestDTO.getProductId())
                 .requestNum(requestDTO.getRequestNum())
                 .requestDescription(requestDTO.getRequestDescription())
+                .requestStatus(requestDTO.getRequestStatus())
                 .requestOutDate(requestDTO.getRequestOutDate())
                 .brandId(requestDTO.getBrandId())
                 .requestCode(requestDTO.getRequestCode())
@@ -39,6 +38,7 @@ public interface RequestService {
                 .requestNum(request.getRequestNum())
                 .requestDescription(request.getRequestDescription())
                 .requestOutDate(request.getRequestOutDate())
+                .requestStatus(request.getRequestStatus())
                 .brandId(request.getBrandId())
                 .requestCode(request.getRequestCode())
                 .build();

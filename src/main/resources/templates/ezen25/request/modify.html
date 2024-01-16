@@ -20,9 +20,9 @@
                         <!--페이지 번호 hidden으로 받기-->
                         <input type="hidden" name="brandId" th:value="${dto.brandId}">
                         <div class="white_shd full margin_bottom_30">
-                            <input name="page" th:value="${requestDTO.page}" type="hidden">
-                            <input name="type" th:value="${requestDTO.type}" type="hidden">
-                            <input name="keyword" th:value="${requestDTO.keyword}" type="hidden">
+                            <input name="page" th:value="${pageRequestDTO.page}" type="hidden">
+                            <input name="type" th:value="${pageRequestDTO.type}" type="hidden">
+                            <input name="keyword" th:value="${pageRequestDTO.keyword}" type="hidden">
 
                             <div class="full graph_head">
                                 <label>브랜드 이름</label>
