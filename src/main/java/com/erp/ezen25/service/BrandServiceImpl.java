@@ -5,6 +5,7 @@ import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.entity.Member;
+import com.erp.ezen25.entity.MemberRole;
 import com.erp.ezen25.entity.QBrand;
 import com.erp.ezen25.etc.KorToEng;
 import com.erp.ezen25.repository.BrandRepository;
@@ -18,8 +19,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -51,6 +54,7 @@ public class BrandServiceImpl implements BrandService {
                 .name(brand.getBrandName())
                 .percent(0)
                 .build();
+        member.addMemberRole(MemberRole.PARTNER);
 
         memberRepository.save(member);
 

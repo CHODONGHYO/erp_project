@@ -6,18 +6,22 @@ import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.service.BrandService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 @Controller
-@RequestMapping("/ezen25/brand")
+@RequestMapping("/ezen25/brand/*")
 @Log4j2
 @RequiredArgsConstructor
 // 협력업체 관련 Controller
 public class PartnerController {
-    private  final BrandService brandService;
+    @Autowired
+    private BrandService brandService;
 
     @GetMapping("/")
     public String brandHome() {
@@ -85,5 +89,13 @@ public class PartnerController {
 
         return "redirect:/ezen25/brand/read";
     }
+    @PostMapping("/selectDelete")
+    public String selectDelete(@RequestParam("brandDeleteList") List<Long> brand_ids) {
+        for (Long brandId : brand_ids) {
+            brandService.remove(brandId);
+        }
+        return "redirect:/ezen25/brand/list?page=1";
+    }
+
 
 }
