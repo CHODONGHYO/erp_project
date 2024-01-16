@@ -23,6 +23,7 @@ public class BrandRepositoryTests {
                     .build();
 
             brandRepository.save(brand);
+
         });
     }
 }

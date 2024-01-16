@@ -43,12 +43,12 @@
                 </div>
             </div>
             <div style="float:right;">
-                <a th:href="@{/ezen25/brand/modify(brandId = ${dto.brandId}, page = ${requestDTO.page},
-         type = ${requestDTO.type}, keyword = ${requestDTO.keyword})}">
+                <a th:href="@{/ezen25/brand/modify(brandId = ${dto.brandId}, page = ${pageRequestDTO.page},
+         type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-primary" type="button">Modify</button>
                 </a>
-                <a th:href="@{/ezen25/brand/list(page=${requestDTO.page}, type = ${requestDTO.type},
-         keyword = ${requestDTO.keyword})}">
+                <a th:href="@{/ezen25/brand/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
+         keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-info" type="button">List</button>
                 </a>
             </div>

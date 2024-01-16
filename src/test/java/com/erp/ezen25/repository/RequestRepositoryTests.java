@@ -1,7 +1,6 @@
 package com.erp.ezen25.repository;
 
 import com.erp.ezen25.entity.Request;
-import jakarta.persistence.ManyToOne;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,8 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.stream.IntStream;
-
-import static java.time.LocalTime.now;
 
 @SpringBootTest
 public class RequestRepositoryTests {
@@ -34,6 +31,8 @@ public class RequestRepositoryTests {
                     ))
                     .requestStatus("완료")
                     .requestCode(String.valueOf(rDummies))
+                    .brandId((long) rDummies)
+                    .productId((long) rDummies)
                     .build();
 
             requestRepository.save(request);
