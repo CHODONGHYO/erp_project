@@ -10,7 +10,7 @@
         <div class="container-fluid px-4">
             <h1 class="mt-4">재고관리</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a th:href="@{/stock/list}">재고리스트</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/stock/exporting}">출고처리</a></li>
                 <li class="breadcrumb-item active">재고관리</li>
             </ol>
             <div class="card mb-4">
@@ -24,9 +24,12 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                    재고리스트
+                    출고처리
                 </div>
                 <div class="card-body">
+                    <div class="panel-heading">
+                        <p><span style="font-weight:bold;">member.name</span>점</p>
+                    </div>
                     <table id="datatablesSimple">
                         <thead>
                         <tr>

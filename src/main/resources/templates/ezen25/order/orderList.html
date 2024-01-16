@@ -38,8 +38,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dto : ${result}">
-                                <th>[[${dto.orderId}]]</th>
+                            <tr th:each="dto,stat : ${result}">
+                                <th>[[${stat.count}]]</th>
                                 <td>[[${dto.memberId}]]</td>
                                 <td>[[${dto.orderCode}]]</td>
                                 <td th:text="${#temporals.format(dto.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
@@ -68,7 +68,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                    <button type="button" class="btn btn-primary">출고하기</button>
+                    <button type="button" class="btn btn-primary" id="submitWithdrawal">출고하기</button>
                 </div>
             </div>
         </div>
@@ -88,9 +88,7 @@
 
             // 출고하기버튼 클릭
             $('#saveChangesBtn').click(function() {
-                // TODO: 저장 동작을 추가하세요.
-                // 모달을 닫고 저장 처리를 수행하는 코드를 여기에 추가하세요.
-                $('#withdrawalModal').modal('hide');
+                // 코드 추가
             });
         });
     </script>

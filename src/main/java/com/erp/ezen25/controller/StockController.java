@@ -24,13 +24,13 @@ import java.util.List;
 // 재고 관련 Controller
 public class StockController {
 
-    private final StockService service;
+    private final StockService stockService;
     private final OrderService orderService;
     // 재고리스트 페이지로 이동
     @GetMapping("/list")
     public String stockList(Model model) {
         log.info("재고리스트 페이지로 이동........");
-        List<StockDTO> dtoList = service.getListWithProduct();
+        List<StockDTO> dtoList = stockService.getListWithProduct();
         model.addAttribute("result", dtoList);
         return "ezen25/stock/stockList";
     }
@@ -46,17 +46,19 @@ public class StockController {
     // 재고불출 페이지에서 출고하기 버튼 클릭 시 처리
     @PostMapping("/withdrawal")
     public String withdrawalPOST() {
-        return "";
+        log.info("출고처리 페이지로 이동........");
+        return "ezen25/stock/exporting";
     }
 
     // 출고처리 페이지로 이동
-    @GetMapping("/export")
+    @GetMapping("/exporting")
     public String exportGET() {
-        return "ezen25/stock/export";
+        log.info("출고처리 페이지로 이동........");
+        return "ezen25/stock/exporting";
     }
 
     // 출고처리 페이지에서 확인 버튼 클릭 시 처리 (alert창 추가)
-    @PostMapping("/export")
+    @PostMapping("/exporting")
     public String exportPOST() {
         return "ezen25/stock/exportList";
     }
