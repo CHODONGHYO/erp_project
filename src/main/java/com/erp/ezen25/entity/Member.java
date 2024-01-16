@@ -7,6 +7,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -61,6 +62,9 @@ public class Member {
     private Set<MemberRole> roleSet;
 
     public void addMemberRole(MemberRole memberRole) {
+        if(roleSet == null) {
+            roleSet = new HashSet<>();
+        }
         roleSet.add(memberRole);
     }
 }
