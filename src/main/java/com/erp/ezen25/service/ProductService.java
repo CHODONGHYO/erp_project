@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -91,5 +92,25 @@ public class ProductService {
             uploadPathFolder.mkdirs();
         }
         return folderPath;
+    }
+
+    // 품목 삭제
+    public void deleteProduct(Long productId) {
+        productRepository.deleteById(productId);
+    }
+    // 품목 상세조회
+    public ProductDetailResponseDTO productdetail(Long productId) {
+        Optional<Product_Info> OppInfo = productRepository.findById(productId);
+        Product_Info pInfo = OppInfo.orElse(null);
+
+        return new ProductDetailResponseDTO(pInfo);
+    }
+
+    // 품목 수정하기
+    public void updateProduct(ProductUpdateRequestDTO updateRequest, MultipartFile mf) throws IOException {
+        updateRequest.setImage(prodFileUpload(mf, uploadPath));
+
+        Product_Info pInfo = updateRequest.toEntity();
+        productRepository.save(pInfo);
     }
 }

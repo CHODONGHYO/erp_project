@@ -6,9 +6,10 @@ window.addEventListener('DOMContentLoaded', event => {
     if (datatablesSimple) {
         new simpleDatatables.DataTable(datatablesSimple);
 
-        $(".listBtn.bg-danger").on("click", (e) => {
+        $(".productList .listBtn.bg-danger").on("click", (e) => {
             let parent$Tr = $(e.target).parents("tr");
             let modalImage = $(parent$Tr).find(".image").attr("src");
+            let modalProductId = $(parent$Tr).find(".productId").val();
             let modalProductName = $(parent$Tr).find(".productName").text();
             let modalBrandName = $(parent$Tr).find(".brandName").text();
             let modalMCategory = $(parent$Tr).find(".mCategory").text();
@@ -17,6 +18,7 @@ window.addEventListener('DOMContentLoaded', event => {
             let modalSellPrice = $(parent$Tr).find(".sellPrice").text();
 
             $(".modalImg").attr("src", modalImage);
+            $(".modalProductId").val(modalProductId);
             $(".modalBrand").text(modalBrandName);
             $(".modalMCate").text(modalMCategory);
             $(".modalSCate").text(modalSCategory);

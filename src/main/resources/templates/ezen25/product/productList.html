@@ -53,10 +53,13 @@
                             </tfoot>
                             <tbody >
                             <tr th:each="product, productStat: ${pList}">
-                                <td><div class="cellStyle">
-                                    <img class="image" th:if="${product.image != null}" th:src="@{|/image/${product.image.substring(0,10).replaceAll('-','/')}/${product.image}|}" alt="이미지"/>
-                                    <img class="image" th:unless="${product.image != null}" th:src="@{/image/NoImg.png}" alt="이미지"/>
-                                </div></td>
+                                <td>
+                                    <input type="hidden" class="productId" th:value="${product.productId}">
+                                    <div class="cellStyle">
+                                        <img class="image" th:if="${product.image != null}" th:src="@{|/image/${product.image.substring(0,10).replaceAll('-','/')}/${product.image}|}" alt="이미지"/>
+                                        <img class="image" th:unless="${product.image != null}" th:src="@{/image/NoImg.png}" alt="이미지"/>
+                                    </div>
+                                </td>
                                 <td><div class="cellStyle productName" th:text="${product.productName}"></div></td>
                                 <td><div class="cellStyle brandName" th:text="${product.brandName}"></div></td>
                                 <td><div class="cellStyle mCategory" th:text="${product.mCategory}"></div></td>
@@ -69,7 +72,7 @@
                                     <div th:if="${product.sellPrice > 1000}" class="cellStyle sellPrice" th:text="${#numbers.formatInteger(product.sellPrice,3,'COMMA')}"></div>
                                     <div th:unless="${product.sellPrice > 1000}" class="cellStyle sellPrice" th:text="${product.sellPrice}"></div>
                                 </td>
-                                <td><div class="cellStyle"><div class="card bg-primary text-white mb-2 listBtn">상세</div></div></td>
+                                <td><div class="cellStyle"><a th:href="@{|productDetail/${product.productId}|}" class="card bg-primary text-white mb-2 listBtn resetLink">상세</a></div></td>
                                 <td><div class="cellStyle"><div class="card bg-danger text-white mb-2 listBtn">삭제</div></div></td>
                             </tr>
                             </tbody>
@@ -86,7 +89,10 @@
                         <table>
                             <tbody>
                             <tr>
-                                <th rowspan="4"><img class="modalImg" src="/image/NoImg.png"></th>
+                                <th rowspan="4">
+                                    <input type="hidden" class="modalProductId">
+                                    <img class="modalImg" src="/image/NoImg.png">
+                                </th>
                                 <th>브랜드</th>
                                 <th>대분류</th>
                                 <th>소분류</th>
@@ -111,7 +117,7 @@
                         <p>위 상품을 삭제 하시겠습니까?</p>
                     </div>
                     <div class="card-footer">
-                        <div class="card bg-danger text-white mb-2 moBtn">삭제</div>
+                        <div class="card bg-danger text-white mb-2 moBtn deleteBtn">삭제</div>
                         <div class="card bg-dark text-white mb-2 moBtn">닫기</div>
                     </div>
                 </div>
@@ -121,6 +127,22 @@
         <script>
             $(".myModal .moBtn").on("click", () => {
                 $(".myModal").hide();
+            })
+            $(".myModal .deleteBtn").on("click", () => {
+                let modalProductId = document.querySelector(".modalProductId").value;
+                $.ajax({
+                    url : "productDelete",
+                    type: "post",
+                    data: {
+                        productId: modalProductId
+                    },
+                    success: function(data) {
+                        location.reload();
+                    },
+                    error: function(request, error) {
+                        alert("code:" + request.status+ "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                })
             })
         </script>
     </th:block>

@@ -14,7 +14,9 @@
 a.resetLink {
     text-decoration: none;
 }
-
+img {
+    width: 100%;
+}
 .myModal {
     display: none;
     position: fixed;
@@ -98,7 +100,7 @@ a.resetLink {
     text-align: center;
 }
 /* 품목등록 */
-.productAdd .mb-4 {
+.productAdd .cardForm {
     width: 60%;
     min-width: 600px;
 }
@@ -135,4 +137,23 @@ a.resetLink {
     padding-left: 0;
     appearance: auto;
     -webkit-appearance: auto;
+}
+.productAdd .cardGroup {
+    display: flex;
+    gap: 5%;
+}
+.productAdd .sideCard {
+    display: inline-block;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    width: 20%;
+    min-width: 200px;
+    max-width: 300px;
+}
+.productAdd .sideCard .imageCard {
+    text-align: center;
+}
+.productAdd img {
+    max-width: 200px;
 }
