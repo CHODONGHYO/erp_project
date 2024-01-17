@@ -23,16 +23,6 @@ public class StockServiceImpl implements StockService {
     private final StockRepository repository;
 
     @Override
-    public List<StockDTO> getList() {
-
-        List<Product_Stock> result = repository.findAll();
-
-        return result.stream()
-                .map(this::entityToDto)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public List<StockDTO> getListWithProduct() {
         List<Object[]> result = repository.getImportDateWithImport();

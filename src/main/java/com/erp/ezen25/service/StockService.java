@@ -11,7 +11,6 @@ import java.util.List;
 
 public interface StockService {
 
-    List<StockDTO> getList();
     List<StockDTO> getListWithProduct();
 
     default Product_Stock dtoToEntity(StockDTO dto) {

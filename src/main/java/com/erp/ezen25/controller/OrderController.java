@@ -19,12 +19,12 @@ import java.util.List;
 // 발주 관련 Controller
 public class OrderController {
 
-    private final OrderService service;
+    private final OrderService orderService;
     @GetMapping("/list")
     public String orderList(Model model) {
         log.info("발주요청목록 페이지로 이동........");
-        List<OrderDTO> dtoList = service.getList();
-        model.addAttribute("result", dtoList);
+        List<OrderDTO> orderList = orderService.getList();
+        model.addAttribute("orderList", orderList);
         return "ezen25/order/orderList";
     }
 

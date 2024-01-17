@@ -42,7 +42,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dto,stat : ${result}">
+                            <tr th:each="dto,stat : ${stockList}">
                                 <th>[[${stat.count}]]</th>
                                 <td>[[${dto.image}]]</td>
                                 <td>[[${dto.productId}]]</td>

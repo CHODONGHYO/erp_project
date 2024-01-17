@@ -38,13 +38,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dto,stat : ${result}">
+                            <tr th:each="dto,stat : ${orderList}">
                                 <th>[[${stat.count}]]</th>
                                 <td>[[${dto.memberId}]]</td>
                                 <td>[[${dto.orderCode}]]</td>
                                 <td th:text="${#temporals.format(dto.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                 <td>
-                                    <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary" data-toggle="modal" data-target="#withdrawalModal" id="withdrawalBtn">불출하기</button>
+                                    <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary withdrawalBtn" data-toggle="modal" data-target="#withdrawalModal">불출하기</button>
                                     <button th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" onclick="#">출고준비</button>
                                     <button th:if="${dto.orderStatus == '2'}" class="btn btn-danger" onclick="#">출고완료</button>
                                 </td>
@@ -58,13 +58,13 @@
 
     <!-- Modal -->
     <div class="modal fade" id="withdrawalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title">재고불출</h3>
                 </div>
                 <div class="modal-body">
-                    <th:block th:replace="/ezen25/stock/withdrawal :: withdrawal"></th:block>
+                    <th:block th:replace="~{/ezen25/stock/withdrawal :: withdrawal}"></th:block>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
@@ -75,22 +75,31 @@
     </div>
 
     <script th:inline="javascript">
-        $(document).ready(function() {
-            $('[data-toggle="modal"]').click(function() {
-                var modalId = $(this).data('target');
-                $(modalId).modal('show');
-            });
-
-            // 닫기버튼 클릭
-            $('.btn-secondary[data-dismiss="modal"]').click(function() {
-                $(this).closest('.modal').modal('hide');
-            });
-
-            // 출고하기버튼 클릭
-            $('#saveChangesBtn').click(function() {
-                // 코드 추가
+    $(document).ready(function() {
+        $('.withdrawalBtn').click(function() {
+            $.ajax({
+                type: "GET",
+                url: "/stock/withdrawal",
+                success: function(response) {
+                    $('#withdrawalModal .modal-body').html(response);
+                    $('#withdrawalModal').modal('show');
+                },
+                error: function(error) {
+                    alert("오류가 발생했습니다.");
+                }
             });
         });
+
+        // 닫기 버튼 클릭
+        $('.btn-secondary[data-dismiss="modal"]').click(function() {
+            $(this).closest('.modal').modal('hide');
+        });
+
+        // 출고하기 버튼 클릭
+        $('#submitWithdrawal').click(function() {
+            // 여기에서 출고 처리 Ajax 요청을 추가할 수 있습니다.
+        });
+    });
     </script>
 
 </th:block>

@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public PageResultDTO<OrderDTO, Order> getWithdrawalList(PageRequestDTO requestDTO) {
-        Pageable pageable = requestDTO.getPageable(Sort.by("OrderId").descending());
+        Pageable pageable = requestDTO.getPageable(Sort.by("orderId").descending());
         Page<Order> result = repository.findAll(pageable);
         Function<Order, OrderDTO> fn = (entity -> entityToDto(entity));
         return new PageResultDTO<>(result, fn);
