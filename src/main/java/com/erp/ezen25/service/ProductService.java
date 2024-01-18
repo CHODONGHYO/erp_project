@@ -37,22 +37,22 @@ public class ProductService {
     }
     
     // 주 카테고리 값 가져오기
-    public List<MCategoryListResponseDTO> getMCategoryList() {
+    public List<ProductMCateListResponseDTO> getMCategoryList() {
         return productRepository.productInfoGroupByMCategory().stream()
-                .map(MCategoryListResponseDTO::new)
+                .map(ProductMCateListResponseDTO::new)
                 .toList();
     };
     // 서브 카테고리 가져오기
-    public List<SCategoryListResponseDTO> getSCategoryList() {
+    public List<ProductSCateListResponseDTO> getSCategoryList() {
         return productRepository.productInfoGroupBySCategory().stream()
-                .map(SCategoryListResponseDTO::new)
+                .map(ProductSCateListResponseDTO::new)
                 .toList();
     };
     // 브랜드 가져오기
-    public List<BrandNameListResponseDTO> getBrandList() {
+    public List<ProductBnameListResponseDTO> getBrandList() {
         List<Brand> bList = brandRepository.findAll();
         return bList.stream()
-                .map(BrandNameListResponseDTO::new)
+                .map(ProductBnameListResponseDTO::new)
                 .toList();
     }
 
@@ -108,7 +108,11 @@ public class ProductService {
 
     // 품목 수정하기
     public void updateProduct(ProductUpdateRequestDTO updateRequest, MultipartFile mf) throws IOException {
-        updateRequest.setImage(prodFileUpload(mf, uploadPath));
+        String imgURL = prodFileUpload(mf, uploadPath);
+
+        if (imgURL != null) {
+            updateRequest.setImage(imgURL);
+        }
 
         Product_Info pInfo = updateRequest.toEntity();
         productRepository.save(pInfo);

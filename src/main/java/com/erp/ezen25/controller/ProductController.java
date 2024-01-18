@@ -29,9 +29,9 @@ public class ProductController {
 
     @GetMapping("/productAdd")
     public void registerProductForm (Model model) {
-        List<MCategoryListResponseDTO> mCateList = productService.getMCategoryList();
-        List<SCategoryListResponseDTO> sCateList = productService.getSCategoryList();
-        List<BrandNameListResponseDTO> brandList = productService.getBrandList();
+        List<ProductMCateListResponseDTO> mCateList = productService.getMCategoryList();
+        List<ProductSCateListResponseDTO> sCateList = productService.getSCategoryList();
+        List<ProductBnameListResponseDTO> brandList = productService.getBrandList();
 
         model.addAttribute("mCateList", mCateList);
         model.addAttribute("sCateList", sCateList);
@@ -57,9 +57,9 @@ public class ProductController {
     @GetMapping("/productModify/{productId}")
     public String productModifyForm(@PathVariable("productId") Long productId, Model model) {
         ProductDetailResponseDTO productDetail = productService.productdetail(productId);
-        List<MCategoryListResponseDTO> mCateList = productService.getMCategoryList();
-        List<SCategoryListResponseDTO> sCateList = productService.getSCategoryList();
-        List<BrandNameListResponseDTO> brandList = productService.getBrandList();
+        List<ProductMCateListResponseDTO> mCateList = productService.getMCategoryList();
+        List<ProductSCateListResponseDTO> sCateList = productService.getSCategoryList();
+        List<ProductBnameListResponseDTO> brandList = productService.getBrandList();
 
         model.addAttribute("product", productDetail);
         model.addAttribute("mCateList", mCateList);

@@ -17,6 +17,7 @@ a.resetLink {
 img {
     width: 100%;
 }
+/* 모달 스타일 */
 .myModal {
     display: none;
     position: fixed;
@@ -48,38 +49,98 @@ img {
     background-color: var(--bs-gray) !important;
 }
 
-/* --- 품목관리 스타일 --- */
-/* 품목리스트 */
-.productList #datatablesSimple th {
+/* 리스트 스타일 */
+.tableListStyle #datatablesSimple th {
     text-align: center
 }
-.productList .card-header {
+.tableListStyle .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.productList .prodBtn {
+.tableListStyle .prodBtn {
     margin: 0 !important;
     font-size: 0.875rem;
 }
-.productList .prodBtn .card-body {
+.tableListStyle .prodBtn .card-body {
     padding: 2px 6px;
 }
-.productList .prodBtn a:hover {
+.tableListStyle .prodBtn a:hover {
     color: white;
     background-color: var(--bs-link-hover-color);
 }
-.productList .listBtn {
+.tableListStyle .listBtn {
     padding: 2px 6px;
     margin: 0 !important;
     cursor: pointer;
 }
-.productList .listBtn.bg-primary:hover {
+.tableListStyle .listBtn.bg-primary:hover {
     background-color: var(--bs-link-hover-color) !important
 }
-.productList .listBtn.bg-danger:hover {
+.tableListStyle .listBtn.bg-danger:hover {
     background-color: var(--bs-code-color) !important;
 }
+
+/* 폼 레이아웃 */
+.formStyle .cardForm {
+    width: 60%;
+    min-width: 600px;
+}
+.formStyle .form-control {
+    display: inline-block;
+}
+.formStyle .inputLine {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+.formStyle .inputLine label{
+    min-width: 90px;
+}
+.formStyle .inputLine input {
+    text-align: center;
+}
+.formStyle .btnGroup {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.formStyle .btnGroup .card-body {
+    padding: 6px 12px;
+    cursor: pointer;
+}
+.formStyle .btnGroup .card-body:hover {
+    color: white;
+    background-color: var(--bs-link-hover-color);
+}
+.formStyle select {
+    width: 30%;
+    padding-left: 0;
+    appearance: auto;
+    -webkit-appearance: auto;
+}
+.formStyle .cardGroup {
+    display: flex;
+    gap: 5%;
+}
+.formStyle .sideCard {
+    display: inline-block;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    width: 20%;
+    min-width: 200px;
+    max-width: 300px;
+}
+.formStyle .sideCard .imageCard {
+    text-align: center;
+}
+.formStyle img {
+    max-width: 200px;
+}
+/* --- 품목관리 스타일 --- */
+/* 품목리스트 */
 
 .productList .myModal img {
     width: 100px;
@@ -99,61 +160,4 @@ img {
     margin-top: 10px;
     text-align: center;
 }
-/* 품목등록 */
-.productAdd .cardForm {
-    width: 60%;
-    min-width: 600px;
-}
-.productAdd .form-control {
-    display: inline-block;
-}
-.productAdd .inputLine {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    gap: 10px;
-}
-.productAdd .inputLine label{
-    min-width: 90px;
-}
-.productAdd .inputLine input {
-    text-align: center;
-}
-.productAdd .btnGroup {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-.productAdd .btnGroup .card-body {
-    padding: 6px 12px;
-    cursor: pointer;
-}
-.productAdd .btnGroup .card-body:hover {
-    color: white;
-    background-color: var(--bs-link-hover-color);
-}
-.productAdd select {
-    width: 30%;
-    padding-left: 0;
-    appearance: auto;
-    -webkit-appearance: auto;
-}
-.productAdd .cardGroup {
-    display: flex;
-    gap: 5%;
-}
-.productAdd .sideCard {
-    display: inline-block;
-    display: flex;
-    flex-flow: column;
-    justify-content: space-between;
-    width: 20%;
-    min-width: 200px;
-    max-width: 300px;
-}
-.productAdd .sideCard .imageCard {
-    text-align: center;
-}
-.productAdd img {
-    max-width: 200px;
-}
+

@@ -5,7 +5,7 @@
       layout:decorate="~{/layout/layout}">
     <th:block layout:fragment="content">
         <!-- 여기에 생성할 페이지 코드 작성 -->
-        <main class="productList">
+        <main class="tableListStyle productList">
             <div class="container-fluid px-4">
                 <h1 class="mt-4">품목리스트</h1>
                 <ol class="breadcrumb mb-4">
@@ -27,10 +27,10 @@
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th style="text-align: center;">이미지</th>
+                                <th>이미지 <span ></span></th>
                                 <th>이름</th>
                                 <th>브랜드</th>
-                                <th>대분류</th>
+                                <th>대분류 </th>
                                 <th>소분류</th>
                                 <th>생산가격</th>
                                 <th>판매가격</th>
@@ -51,7 +51,7 @@
                                 <th>삭제</th>
                             </tr>
                             </tfoot>
-                            <tbody >
+                            <tbody>
                             <tr th:each="product, productStat: ${pList}">
                                 <td>
                                     <input type="hidden" class="productId" th:value="${product.productId}">

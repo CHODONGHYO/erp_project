@@ -4,11 +4,11 @@ import com.erp.ezen25.entity.Brand;
 import lombok.Getter;
 
 @Getter
-public class BrandNameListResponseDTO {
-    private Long brandId;
-    private String brandName;
+public class ProductBnameListResponseDTO {
+    private final Long brandId;
+    private final String brandName;
 
-    public BrandNameListResponseDTO (Brand brand) {
+    public ProductBnameListResponseDTO(Brand brand) {
         this.brandId = brand.getBrandId();
         this.brandName = brand.getBrandName();
     }
