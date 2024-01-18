@@ -1,9 +1,6 @@
 package com.erp.ezen25.controller;
 
-import com.erp.ezen25.dto.OrderDTO;
-import com.erp.ezen25.dto.PageRequestDTO;
-import com.erp.ezen25.dto.PageResultDTO;
-import com.erp.ezen25.dto.StockDTO;
+import com.erp.ezen25.dto.*;
 import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.service.OrderService;
 import com.erp.ezen25.service.StockService;
@@ -38,11 +35,10 @@ public class StockController {
 
     // 재고불출 페이지로 이동(모달)
     @GetMapping("/withdrawal")
-    public String withdrawalGET(PageRequestDTO pageRequestDTO, Model model) {
-        log.info("재고불출 페이지로 이동........" + pageRequestDTO);
-        PageResultDTO<OrderDTO, Order> withdrawalList = orderService.getWithdrawalList(pageRequestDTO);
+    public String withdrawalGET(Model model) {
+        log.info("재고불출 페이지로 이동........");
+        List<OrderDTO> withdrawalList = orderService.getWithdrawalList();
         model.addAttribute("withdrawalList", withdrawalList);
-        log.info("withdrawalList............. "+withdrawalList);
         return "ezen25/stock/withdrawal";
     }
 

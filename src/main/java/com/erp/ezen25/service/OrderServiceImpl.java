@@ -31,16 +31,18 @@ public class OrderServiceImpl implements OrderService {
         List<Order> result = repository.findAll();
 
         return result.stream()
-                .map(this::entityToDtoWithName)
+                .map(this::entityToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public PageResultDTO<OrderDTO, Order> getWithdrawalList(PageRequestDTO requestDTO) {
-        Pageable pageable = requestDTO.getPageable(Sort.by("orderId").descending());
-        Page<Order> result = repository.findAll(pageable);
-        Function<Order, OrderDTO> fn = (entity -> entityToDtoWithName(entity));
-        return new PageResultDTO<>(result, fn);
+    public List<OrderDTO> getWithdrawalList() {
+
+        List<Order> result = repository.findAll();
+
+        return result.stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
     }
 
 }

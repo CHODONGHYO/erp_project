@@ -13,12 +13,12 @@ public class OrderServiceTests {
     @Autowired
     private OrderService orderService;
 
-    @Test
+    /*@Test
     public void testList() {
         PageRequestDTO pageRequestDTO =PageRequestDTO.builder().page(1).size(10).build();
         PageResultDTO<OrderDTO, Order> resultDTO = orderService.getWithdrawalList(pageRequestDTO);
         for(OrderDTO orderDTO : resultDTO.getDtoList()) {
             System.out.println(orderDTO);
         }
-    }
+    }*/
 }

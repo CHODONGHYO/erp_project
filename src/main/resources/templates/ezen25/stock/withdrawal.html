@@ -22,22 +22,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!--<tr th:each="dto : ${withdrawalList}">
-                                <th><input type="checkbox"></th>
-                                <td th:text="${dto.image}"></td>
-                                <td th:text="${dto.productId}"></td>
-                                <td th:text="${dto.productName}"></td>
-                                <td th:text="${dto.mCategory} + ' / ' + ${dto.sCategory}"></td>
-                                <td th:text="${dto.orderNum}"></td>
-                            </tr>-->
-
                             <tr th:each="dto : ${withdrawalList}">
                                 <th><input type="checkbox"></th>
                                 <td>image</td>
-                                <td>productId</td>
+                                <td th:text="${dto.productId}"></td>
                                 <td>productName</td>
                                 <td>mCategory / sCategory</td>
-                                <td>orderNum</td>
+                                <td th:text="${dto.orderNum}"></td>
                             </tr>
                         </tbody>
                     </table>

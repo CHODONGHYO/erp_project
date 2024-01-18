@@ -38,8 +38,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dto,stat : ${orderList}">
-                                <th>[[${stat.count}]]</th>
+                            <tr th:each="dto, stat : ${orderList}">
+                                <td>[[${stat.count}]]</td>
                                 <td>[[${dto.name}]]</td>
                                 <td>[[${dto.orderCode}]]</td>
                                 <td th:text="${#temporals.format(dto.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
