@@ -28,10 +28,11 @@ public interface OrderService {
         return entity;
     }
 
-    default OrderDTO entityToDto(Order entity) {
+    default OrderDTO entityToDtoWithName(Order entity) {
         OrderDTO dto = OrderDTO.builder()
                 .orderId(entity.getOrderId())
                 .memberId(entity.getMember().getMemberId())
+                .name(entity.getMember().getName())
                 .orderDate(entity.getOrderDate())
                 .productId(entity.getProduct().getProductId())
                 .orderNum(entity.getOrderNum())

@@ -15,6 +15,7 @@ public class OrderDTO {
 
     private Long orderId;
     private Long memberId;
+    private String name;
     private LocalDateTime orderDate;
     private Long productId;
     private Long orderNum;
@@ -22,4 +23,5 @@ public class OrderDTO {
     private LocalDateTime orderOutDate;
     private String orderStatus;
     private String orderCode;
+
 }

@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
         List<Order> result = repository.findAll();
 
         return result.stream()
-                .map(this::entityToDto)
+                .map(this::entityToDtoWithName)
                 .collect(Collectors.toList());
     }
 
@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
     public PageResultDTO<OrderDTO, Order> getWithdrawalList(PageRequestDTO requestDTO) {
         Pageable pageable = requestDTO.getPageable(Sort.by("orderId").descending());
         Page<Order> result = repository.findAll(pageable);
-        Function<Order, OrderDTO> fn = (entity -> entityToDto(entity));
+        Function<Order, OrderDTO> fn = (entity -> entityToDtoWithName(entity));
         return new PageResultDTO<>(result, fn);
     }
 

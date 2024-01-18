@@ -22,26 +22,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dto : ${withdrawalList}">
+                            <!--<tr th:each="dto : ${withdrawalList}">
                                 <th><input type="checkbox"></th>
                                 <td th:text="${dto.image}"></td>
                                 <td th:text="${dto.productId}"></td>
                                 <td th:text="${dto.productName}"></td>
                                 <td th:text="${dto.mCategory} + ' / ' + ${dto.sCategory}"></td>
                                 <td th:text="${dto.orderNum}"></td>
-                            </tr>
+                            </tr>-->
 
-                            <!--<tr th:each="dto : ${withdrawalList}">
+                            <tr th:each="dto : ${withdrawalList}">
                                 <th><input type="checkbox"></th>
                                 <td>image</td>
                                 <td>productId</td>
                                 <td>productName</td>
                                 <td>mCategory / sCategory</td>
                                 <td>orderNum</td>
-                            </tr>-->
+                            </tr>
                         </tbody>
                     </table>
-                    <input type="hidden" name="withdrawalDtoList" th:value="${result}">
+                    <input type="hidden" name="withdrawalDtoList" th:value="${withdrawalList}">
 
                     <!--<ul class="pagination h-100 justify-content-center align-items-center">
                         <li class="page-item " th:if="${result.prev}">
