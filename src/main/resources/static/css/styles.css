@@ -11304,3 +11304,18 @@ body {
 .table-responsive-sm {
     overflow: auto;
 }
+
+.table_for_details {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.td_for_details {
+  border: 1px solid #ddd;
+  padding: 2px;
+  text-align: center;
+}
+
+.form-control_for_details {
+  width: 80%; /* Adjust the width as needed */
+}

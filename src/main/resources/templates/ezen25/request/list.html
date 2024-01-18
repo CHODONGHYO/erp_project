@@ -21,7 +21,7 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h2>협력업체 관리</h2>
+                        <h2>요청서 관리</h2>
                     </div>
                 </div>
             </div>
@@ -32,14 +32,9 @@
                     <div class="white_shd full margin_bottom_30">
                         <div class="full graph_head">
                             <div class="heading1 margin_0">
-                                <h2>협력업체 리스트</h2>
-                                <login>
-                                    <a sec:authorize="isAnonymous()" th:href="@{/ezen25/main/login}">Login</a>
-                                    <a sec:authorize="isAuthenticated()" th:href="@{/ezen25/main/logout}">Logout</a>
-                                </login>
-                                <a th:href="@{/ezen25/main/signup}">Sign Up</a>
+                                <h2>요청서 리스트</h2>
                             </div>
-                            <a th:href="@{/ezen25/brand/register}">
+                            <a th:href="@{/ezen25/request/register}">
                                 <button class="btn btn-outline-primary" style="float:right;" type="button">등록하기</button>
                             </a>
                         </div>
@@ -110,7 +105,7 @@
                                             <td><input name="requestDeleteList" th:value="${requestdto.requestId}"
                                                        type="checkbox">
                                             </td>
-                                            <input name="brandId" th:value="${requestdto.brandId}" type="hidden">
+                                            <input name="requestId" th:value="${requestdto.requestId}" type="hidden">
                                             <td>
                                                 <a th:href="@{/ezen25/request/read(requestId = ${requestdto.requestId}, page= ${requestResult.page},
                         type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
@@ -130,18 +125,18 @@
                                 </form>
                                 <ul class="pagination h-100 justify-content-center align-items-center">
                                     <li class="page-item " th:if="${requestResult.prev}">
-                                        <a class="page-link" tabindex="-1" th:href="@{/ezen25/request/requestList(page = ${requestResult.start-1}, type=${pageRequestDTO.type},
+                                        <a class="page-link" tabindex="-1" th:href="@{/ezen25/request/list(page = ${requestResult.start-1}, type=${pageRequestDTO.type},
                 keyword=${pageRequestDTO.keyword})}"><</a>
                                     </li>
 
                                     <li th:class="'page-item ' + ${requestResult.page == page?'active':''}"
                                         th:each="page: ${requestResult.pageList}">
-                                        <a class="page-link" th:href="@{/ezen25/request/requestList(page = ${page}, type=${pageRequestDTO.type},
+                                        <a class="page-link" th:href="@{/ezen25/request/list(page = ${page}, type=${pageRequestDTO.type},
                 keyword=${pageRequestDTO.keyword})}">[[${page}]]</a>
                                     </li>
 
                                     <li class="page-item" th:if="${requestResult.next}">
-                                        <a class="page-link" th:href="@{/ezen25/request/requestList(page = ${requestResult.end + 1}, type=${pageRequestDTO.type},
+                                        <a class="page-link" th:href="@{/ezen25/request/list(page = ${requestResult.end + 1}, type=${pageRequestDTO.type},
                 keyword=${pageRequestDTO.keyword})}">></a>
                                     </li>
                                 </ul>

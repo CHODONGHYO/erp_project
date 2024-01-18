@@ -11,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Controller
 @RequestMapping("/ezen25/request/*")
 @Log4j2
@@ -36,15 +39,29 @@ public class RequestController {
     }
 
     @GetMapping("/register")
-    public void requestRegister() {
+    public void requestRegister(Model model) {
         log.info("GET 형식 Register");
+
+        LocalDateTime LDTCT = LocalDateTime.now();
+        LocalDateTime LDTCT3 = LDTCT.plusDays(3);
+        // 원하는 형식으로 포맷을 지정합니다.
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        // 형식에 맞게 날짜와 시간을 문자열로 변환합니다.
+        String currentTime = LDTCT.format(formatter);
+        String currentTimeplus3 = LDTCT3.format(formatter);
+
+        model.addAttribute("Now", currentTime);
+        model.addAttribute("Now3", currentTimeplus3);
+
+
     }
 
     @PostMapping("/register")
     public String requestPOSTRegister(RequestDTO requestDTO) {
         log.info("POST 형식 Register");
 
-        Long requestId = requestService.register(requestDTO);
+        requestService.register(requestDTO);
 
         return "redirect:/ezen25/request/list";
 
@@ -53,7 +70,6 @@ public class RequestController {
     @GetMapping({"/read", "/modify"})
     public void requestRead(@RequestParam("requestId") Long requestId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model) {
         log.info("Get Read/Modify. requestId : " + requestId);
-
 
         RequestDTO dto = requestService.read(requestId);
 
@@ -70,9 +86,9 @@ public class RequestController {
     }
 
     @PostMapping("/modify")
-    public String requestModify(RequestDTO requestDTO, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO,
-                         RedirectAttributes redirectAttributes) {
-        log.info("Post Modify. brandDTO : " + requestDTO);
+    public String requestModify(@ModelAttribute("requestDTO") RequestDTO requestDTO,
+                                @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO,
+                                RedirectAttributes redirectAttributes) {
 
         requestService.modify(requestDTO);
 
@@ -83,5 +99,4 @@ public class RequestController {
 
         return "redirect:/ezen25/request/read";
     }
-
 }

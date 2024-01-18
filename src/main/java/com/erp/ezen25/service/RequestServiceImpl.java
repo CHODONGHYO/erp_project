@@ -1,11 +1,8 @@
 package com.erp.ezen25.service;
 
-import com.erp.ezen25.dto.BrandDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.dto.RequestDTO;
-import com.erp.ezen25.entity.Brand;
-import com.erp.ezen25.entity.QBrand;
 import com.erp.ezen25.entity.QRequest;
 import com.erp.ezen25.entity.Request;
 import com.erp.ezen25.repository.RequestRepository;
@@ -64,7 +61,7 @@ public class RequestServiceImpl implements RequestService {
         if (oRequest.isPresent()) {
             Request request = oRequest.get();
 
-            request.changeRequestDate(request.getRequestDate());
+            request.changeRequestDate(requestDTO.getRequestDate());
             request.changeProductId(requestDTO.getProductId());
             request.changeRequestNum(requestDTO.getRequestNum());
             request.changeRequestDescription(requestDTO.getRequestDescription());

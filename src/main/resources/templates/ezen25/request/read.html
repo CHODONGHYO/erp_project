@@ -11,43 +11,54 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h1 class="mt-4">브랜드 상세보기</h1>
+                        <h1 class="mt-4">요청사항</h1>
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="brandId" th:value="${dto.brandId}">
+            <input name="requestId" th:value="${requestdto.requestId}" type="hidden">
+
             <div>
                 <div class="col-md-12">
                     <div class="white_shd full margin_bottom_30">
                         <div class="full graph_head">
-                            <label>브랜드 이름</label>
-                            <input class="form-control" name="brandName" readonly th:value="${dto.brandName}"
-                                   type="text">
-                        </div>
-                        <div class="full graph_head">
-                            <label>연락처</label>
-                            <input class="form-control" name="brandPhone" readonly th:value="${dto.brandPhone}"
-                                   type="text">
-                        </div>
-                        <div class="full graph_head">
-                            <label>이메일</label>
-                            <input class="form-control" name="brandEmail" readonly th:value="${dto.brandEmail}"
-                                   type="text">
-                        </div>
-                        <div class="full graph_head">
-                            <label>설명</label>
-                            <textarea class="form-control" name="brandDescription" readonly
-                                      rows="5">[[${dto.brandDescription}]]</textarea>
+                            <table class="table_for_details" width="100%">
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details">품목 코드</td>
+                                    <td class="td_for_details">[[${requestdto.requestCode}]]</td>
+                                    <td class="td_for_details">개수</td>
+                                    <td class="td_for_details">[[${requestdto.requestNum}]]개</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details">브랜드</td>
+                                    <td class="td_for_details">[[${requestdto.brandId}]]</td>
+                                    <td class="td_for_details">요청일자</td>
+                                    <td class="td_for_details">[[${requestdto.requestDate}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details">완료예정</td>
+                                    <td class="td_for_details">[[${requestdto.requestOutDate}]]</td>
+                                    <td class="td_for_details">상태</td>
+                                    <td class="td_for_details">[[${requestdto.requestStatus}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details" colspan="1">비고</td>
+                                    <td class="td_for_details" colspan="5">
+                                        <textarea class="form-control" name="requestDescription" readonly style="height: 225px;
+                                        ">[[${requestdto.requestDescription}]]</textarea>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
             </div>
             <div style="float:right;">
-                <a th:href="@{/ezen25/brand/modify(brandId = ${dto.brandId}, page = ${pageRequestDTO.page},
+                <a th:href="@{/ezen25/request/modify(requestId = ${requestdto.requestId}, page = ${pageRequestDTO.page},
          type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-primary" type="button">Modify</button>
                 </a>
-                <a th:href="@{/ezen25/brand/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
+                <a></a>
+                <a th:href="@{/ezen25/request/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
          keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-info" type="button">List</button>
                 </a>

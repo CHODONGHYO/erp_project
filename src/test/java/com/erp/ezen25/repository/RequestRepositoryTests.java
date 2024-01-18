@@ -18,7 +18,7 @@ public class RequestRepositoryTests {
     public void insertRequestDummies() {
         LocalDateTime time = LocalDateTime.now();
         String outDate = time.format(
-                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SSS")
+                DateTimeFormatter.ofPattern("yyyy-MM-dd")
         );
 
         IntStream.rangeClosed(1, 100).forEach(rDummies -> {
@@ -27,7 +27,7 @@ public class RequestRepositoryTests {
                     .requestNum((long) rDummies)
                     .requestDescription("" + rDummies)
                     .requestOutDate((time.plusDays(5)).format(
-                            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss:SSS")
+                            DateTimeFormatter.ofPattern("yyyy-MM-dd")
                     ))
                     .requestStatus("완료")
                     .requestCode(String.valueOf(rDummies))
