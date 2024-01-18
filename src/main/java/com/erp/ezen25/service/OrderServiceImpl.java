@@ -36,9 +36,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> getWithdrawalList() {
+    public List<OrderDTO> getWithdrawalList(String orderCode) {
 
-        List<Order> result = repository.findAll();
+        List<Order> result = repository.findByOrderCode(orderCode); /*발주요청리스트에서 보낼 orderCode*/
 
         return result.stream()
                 .map(this::entityToDto)

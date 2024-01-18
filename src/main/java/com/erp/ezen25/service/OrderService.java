@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface OrderService {
     List<OrderDTO> getList();
-    List<OrderDTO> getWithdrawalList();
+    List<OrderDTO> getWithdrawalList(String orderCode);
 
     default Order dtoToEntity(OrderDTO dto) {
         Order entity = Order.builder()

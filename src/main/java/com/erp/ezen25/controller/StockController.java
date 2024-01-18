@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -35,9 +36,9 @@ public class StockController {
 
     // 재고불출 페이지로 이동(모달)
     @GetMapping("/withdrawal")
-    public String withdrawalGET(Model model) {
+    public String withdrawalGET(@RequestParam String orderCode, Model model) {
         log.info("재고불출 페이지로 이동........");
-        List<OrderDTO> withdrawalList = orderService.getWithdrawalList();
+        List<OrderDTO> withdrawalList = orderService.getWithdrawalList(orderCode);
         model.addAttribute("withdrawalList", withdrawalList);
         return "ezen25/stock/withdrawal";
     }
