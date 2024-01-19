@@ -1,10 +1,7 @@
 package com.erp.ezen25.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -30,8 +27,8 @@ public class Product_Info {
     private String productDescription;
 
     @ManyToOne(targetEntity = Brand.class, fetch=FetchType.LAZY)
-    @JoinColumn(name="brand_id",nullable = false)
-    private Brand brandId;
+    @JoinColumn(name="brandId",nullable = false)
+    private Brand brand;
 
     @Column(length = 1000, nullable = false)
     private String mCategory;
@@ -56,5 +53,4 @@ public class Product_Info {
         this.productId = productId;
         return this;
     }
-
 }

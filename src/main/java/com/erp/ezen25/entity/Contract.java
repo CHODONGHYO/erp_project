@@ -29,13 +29,14 @@ public class Contract {
 
     @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
-    private Long productId;
+    private Product_Info productInfo;
 
     @ManyToOne(targetEntity = Brand.class, fetch = FetchType.LAZY)
     @JoinColumn(name="brand_id", nullable = false)
-    private Long brandId;
+    private Brand Brand;
 
     @Column(nullable = false)
+    @ColumnDefault(value= "now(6)")
     private LocalDateTime contractDate;
 
     @Column(length = 1000, nullable = false)
