@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+
+<th:block layout:fragment="content">
+
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">발주관리</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a th:href="@{/order/list}">발주 요청리스트</a></li>
+                <li class="breadcrumb-item active">발주관리</li>
+            </ol>
+            <div class="card mb-4">
+                <div class="card-body">
+                    DataTables is a third party plugin that is used to generate the demo table below. For more information
+                    about DataTables, please visit the
+                    <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                    .
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    발주 요청리스트
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>지점명</th>
+                                <th>발주서 코드</th>
+                                <th>발주일자</th>
+                                <th>상태</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="dto, stat : ${orderList}"
+                            th:if="${stat.index == 0 or dto.orderCode != orderList[stat.index - 1].orderCode}">
+                            <td th:text="${stat.count}"></td>
+                            <td th:text="${dto.name}"></td>
+                            <td th:text="${dto.orderCode}"></td>
+                                <td th:text="${#temporals.format(dto.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td>
+                                    <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary withdrawalBtn"
+                                            data-toggle="modal" data-target="#withdrawalModal" th:attr="data-order-code=${dto.orderCode}">
+                                        불출하기
+                                    </button>
+                                    <button th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" onclick="#">출고준비</button>
+                                    <button th:if="${dto.orderStatus == '2'}" class="btn btn-danger" onclick="#">출고완료</button>
+                                </td>
+                            </tr>
+                            <input type="hidden" name="orderCode" th:value="${orderCode}">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal -->
+    <div class="modal fade" id="withdrawalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">재고불출</h3>
+                </div>
+                <div class="modal-body">
+                    <th:block th:replace="~{/ezen25/stock/withdrawal :: withdrawal}"></th:block>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+    $(document).ready(function() {
+
+        function updateRowIndices() {
+            $('#datatablesSimple tbody tr').each(function(index) {
+                $(this).find('td:first').text(index + 1);
+            });
+        }
+
+        updateRowIndices();
+
+        $('.withdrawalBtn').click(function() {
+            var orderCode = $(this).data('order-code');
+
+            $.ajax({
+                type: "GET",
+                url: "/stock/withdrawal",
+                data: {
+                    orderCode : orderCode,
+                },
+                success: function(response) {
+                    $('#withdrawalModal .modal-body').html(response);
+                    $('#withdrawalModal').modal('show');
+                },
+                error: function(error) {
+                    alert("오류가 발생했습니다.");
+                }
+            });
+        });
+
+    });
+    </script>
+</th:block>
+</html>

@@ -51,7 +51,7 @@ public class Request {
     /*@ColumnDefault("0L")*/
     private Long brandId;
 
-    @Column(length = 1000, nullable = false)
+    @Column(length = 1000, nullable = false, unique = true)
     @ColumnDefault("'0'")
     private String requestCode;
 
