@@ -25,16 +25,16 @@ public class Order {
     @Column(name = "orderId")
     private Long orderId;
 
-    @ManyToOne(targetEntity = Member.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id", nullable = false)
-    private Long memberId;
+    private Member member;
 
     @Column(nullable = false)
     private LocalDateTime orderDate;
 
-    @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
-    private Long productId;
+    private Product_Info product;
 
     @Column(nullable = false)
     @ColumnDefault("0")
@@ -47,10 +47,10 @@ public class Order {
     private LocalDateTime orderOutDate;
 
     @Column(length = 1000, nullable = false)
-    @ColumnDefault("'미정'")
+    @ColumnDefault("'0'")
     private String orderStatus;
 
-    @Column(length = 1000, nullable = false, unique = true)
+    @Column(length = 1000, nullable = false)
     @ColumnDefault("'0'")
     private String orderCode;
 }

@@ -56,6 +56,10 @@ public class Member {
         this.name = name;
     }
 
+    public Member setMemberId(Long memberId) {
+        this.memberId = memberId;
+        return this;
+    }
     public void changePercent(Integer percent) {
         this.percent = percent;
     }

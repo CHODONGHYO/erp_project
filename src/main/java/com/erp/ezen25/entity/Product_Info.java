@@ -1,6 +1,10 @@
 package com.erp.ezen25.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,4 +54,9 @@ public class Product_Info {
 
     @Column(length = 1000)
     private String image;
+
+    public Product_Info setProductId(Long productId) {
+        this.productId = productId;
+        return this;
+    }
 }
