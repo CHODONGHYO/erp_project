@@ -1,9 +1,6 @@
 package com.erp.ezen25.service;
 
-import com.erp.ezen25.dto.OrderDTO;
-import com.erp.ezen25.dto.PageRequestDTO;
-import com.erp.ezen25.dto.PageResultDTO;
-import com.erp.ezen25.dto.StockDTO;
+import com.erp.ezen25.dto.*;
 import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.entity.Product_Stock;
 import com.erp.ezen25.repository.OrderRepository;
@@ -36,13 +33,26 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDTO> getWithdrawalList(String orderCode) {
+    public List<WithdrawalDTO> getWithdrawalList(String orderCode) {
 
         List<Order> result = repository.findByOrderCode(orderCode); /*발주요청리스트에서 보낼 orderCode*/
 
         return result.stream()
-                .map(this::entityToDto)
+                .map(this::entityToDtoForWithdrawal)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getNameByOrderCode(String orderCode) {
+        List<Order> result = repository.findByOrderCode(orderCode);
+        System.out.println("result:" + result);
+        if (!result.isEmpty()) {
+            return result.get(0).getMember().getName();
+        } else {
+            // Handle the case where the list is empty
+            log.error("No order found for orderCode: {}", orderCode);
+            return "";
+        }
     }
 
 }

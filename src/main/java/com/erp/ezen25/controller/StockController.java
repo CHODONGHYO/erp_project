@@ -38,8 +38,11 @@ public class StockController {
     @GetMapping("/withdrawal")
     public String withdrawalGET(@RequestParam String orderCode, Model model) {
         log.info("재고불출 페이지로 이동........");
-        List<OrderDTO> withdrawalList = orderService.getWithdrawalList(orderCode);
+        List<WithdrawalDTO> withdrawalList = orderService.getWithdrawalList(orderCode);
+        String name = orderService.getNameByOrderCode(orderCode);
         model.addAttribute("withdrawalList", withdrawalList);
+        model.addAttribute("orderCode", orderCode);
+        model.addAttribute("name",name);
         return "ezen25/stock/withdrawal";
     }
 

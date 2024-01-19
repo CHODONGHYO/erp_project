@@ -8,7 +8,6 @@ import lombok.*;
 @NoArgsConstructor
 public class WithdrawalDTO {
 
-    private Long withdrawalId;
     private Long memberId;
     private String name;
     private Long orderId;

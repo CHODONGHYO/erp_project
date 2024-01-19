@@ -5,7 +5,7 @@
     <form id="withdrawalForm" th:action="@{/stock/withdrawal}" method="post">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <p><span style="font-weight:bold;">member.name</span>점</p>
+                <p><span style="font-weight:bold;">[[${name}]]</span>점</p>
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -27,12 +27,13 @@
                                 <td th:text="${dto.image}"></td>
                                 <td th:text="${dto.productId}"></td>
                                 <td th:text="${dto.productName}"></td>
-                                <td th:text="${dto.mCategory} + / + ${dto.sCategory}"></td>
+                                <td th:text="${dto.mCategory + '/' + dto.sCategory}"></td>
                                 <td th:text="${dto.orderNum}"></td>
                             </tr>
                         </tbody>
                     </table>
                     <input type="hidden" name="withdrawalDtoList" th:value="${withdrawalList}">
+                    <input type="hidden" name="orderCode" th:value="${orderCode}">
                 </div>
                 <!-- /.table-responsive -->
             </div>

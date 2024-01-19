@@ -1,16 +1,19 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.OrderDTO;
+import com.erp.ezen25.dto.WithdrawalDTO;
 import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.entity.Product_Info;
+import org.springframework.data.repository.query.Param;
 
 
 import java.util.List;
 
 public interface OrderService {
     List<OrderDTO> getList();
-    List<OrderDTO> getWithdrawalList(String orderCode);
+    List<WithdrawalDTO> getWithdrawalList(String orderCode);
+    String getNameByOrderCode(String orderCode);
 
     default Order dtoToEntity(OrderDTO dto) {
         Order entity = Order.builder()
@@ -38,6 +41,22 @@ public interface OrderService {
                 .orderOutDate(entity.getOrderOutDate())
                 .orderCode(entity.getOrderCode())
                 .orderStatus(entity.getOrderStatus())
+                .build();
+        return dto;
+    }
+
+    default  WithdrawalDTO entityToDtoForWithdrawal(Order entity) {
+        WithdrawalDTO dto = WithdrawalDTO.builder()
+                .memberId(entity.getMember().getMemberId())
+                .name(entity.getMember().getName())
+                .productId(entity.getProduct().getProductId())
+                .productName(entity.getProduct().getProductName())
+                .orderCode(entity.getOrderCode())
+                .orderId(entity.getOrderId())
+                .image(entity.getProduct().getImage())
+                .mCategory(entity.getProduct().getMCategory())
+                .sCategory(entity.getProduct().getSCategory())
+                .orderNum(entity.getOrderNum())
                 .build();
         return dto;
     }

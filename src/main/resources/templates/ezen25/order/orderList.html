@@ -45,11 +45,15 @@
                             <td th:text="${dto.orderCode}"></td>
                                 <td th:text="${#temporals.format(dto.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                                 <td>
-                                    <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary withdrawalBtn" data-toggle="modal" data-target="#withdrawalModal">불출하기</button>
+                                    <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary withdrawalBtn"
+                                            data-toggle="modal" data-target="#withdrawalModal" th:attr="data-order-code=${dto.orderCode}">
+                                        불출하기
+                                    </button>
                                     <button th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" onclick="#">출고준비</button>
                                     <button th:if="${dto.orderStatus == '2'}" class="btn btn-danger" onclick="#">출고완료</button>
                                 </td>
                             </tr>
+                            <input type="hidden" name="orderCode" th:value="${orderCode}">
                         </tbody>
                     </table>
                 </div>
@@ -87,7 +91,7 @@
         updateRowIndices();
 
         $('.withdrawalBtn').click(function() {
-            var orderCode = $(this).closest('tr').find('[th\\:text="${dto.orderCode}"]').text();
+             var orderCode = $(this).data('order-code');
             $.ajax({
                 type: "GET",
                 url: "/stock/withdrawal",
