@@ -80,6 +80,24 @@ img {
 .tableListStyle .listBtn.bg-danger:hover {
     background-color: var(--bs-code-color) !important;
 }
+.tableListStyle .myModal img {
+    width: 100px;
+}
+.tableListStyle .myModal table {
+    border-collapse: collapse;
+    text-align:center;
+    margin: 0 auto;
+}
+.tableListStyle .myModal th,
+.tableListStyle .myModal td {
+    padding: 6px 10px;
+    border: 1px solid gray;
+}
+.tableListStyle .myModal p {
+    font-size: 18px;
+    margin-top: 10px;
+    text-align: center;
+}
 
 /* 폼 레이아웃 */
 .formStyle .cardForm {
@@ -142,22 +160,13 @@ img {
 /* --- 품목관리 스타일 --- */
 /* 품목리스트 */
 
-.productList .myModal img {
-    width: 100px;
+
+
+/* 계약관리 */
+.listBtn.processBtn {
+    background-color: var(--bs-gray) !important;
 }
-.productList .myModal table {
-    border-collapse: collapse;
-    text-align:center;
-    margin: 0 auto;
-}
-.productList .myModal th,
-.productList .myModal td {
-    padding: 6px 10px;
-    border: 1px solid gray;
-}
-.productList .myModal p {
-    font-size: 18px;
-    margin-top: 10px;
-    text-align: center;
+.tableListStyle .listBtn.processBtn:hover {
+    background-color: var(--bs-gray-900) !important;
 }
 

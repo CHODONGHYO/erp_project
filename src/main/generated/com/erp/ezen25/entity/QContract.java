@@ -24,7 +24,7 @@ public class QContract extends EntityPathBase<Contract> {
 
     public final QBrand Brand;
 
-    public final DateTimePath<java.time.LocalDateTime> contractDate = createDateTime("contractDate", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> contractDate = createDate("contractDate", java.time.LocalDate.class);
 
     public final StringPath contractFile = createString("contractFile");
 
