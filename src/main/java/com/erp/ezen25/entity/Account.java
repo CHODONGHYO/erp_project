@@ -1,10 +1,7 @@
 package com.erp.ezen25.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
@@ -18,6 +15,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert
 @Table(name = "account")
 public class Account {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "accountId")

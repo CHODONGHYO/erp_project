@@ -4,8 +4,12 @@ import com.erp.ezen25.dto.BrandDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.entity.Brand;
+import com.erp.ezen25.entity.Member;
+import com.erp.ezen25.entity.MemberRole;
 import com.erp.ezen25.entity.QBrand;
+import com.erp.ezen25.etc.KorToEng;
 import com.erp.ezen25.repository.BrandRepository;
+import com.erp.ezen25.repository.MemberRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +18,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -25,6 +31,9 @@ public class BrandServiceImpl implements BrandService {
 
     private final BrandRepository brandRepository;
 
+    private final MemberRepository memberRepository;
+
+    private final KorToEng converter;
     @Override
     public Long register(BrandDTO brandDTO) {
         log.info("-----------------------");
@@ -33,6 +42,19 @@ public class BrandServiceImpl implements BrandService {
         Brand brand = dtoToEntity(brandDTO);
 
         brandRepository.save(brand);
+        String convertedBrandName = converter.convertToRoman(brand.getBrandName());
+        String password = convertedBrandName + LocalDateTime.now().getYear();
+        Member member = Member.builder()
+                .userId(brand.getBrandPhone())
+                .password(password)
+                /*.authority("PARTNER")*/
+                .email(brand.getBrandEmail())
+                .name(brand.getBrandName())
+                .percent(0)
+                .build();
+        member.addMemberRole(MemberRole.PARTNER);
+
+        memberRepository.save(member);
 
         return brand.getBrandId();
     }
@@ -58,8 +80,35 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @Transactional
     public void remove(Long brandId) {
-        brandRepository.deleteById(brandId);
+        String brandName = "";
+        Brand brand = new Brand();
+        Member member = new Member();
+        Long memberId = 0L;
+        String name = "";
+
+        Optional<Brand> oBrand = brandRepository.findById(brandId);
+
+        if (oBrand.isPresent()) {
+            brand = oBrand.get();
+            brandName = brand.getBrandName();
+        }
+        Optional<Member> oMember = memberRepository.findByName(brandName);
+        if (oMember.isPresent()) {
+            member = oMember.get();
+            name = member.getName();
+            memberId = member.getMemberId();
+        }
+        if (brandName.equals(name)) {
+            memberRepository.deleteById(memberId);
+            brandRepository.deleteById(brandId);
+            member.removeMemberRole(MemberRole.PARTNER);
+        } else {
+            brandRepository.deleteById(brandId);
+        }
+
+
     }
 
     @Override
@@ -95,6 +144,15 @@ public class BrandServiceImpl implements BrandService {
 
         if (type.contains("n")) {
                sBuilder.or(qBrand.brandName.contains(keyword));
+        }
+        if (type.contains("p")) {
+            sBuilder.or(qBrand.brandPhone.contains(keyword));
+        }
+        if (type.contains("e")) {
+            sBuilder.or(qBrand.brandEmail.contains(keyword));
+        }
+        if (type.contains("d")) {
+            sBuilder.or(qBrand.brandDescription.contains(keyword));
         }
 
         builder.and(sBuilder);

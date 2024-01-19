@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<th:block layout:fragment="content">
+    <!-- 여기에 생성할 페이지 코드 작성 -->
+    <main class="tableListStyle productList">
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">계약관리</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item">협력업체</li>
+                <li class="breadcrumb-item active">계약관리</li>
+            </ol>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div>
+                        <i class="fas fa-table me-1"></i>
+                        품목 리스트
+                    </div>
+                    <div class="card bg-primary text-white mb-2 prodBtn">
+                        <a href="contractAdd" class="card-body resetLink">계약 등록</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                        <tr>
+                            <th>계약업체</th>
+                            <th>계약제품</th>
+                            <th>계약날짜</th>
+                            <th>계약서보기</th>
+                            <th>삭제</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>계약업체</th>
+                            <th>계약제품</th>
+                            <th>계약날짜</th>
+                            <th>계약서보기</th>
+                            <th>삭제</th>
+                        </tr>
+                        </tfoot>
+                        <tbody >
+                        <tr th:each="contract : ${cList}">
+                            <td><div class="cellStyle brandName" th:text="${contract.brandName}" ></div></td>
+                            <td><div class="cellStyle productName" th:text="${contract.productName}" ></div></td>
+                            <td><div class="cellStyle contractDate" th:text="${#temporals.format(contract.contractDate, 'yyyy-MM-dd')}"></div></td>
+                            <td><div class="cellStyle"><a href="#" class="card bg-primary text-white mb-2 listBtn resetLink">계약서</a></div></td>
+                            <td><div class="cellStyle"><div class="card bg-danger text-white mb-2 listBtn">삭제</div></div></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="myModal">
+            <div class="card">
+                <div class="card-header">
+                    <div class="modalTitle">품목 삭제</div>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th rowspan="4">
+                                <input type="hidden" class="modalProductId">
+                                <img class="modalImg" src="/image/NoImg.png">
+                            </th>
+                            <th>브랜드</th>
+                            <th>대분류</th>
+                            <th>소분류</th>
+                        </tr>
+                        <tr>
+                            <td class="modalBrand"></td>
+                            <td class="modalMCate"></td>
+                            <td class="modalSCate"></td>
+                        </tr>
+                        <tr>
+                            <th>이름</th>
+                            <th>생산가격</th>
+                            <th>판매가격</th>
+                        </tr>
+                        <tr>
+                            <td class="modalName"></td>
+                            <td class="modalOriginal"></td>
+                            <td class="modalSale"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p>위 상품을 삭제 하시겠습니까?</p>
+                </div>
+                <div class="card-footer">
+                    <div class="card bg-danger text-white mb-2 moBtn deleteBtn">삭제</div>
+                    <div class="card bg-dark text-white mb-2 moBtn">닫기</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        $(".myModal .moBtn").on("click", () => {
+            $(".myModal").hide();
+        })
+        $(".myModal .deleteBtn").on("click", () => {
+            let modalProductId = document.querySelector(".modalProductId").value;
+            $.ajax({
+                url : "productDelete",
+                type: "post",
+                data: {
+                    productId: modalProductId
+                },
+                success: function(data) {
+                    location.reload();
+                },
+                error: function(request, error) {
+                    alert("code:" + request.status+ "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            })
+        })
+    </script>
+</th:block>
+</html>

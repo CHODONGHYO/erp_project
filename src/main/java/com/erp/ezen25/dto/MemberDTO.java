@@ -1,21 +1,22 @@
 package com.erp.ezen25.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.extern.log4j.Log4j2;
+import org.apache.catalina.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
-public class MemberDTO {
+import java.util.Collection;
 
-    private Long memberId;
-    private String userId;
-    private String password;
-    private String authority;
-    private String email;
-    private String name;
-    private Long percent;
+@Log4j2
+@Getter
+@Setter
+@ToString
+public class MemberDTO{
+        private Long memberId;
+        private String userId;
+        private String email;
+        private String name;
+        private Integer percent;
+
 }
