@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="withdrawal">
-    <form id="withdrawalForm" th:action="@{/stock/withdrawal}" method="post">
+    <form id="withdrawalForm" action="/stock/withdrawal" method="post">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <p><span style="font-weight:bold;">[[${name}]]</span>점</p>
