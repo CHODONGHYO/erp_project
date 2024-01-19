@@ -14,63 +14,150 @@
 a.resetLink {
     text-decoration: none;
 }
-/* --- 품목관리 스타일 --- */
-/* 품목리스트 */
-.productList #datatablesSimple th {
+img {
+    width: 100%;
+}
+/* 모달 스타일 */
+.myModal {
+    display: none;
+    position: fixed;
+    z-index:1200;
+    top:0;
+    left:0;
+    background-color: rgba(0,0,0,0.7);
+    width: 100%;
+    height: 100%;
+}
+.myModal > .card {
+    width: 50%;
+    margin: 60px auto;
+}
+.myModal .card .card-header .modalTitle {
+    font-size: 24px;
+}
+.myModal .card .card-footer {
+    display: flex;
+    justify-content: end;
+    gap: 10px;
+}
+.myModal .card .moBtn {
+    display: inline-block;
+    padding: 4px 6px;
+    cursor: pointer;
+}
+.myModal .card .moBtn.bg-dark {
+    background-color: var(--bs-gray) !important;
+}
+
+/* 리스트 스타일 */
+.tableListStyle #datatablesSimple th {
     text-align: center
 }
-.productList .card-header {
+.tableListStyle .card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.productList .prodBtn {
+.tableListStyle .prodBtn {
     margin: 0 !important;
     font-size: 0.875rem;
 }
-.productList .prodBtn .card-body {
+.tableListStyle .prodBtn .card-body {
     padding: 2px 6px;
 }
-.productList .prodBtn a:hover {
+.tableListStyle .prodBtn a:hover {
     color: white;
     background-color: var(--bs-link-hover-color);
 }
-/* 품목등록 */
-.productAdd .mb-4 {
+.tableListStyle .listBtn {
+    padding: 2px 6px;
+    margin: 0 !important;
+    cursor: pointer;
+}
+.tableListStyle .listBtn.bg-primary:hover {
+    background-color: var(--bs-link-hover-color) !important
+}
+.tableListStyle .listBtn.bg-danger:hover {
+    background-color: var(--bs-code-color) !important;
+}
+
+/* 폼 레이아웃 */
+.formStyle .cardForm {
     width: 60%;
     min-width: 600px;
 }
-.productAdd .form-control {
+.formStyle .form-control {
     display: inline-block;
 }
-.productAdd .inputLine {
+.formStyle .inputLine {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
     gap: 10px;
 }
-.productAdd .inputLine label{
+.formStyle .inputLine label{
     min-width: 90px;
 }
-.productAdd .inputLine input {
+.formStyle .inputLine input {
     text-align: center;
 }
-.productAdd .btnGroup {
+.formStyle .btnGroup {
     display: flex;
     justify-content: center;
     gap: 10px;
 }
-.productAdd .btnGroup .card-body {
+.formStyle .btnGroup .card-body {
     padding: 6px 12px;
     cursor: pointer;
 }
-.productAdd .btnGroup .card-body:hover {
+.formStyle .btnGroup .card-body:hover {
     color: white;
     background-color: var(--bs-link-hover-color);
 }
-.productAdd select {
+.formStyle select {
     width: 30%;
     padding-left: 0;
     appearance: auto;
     -webkit-appearance: auto;
 }
+.formStyle .cardGroup {
+    display: flex;
+    gap: 5%;
+}
+.formStyle .sideCard {
+    display: inline-block;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+    width: 20%;
+    min-width: 200px;
+    max-width: 300px;
+}
+.formStyle .sideCard .imageCard {
+    text-align: center;
+}
+.formStyle img {
+    max-width: 200px;
+}
+/* --- 품목관리 스타일 --- */
+/* 품목리스트 */
+
+.productList .myModal img {
+    width: 100px;
+}
+.productList .myModal table {
+    border-collapse: collapse;
+    text-align:center;
+    margin: 0 auto;
+}
+.productList .myModal th,
+.productList .myModal td {
+    padding: 6px 10px;
+    border: 1px solid gray;
+}
+.productList .myModal p {
+    font-size: 18px;
+    margin-top: 10px;
+    text-align: center;
+}
+

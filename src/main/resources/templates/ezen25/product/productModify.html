@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<th:block layout:fragment="content">
+    <!-- 여기에 생성할 페이지 코드 작성 -->
+    <main class="formStyle productDetail">
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">품목수정</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item">품목관리</li>
+                <li class="breadcrumb-item active">품목수정</li>
+            </ol>
+            <div class="cardGroup">
+                <div class="card cardForm">
+                    <div class="card-header">
+                        <div>
+                            <i class="fas fa-table me-1"></i>
+                            입력란
+                        </div>
+                    </div>
+                    <form method="post" enctype="multipart/form-data" class="card-body" id="productModifyForm">
+                        <div class="inputLine">
+                            <label for="productId">품목코드</label><input th:value="${product.productId}" class="form-control" id="productId" name="productId" placeholder="자동기입" disabled>
+                        </div>
+                        <div class="inputLine">
+                            <label for="imageSelect">품목 이미지</label>
+                            <input type="file" class="form-control" id="imageSelect" name="imageSelect">
+                            <input th:value="${product.image}" type="hidden" id="image" name="image" >
+                        </div>
+                        <div class="inputLine">
+                            <label for="productName">이름</label><input th:value="${product.productName}" class="form-control" id="productName" name="productName">
+                        </div>
+                        <div class="inputLine">
+                            <label for="brandName">브랜드</label><input th:value="${product.brandName}" type="text" class="form-control" id="brandName" name="brandName" readonly>
+                            <select class="form-control" name="brandList" id="brandList">
+                                <option>--선택--</option>
+                                <option th:each=" bList: ${brandList}" th:value="${bList.brandId}">[[${bList.brandName}]]</option>
+                            </select>
+                            <input type="hidden" id="brand" name="brand" th:value="${product.brandId}">
+                        </div>
+                        <div class="inputLine">
+                            <label for="mCategory">대분류</label><input th:value="${product.mCategory}" type="text" class="form-control" id="mCategory" name="mCategory" readonly>
+                            <select class="form-control" name="mCategoryList" id="mCategoryList">
+                                <option>--선택--</option>
+                                <option value="0">-직접입력-</option>
+                                <option th:each=" mList: ${mCateList}" th:value="${mList.m_category}">[[${mList.m_category}]]</option>
+                            </select>
+                        </div>
+                        <div class="inputLine">
+                            <label for="sCategory">소분류</label><input th:value="${product.sCategory}" type="text" class="form-control" id="sCategory" name="sCategory" readonly>
+                            <select class="form-control" name="sCategoryList" id="sCategoryList">
+                                <option>--선택--</option>
+                                <option value="0">-직접입력-</option>
+                                <option th:each=" sList: ${sCateList}" th:value="${sList.s_category}">[[${sList.s_category}]]</option>
+                            </select>
+                        </div>
+                        <div class="inputLine">
+                            <label for="originalPrice">생산가격</label><input th:value="${product.originalPrice}" class="form-control" id="originalPrice" name="originalPrice" placeholder="숫자만 입력 바랍니다">
+                        </div>
+                        <div class="inputLine">
+                            <label for="sellPrice">판매가격</label><input th:value="${product.sellPrice}" class="form-control" id="sellPrice" name="sellPrice" placeholder="숫자만 입력 바랍니다">
+                        </div>
+                        <div class="inputLine">
+                            <label for="productDescription">설명</label><textarea rows="5" class="form-control" id="productDescription" name="productDescription">[[${product.productDescription}]]</textarea>
+                        </div>
+                        <div class="btnGroup">
+                            <div class="card bg-primary text-white mb-2 prodBtn">
+                                <div class="card-body resetLink modifyBtn">품목 수정</div>
+                            </div>
+                            <div class="card bg-primary text-white mb-2 prodBtn ">
+                                <div class="card-body resetLink resetBtn">초기화</div>
+                            </div>
+                            <div class="card bg-primary text-white mb-2 prodBtn">
+                                <a href="../productList" class="card-body resetLink">목록</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <aside class="sideCard">
+                    <div class="card">
+                        <div class="card-header">
+                            협력업체 정보
+                        </div>
+                        <div class="card-body">
+                            <label for="partnerName">이름</label><input th:value="${product.brandName}" type="text" id="partnerName" class="form-control" disabled>
+                            <label for="partnerPhone">연락처</label><input th:value="${product.brandPhone}" type="text" id="partnerPhone" class="form-control" disabled>
+                            <label for="partnerEmail">이메일</label><input th:value="${product.brandEmail}" type="text" id="partnerEmail" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="card imageCard">
+                        <div class="card-header">품목 이미지</div>
+                        <div class="card-body">
+                            <img class="image" th:if="${product.image != null}" th:src="@{|/image/${product.image.substring(0,10).replaceAll('-','/')}/${product.image}|}" alt="이미지"/>
+                            <img class="image" th:unless="${product.image != null}" th:src="@{/image/NoImg.png}" alt="이미지"/>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        $("select").on("change", (e) => {
+            let $select = $(e.target);
+            let insertValue = $select.val();
+            let insertOption = $select.find(`option[value="${insertValue}"]`).text();
+            console.log(insertOption);
+            if ($select.val() == 0) {
+                $select.prev().val("");
+                $select.prev().focus();
+                $select.prev().removeAttr("readonly");
+            } else {
+                $select.next().val(insertValue);
+                $select.prev().val(insertOption);
+                $select.prev().attr("readonly","readonly")
+            }
+        });
+
+        let originalImage = $('.image').attr('src');
+        $("#imageSelect").on("change", (e) => {
+            let miri = $(e.target)[0].files[0];
+            if(!miri){
+                $('.image').attr('src', originalImage);
+                return
+            }
+            let reader = new FileReader();
+            reader.readAsDataURL(miri);
+
+            reader.onload = function(){
+                $('.image').attr('src', reader.result);
+            };
+        })
+
+        $(".modifyBtn").on("click", (e) => {
+            console.log("ddd");
+            $("#productModifyForm").submit();
+        })
+        $(".resetBtn").on("click", (e) => {
+            document.querySelector("#productModifyForm").reset();
+        })
+    </script>
+</th:block>
+</html>

@@ -1,8 +1,11 @@
 package com.erp.ezen25.controller;
 
 import com.erp.ezen25.dto.BrandDTO;
+import com.erp.ezen25.dto.ContractListResponseDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
+import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.service.BrandService;
+import com.erp.ezen25.service.ContractService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/ezen25/brand/*")
@@ -19,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class PartnerController {
     @Autowired
     private BrandService brandService;
+
+    private final ContractService contractService;
 
     @GetMapping("/")
     public String brandHome() {
@@ -84,4 +91,14 @@ public class PartnerController {
         return "redirect:/ezen25/brand/read";
     }
 
+    // 계약관리 -----------
+    @GetMapping("/contract/contractList")
+    public void contractList (Model model) {
+        List<ContractListResponseDTO> cList = contractService.contractList();
+
+        model.addAttribute("cList", cList);
+    }
+    @GetMapping("/contract/contractAdd")
+    public void contractAddForm (Model model) {
+    }
 }

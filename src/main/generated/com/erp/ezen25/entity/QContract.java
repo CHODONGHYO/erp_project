@@ -22,7 +22,7 @@ public class QContract extends EntityPathBase<Contract> {
 
     public static final QContract contract = new QContract("contract");
 
-    public final QBrand brandId;
+    public final QBrand Brand;
 
     public final DateTimePath<java.time.LocalDateTime> contractDate = createDateTime("contractDate", java.time.LocalDateTime.class);
 
@@ -30,7 +30,7 @@ public class QContract extends EntityPathBase<Contract> {
 
     public final NumberPath<Long> contractId = createNumber("contractId", Long.class);
 
-    public final QProduct_Info productId;
+    public final QProduct_Info productInfo;
 
     public QContract(String variable) {
         this(Contract.class, forVariable(variable), INITS);
@@ -50,8 +50,8 @@ public class QContract extends EntityPathBase<Contract> {
 
     public QContract(Class<? extends Contract> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.brandId = inits.isInitialized("brandId") ? new QBrand(forProperty("brandId")) : null;
-        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
+        this.Brand = inits.isInitialized("Brand") ? new QBrand(forProperty("Brand")) : null;
+        this.productInfo = inits.isInitialized("productInfo") ? new QProduct_Info(forProperty("productInfo"), inits.get("productInfo")) : null;
     }
 
 }

@@ -5,7 +5,7 @@
       layout:decorate="~{/layout/layout}">
     <th:block layout:fragment="content">
         <!-- 여기에 생성할 페이지 코드 작성 -->
-        <main class="productList">
+        <main class="tableListStyle productList">
             <div class="container-fluid px-4">
                 <h1 class="mt-4">품목리스트</h1>
                 <ol class="breadcrumb mb-4">
@@ -27,10 +27,10 @@
                         <table id="datatablesSimple">
                             <thead>
                             <tr>
-                                <th style="text-align: center;">이미지</th>
+                                <th>이미지 <span ></span></th>
                                 <th>이름</th>
                                 <th>브랜드</th>
-                                <th>대분류</th>
+                                <th>대분류 </th>
                                 <th>소분류</th>
                                 <th>생산가격</th>
                                 <th>판매가격</th>
@@ -51,23 +51,99 @@
                                 <th>삭제</th>
                             </tr>
                             </tfoot>
-                            <tbody >
-                            <tr th:each="product : ${pList}">
-                                <td><div class="cellStyle"><img  th:src="@{/image/NoImg.png}" alt="이미지"/></div></td>
-                                <td><div class="cellStyle" th:text="${product.productName}"></div></td>
-                                <td><div class="cellStyle" th:text="${product.brandName}"></div></td>
-                                <td><div class="cellStyle" th:text="${product.mCategory}"></div></td>
-                                <td><div class="cellStyle" th:text="${product.sCategory}"></div></td>
-                                <td><div class="cellStyle" th:text="${#numbers.formatInteger(product.originalPrice,3,'COMMA')}"></div></td>
-                                <td><div class="cellStyle" th:text="${product.sellPrice}"></div></td>
-                                <td><div class="cellStyle"><a href="#">상세</a></div></td>
-                                <td><div class="cellStyle"><a href="#">삭제</a></div></td>
+                            <tbody>
+                            <tr th:each="product, productStat: ${pList}">
+                                <td>
+                                    <input type="hidden" class="productId" th:value="${product.productId}">
+                                    <div class="cellStyle">
+                                        <img class="image" th:if="${product.image != null}" th:src="@{|/image/${product.image.substring(0,10).replaceAll('-','/')}/${product.image}|}" alt="이미지"/>
+                                        <img class="image" th:unless="${product.image != null}" th:src="@{/image/NoImg.png}" alt="이미지"/>
+                                    </div>
+                                </td>
+                                <td><div class="cellStyle productName" th:text="${product.productName}"></div></td>
+                                <td><div class="cellStyle brandName" th:text="${product.brandName}"></div></td>
+                                <td><div class="cellStyle mCategory" th:text="${product.mCategory}"></div></td>
+                                <td><div class="cellStyle sCategory" th:text="${product.sCategory}"></div></td>
+                                <td>
+                                    <div th:if="${product.originalPrice > 1000}" class="cellStyle originalPrice" th:text="${#numbers.formatInteger(product.originalPrice,3,'COMMA')}"></div>
+                                    <div th:unless="${product.originalPrice > 1000}" class="cellStyle originalPrice" th:text="${product.originalPrice}"></div>
+                                </td>
+                                <td>
+                                    <div th:if="${product.sellPrice > 1000}" class="cellStyle sellPrice" th:text="${#numbers.formatInteger(product.sellPrice,3,'COMMA')}"></div>
+                                    <div th:unless="${product.sellPrice > 1000}" class="cellStyle sellPrice" th:text="${product.sellPrice}"></div>
+                                </td>
+                                <td><div class="cellStyle"><a th:href="@{|productDetail/${product.productId}|}" class="card bg-primary text-white mb-2 listBtn resetLink">상세</a></div></td>
+                                <td><div class="cellStyle"><div class="card bg-danger text-white mb-2 listBtn">삭제</div></div></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            <div class="myModal">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="modalTitle">품목 삭제</div>
+                    </div>
+                    <div class="card-body">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <th rowspan="4">
+                                    <input type="hidden" class="modalProductId">
+                                    <img class="modalImg" src="/image/NoImg.png">
+                                </th>
+                                <th>브랜드</th>
+                                <th>대분류</th>
+                                <th>소분류</th>
+                            </tr>
+                            <tr>
+                                <td class="modalBrand"></td>
+                                <td class="modalMCate"></td>
+                                <td class="modalSCate"></td>
+                            </tr>
+                            <tr>
+                                <th>이름</th>
+                                <th>생산가격</th>
+                                <th>판매가격</th>
+                            </tr>
+                            <tr>
+                                <td class="modalName"></td>
+                                <td class="modalOriginal"></td>
+                                <td class="modalSale"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <p>위 상품을 삭제 하시겠습니까?</p>
+                    </div>
+                    <div class="card-footer">
+                        <div class="card bg-danger text-white mb-2 moBtn deleteBtn">삭제</div>
+                        <div class="card bg-dark text-white mb-2 moBtn">닫기</div>
+                    </div>
+                </div>
+            </div>
         </main>
+
+        <script>
+            $(".myModal .moBtn").on("click", () => {
+                $(".myModal").hide();
+            })
+            $(".myModal .deleteBtn").on("click", () => {
+                let modalProductId = document.querySelector(".modalProductId").value;
+                $.ajax({
+                    url : "productDelete",
+                    type: "post",
+                    data: {
+                        productId: modalProductId
+                    },
+                    success: function(data) {
+                        location.reload();
+                    },
+                    error: function(request, error) {
+                        alert("code:" + request.status+ "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    }
+                })
+            })
+        </script>
     </th:block>
 </html>
