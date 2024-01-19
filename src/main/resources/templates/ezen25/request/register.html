@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="content">
+    <main>
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>협력업체 등록</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <!-- table section -->
+                <div class="col-md-12">
+                    <form th:action="@{/ezen25/request/register}" th:method="post">
+                        <div class="white_shd full margin_bottom_30">
+                            <div class="full graph_head">
+                                <table class="table_for_details" width="100%">
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">요청서 코드</td>
+                                        <td class="td_for_details" colspan="3">
+                                            <input class="form-control" name="requestCode" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">품목 코드</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" name="productId" type="text">
+                                        </td>
+                                        <td class="td_for_details">개수</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" name="requestNum" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">브랜드</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" name="brandId" type="text">
+                                        </td>
+                                        <td class="td_for_details">요청일자</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" id="requestDate" name="requestDate" type="date" th:value="${Now}" onchange="updateRequestOutDate()">
+                                        </td>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">완료예정</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" id="requestOutDate" name="requestOutDate" type="date" th:value="${Now3}">
+                                        </td>
+                                        <td class="td_for_details">상태</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" name="requestStatus" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details" colspan="1">비고</td>
+                                        <td class="td_for_details" colspan="5">
+                                            <textarea class="form-control" name="requestDescription"
+                                                      style="height: 225px;"></textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                                <script th:inline="javascript">
+                                    function updateRequestOutDate() {
+                                        var requestDate = document.getElementById('requestDate').value;
+                                        var requestOutDateField = document.getElementById('requestOutDate');
+                                        var requestOutDate = new Date(requestDate);
+                                        requestOutDate.setDate(requestOutDate.getDate() + 3);
+
+                                        // 날짜 형식을 yyyy-mm-dd로 변환
+                                        var formattedRequestOutDate = requestOutDate.toISOString().substring(0, 10);
+
+                                        // requestOutDate 필드 업데이트
+                                        requestOutDateField.value = formattedRequestOutDate;
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <div style="float:right;">
+                            <a th:href="@{/ezen25/request/list?page=1}">
+                                <button class="btn btn-primary">목록으로</button>
+                            </a>
+                            <button class="btn btn-primary" type="submit">등록하기</button>
+                            <button class="btn btn-primary" type="reset">다시하기</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</th:block>
+
+</html>

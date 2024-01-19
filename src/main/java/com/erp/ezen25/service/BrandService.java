@@ -5,6 +5,8 @@ import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.entity.Brand;
 
+import java.util.List;
+
 public interface BrandService {
     Long register(BrandDTO brandDTO);
     PageResultDTO<BrandDTO, Brand> getList(PageRequestDTO pageRequestDTO);

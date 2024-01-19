@@ -5,6 +5,7 @@ import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.entity.Member;
+import com.erp.ezen25.entity.MemberRole;
 import com.erp.ezen25.entity.QBrand;
 import com.erp.ezen25.etc.KorToEng;
 import com.erp.ezen25.repository.BrandRepository;
@@ -13,11 +14,11 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -51,6 +52,7 @@ public class BrandServiceImpl implements BrandService {
                 .name(brand.getBrandName())
                 .percent(0)
                 .build();
+        member.addMemberRole(MemberRole.PARTNER);
 
         memberRepository.save(member);
 
@@ -78,8 +80,35 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    @Transactional
     public void remove(Long brandId) {
-        brandRepository.deleteById(brandId);
+        String brandName = "";
+        Brand brand = new Brand();
+        Member member = new Member();
+        Long memberId = 0L;
+        String name = "";
+
+        Optional<Brand> oBrand = brandRepository.findById(brandId);
+
+        if (oBrand.isPresent()) {
+            brand = oBrand.get();
+            brandName = brand.getBrandName();
+        }
+        Optional<Member> oMember = memberRepository.findByName(brandName);
+        if (oMember.isPresent()) {
+            member = oMember.get();
+            name = member.getName();
+            memberId = member.getMemberId();
+        }
+        if (brandName.equals(name)) {
+            memberRepository.deleteById(memberId);
+            brandRepository.deleteById(brandId);
+            member.removeMemberRole(MemberRole.PARTNER);
+        } else {
+            brandRepository.deleteById(brandId);
+        }
+
+
     }
 
     @Override

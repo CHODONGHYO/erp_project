@@ -21,7 +21,7 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h2>협력업체 관리</h2>
+                        <h2>요청서 관리</h2>
                     </div>
                 </div>
             </div>
@@ -32,20 +32,15 @@
                     <div class="white_shd full margin_bottom_30">
                         <div class="full graph_head">
                             <div class="heading1 margin_0">
-                                <h2>협력업체 리스트</h2>
-                                <login>
-                                    <a sec:authorize="isAnonymous()" th:href="@{/ezen25/main/login}">Login</a>
-                                    <a sec:authorize="isAuthenticated()" th:href="@{/ezen25/main/logout}">Logout</a>
-                                </login>
-                                <a th:href="@{/ezen25/main/signup}">Sign Up</a>
+                                <h2>요청서 리스트</h2>
                             </div>
-                            <a th:href="@{/ezen25/brand/register}">
+                            <a th:href="@{/ezen25/request/register}">
                                 <button class="btn btn-outline-primary" style="float:right;" type="button">등록하기</button>
                             </a>
                         </div>
                         <div class="full graph_head">
                             <div>
-                                <form action="/ezen25/brand/list" id="searchForm" method="get">
+                                <form action="/ezen25/request/list" id="searchForm" method="get">
                                     <div class="input-group">
                                         <input name="page" type="hidden" value="1">
                                         <div class="input-group-prepend">
@@ -85,18 +80,20 @@
                         </div>
                         <div class="table_section padding_infor_info">
                             <div class="table-responsive-sm">
-                                <form action="/ezen25/common/brandSelectDelete" method="post">
+                                <form action="/ezen25/common/requestSelectDelete" method="post">
                                     <table class="table" style="text-align:center;">
                                         <thead>
                                         <tr>
                                             <th><input id="selectAll" type="checkbox"></th>
-                                            <th>#</th>
-                                            <th>브랜드 이름</th>
-                                            <th>연락처</th>
-                                            <th>이메일</th>
-                                            <th>설명</th>
+                                            <th>요청서 코드</th>
+                                            <th>품목 코드</th>
+                                            <th>개수</th>
+                                            <th>요청일자</th>
+                                            <th>완료일자</th>
+                                            <th>비고</th>
+                                            <th>상태</th>
                                             <th>
-                                                <button class="new-button" onclick="return brandDeleteSelected()"
+                                                <button class="new-button" onclick="return requestDeleteSelected()"
                                                         type="submit">
                                                     <strong>선택 삭제</strong>
                                                 </button>
@@ -104,36 +101,42 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="dto : ${brandResult.dtoList}">
-                                            <td><input name="brandDeleteList" th:value="${dto.brandId}" type="checkbox">
+                                        <tr th:each="requestdto : ${requestResult.dtoList}">
+                                            <td><input name="requestDeleteList" th:value="${requestdto.requestId}"
+                                                       type="checkbox">
                                             </td>
+                                            <input name="requestId" th:value="${requestdto.requestId}" type="hidden">
                                             <td>
-                                                <a th:href="@{/ezen25/brand/read(brandId = ${dto.brandId}, page= ${brandResult.page},
+                                                <a th:href="@{/ezen25/request/read(requestId = ${requestdto.requestId}, page= ${requestResult.page},
                         type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
-                                                    [[${dto.brandId}]]
-                                                </a></td>
-                                            <td>[[${dto.brandName}]]</td>
-                                            <td>[[${dto.brandPhone}]]</td>
-                                            <td>[[${dto.brandEmail}]]</td>
-                                            <td>[[${dto.brandDescription}]]</td>
+                                                    [[${requestdto.requestCode}]]
+                                                </a>
+                                            </td>
+                                            <td>[[${requestdto.productId}]]</td>
+                                            <td>[[${requestdto.requestNum}]]</td>
+                                            <td>[[${requestdto.requestDate}]]</td>
+                                            <td>[[${requestdto.requestOutDate}]]</td>
+                                            <td>[[${requestdto.requestDescription}]]</td>
+                                            <td>[[${requestdto.requestStatus}]]</td>
+                                            <td>a</td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </form>
                                 <ul class="pagination h-100 justify-content-center align-items-center">
-                                    <li class="page-item " th:if="${brandResult.prev}">
-                                        <a class="page-link" tabindex="-1" th:href="@{/ezen25/brand/list(page = ${brandResult.start-1}, type=${pageRequestDTO.type},
+                                    <li class="page-item " th:if="${requestResult.prev}">
+                                        <a class="page-link" tabindex="-1" th:href="@{/ezen25/request/list(page = ${requestResult.start-1}, type=${pageRequestDTO.type},
                 keyword=${pageRequestDTO.keyword})}"><</a>
                                     </li>
 
-                                    <li th:class="'page-item ' + ${brandResult.page == page?'active':''}"
-                                        th:each="page: ${brandResult.pageList}">
-                                        <a class="page-link" th:href="@{/ezen25/brand/list(page = ${page}, type=${pageRequestDTO.type},
+                                    <li th:class="'page-item ' + ${requestResult.page == page?'active':''}"
+                                        th:each="page: ${requestResult.pageList}">
+                                        <a class="page-link" th:href="@{/ezen25/request/list(page = ${page}, type=${pageRequestDTO.type},
                 keyword=${pageRequestDTO.keyword})}">[[${page}]]</a>
                                     </li>
 
-                                    <li class="page-item" th:if="${brandResult.next}">
-                                        <a class="page-link" th:href="@{/ezen25/brand/list(page = ${brandResult.end + 1}, type=${pageRequestDTO.type},
+                                    <li class="page-item" th:if="${requestResult.next}">
+                                        <a class="page-link" th:href="@{/ezen25/request/list(page = ${requestResult.end + 1}, type=${pageRequestDTO.type},
                 keyword=${pageRequestDTO.keyword})}">></a>
                                     </li>
                                 </ul>
@@ -165,15 +168,15 @@
             $(document).ready(function() {
               // 전체 선택 체크박스
               $("#selectAll").click(function() {
-                  $("input[name='brandDeleteList']").prop('checked', this.checked);
+                  $("input[name='requestDeleteList']").prop('checked', this.checked);
               });
           });
           // 선택 삭제 함수
-          function brandDeleteSelected() {
+          function requestDeleteSelected() {
               var selectedItems = [];
 
               // 선택된 체크박스 가져오기
-              $('input[name="brandDeleteList"]:checked').each(function() {
+              $('input[name="requestDeleteList"]:checked').each(function() {
                   selectedItems.push($(this).val());
               });
 
@@ -190,8 +193,8 @@
               if (isConfirmed) {
                   console.log("deleteSelected 함수 호출됨");
                   alert("삭제완료");
-
                   return true;
+
               } else {
                   return false;
               }

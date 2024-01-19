@@ -8,6 +8,7 @@ import com.erp.ezen25.service.BrandService;
 import com.erp.ezen25.service.ContractService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,25 +17,28 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("/ezen25/brand")
+@RequestMapping("/ezen25/brand/*")
 @Log4j2
 @RequiredArgsConstructor
 // 협력업체 관련 Controller
 public class PartnerController {
-    private  final BrandService brandService;
+    @Autowired
+    private BrandService brandService;
+
     private final ContractService contractService;
+
     @GetMapping("/")
     public String brandHome() {
         return "redirect:/ezen25/brand/list";
     }
 
     @GetMapping("/list")
-    public void brandList(PageRequestDTO requestDTO, Model model) {
+    public void brandList(PageRequestDTO pageRequestDTO, Model model) {
 
         log.info("brandList. ");
-        log.info(requestDTO);
+        log.info(pageRequestDTO);
 
-        model.addAttribute("result", brandService.getList(requestDTO));
+        model.addAttribute("brandResult", brandService.getList(pageRequestDTO));
     }
 
     @GetMapping("/register")
@@ -43,21 +47,18 @@ public class PartnerController {
     }
 
     @PostMapping("/register")
-    public String brandPOSTRegister(BrandDTO brandDTO, RedirectAttributes redirectAttributes) {
+    public String brandPOSTRegister(BrandDTO brandDTO) {
         log.info("POST 형식 Register");
 
         Long brandId = brandService.register(brandDTO);
-
-        redirectAttributes.addFlashAttribute("msg", brandId);
 
         return "redirect:/ezen25/brand/list";
 
     }
 
     @GetMapping({"/read", "/modify"})
-    public void read(@RequestParam("brandId") Long brandId, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, Model model) {
+    public void brandRead(@RequestParam("brandId") Long brandId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model) {
         log.info("Get Read/Modify. gno : " + brandId);
-
 
         BrandDTO dto = brandService.read(brandId);
 
@@ -65,7 +66,7 @@ public class PartnerController {
     }
 
     @PostMapping("/remove")
-    public String remove(@RequestParam("brandId") Long brandId, RedirectAttributes redirectAttributes) {
+    public String brandRemove(@RequestParam("brandId") Long brandId, RedirectAttributes redirectAttributes) {
         log.info("Post Remove. brandId : " + brandId);
 
         brandService.remove(brandId);
@@ -76,15 +77,15 @@ public class PartnerController {
     }
 
     @PostMapping("/modify")
-    public String modify(BrandDTO brandDTO, @ModelAttribute("requestDTO") PageRequestDTO requestDTO,
+    public String brandModify(BrandDTO brandDTO, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO,
                          RedirectAttributes redirectAttributes) {
         log.info("Post Modify. brandDTO : " + brandDTO);
 
         brandService.modify(brandDTO);
 
-        redirectAttributes.addAttribute("page", requestDTO.getPage());
-        redirectAttributes.addAttribute("type", requestDTO.getType());
-        redirectAttributes.addAttribute("keyword", requestDTO.getKeyword());
+        redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
+        redirectAttributes.addAttribute("type", pageRequestDTO.getType());
+        redirectAttributes.addAttribute("keyword", pageRequestDTO.getKeyword());
         redirectAttributes.addAttribute("brandId", brandDTO.getBrandId());
 
         return "redirect:/ezen25/brand/read";

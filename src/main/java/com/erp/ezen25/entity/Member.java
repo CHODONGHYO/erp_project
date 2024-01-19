@@ -6,7 +6,9 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,6 +21,7 @@ import java.util.Set;
 @DynamicInsert
 @Table(name = "member")
 @ToString
+@Transactional
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,8 +62,14 @@ public class Member {
 
     @ElementCollection(fetch = FetchType.LAZY)
     private Set<MemberRole> roleSet;
-
     public void addMemberRole(MemberRole memberRole) {
+        if(roleSet == null) {
+            roleSet = new HashSet<>();
+        }
         roleSet.add(memberRole);
     }
+    public void removeMemberRole(MemberRole memberRole) {
+        roleSet.remove(memberRole);
+    }
+
 }
