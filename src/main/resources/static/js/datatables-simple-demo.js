@@ -29,5 +29,34 @@ window.addEventListener('DOMContentLoaded', event => {
 
             $('.myModal').show();
         })
+        $(".contractList .listBtn.bg-danger").on("click", (e) => {
+            let parent$Tr = $(e.target).parents("tr");
+            let modalContractId = $(parent$Tr).find(".contractId").val();
+            let modalBrandName = $(parent$Tr).find(".brandName").text();
+            let modalProductName = $(parent$Tr).find(".productName").text();
+            let modalContractDate = $(parent$Tr).find(".contractDate").text();
+
+            $(".modalContractId").val(modalContractId);
+            $(".modalBrandName").text(modalBrandName);
+            $(".modalProductName").text(modalProductName);
+            $(".modalContractDate").text(modalContractDate);
+
+            $('.myModal.deleteModal').show();
+        })
+
+        $(".contractList .listBtn.bg-primary").on("click", (e) => {
+            let parent$Tr = $(e.target).parents("tr");
+            let modalContractId = $(parent$Tr).find(".contractId").val();
+            let modalBrandName = $(parent$Tr).find(".brandName").text();
+            let modalProductName = $(parent$Tr).find(".productName").text();
+            let modalContractDate = $(parent$Tr).find(".contractDate").text();
+
+            $(".modalContractId").val(modalContractId);
+            $(".modalBrandName").text(modalBrandName);
+            $(".modalProductName").text(modalProductName);
+            $(".modalContractDate").text(modalContractDate);
+
+            $('.myModal.detailModal').show();
+        })
     }
 });

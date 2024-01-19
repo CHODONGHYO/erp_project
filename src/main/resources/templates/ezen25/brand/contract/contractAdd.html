@@ -22,24 +22,28 @@
                     </div>
                     <form method="post" class="card-body" id="productAddForm" enctype="multipart/form-data">
                         <div class="inputLine">
-                            <label for="mCategory">계약 업체</label><input type="text" class="form-control" id="mCategory" name="mCategory" readonly>
-                            <select class="form-control" name="mCategoryList" id="mCategoryList">
+                            <label for="brandName">계약 업체</label><input type="text" class="form-control" id="brandName" name="brandName" readonly>
+                            <select class="form-control" name="bNameList" id="bNameList">
                                 <option>--선택--</option>
                                 <option value="0">-직접입력-</option>
-                                <option th:each=" mList: ${mCateList}" th:value="${mList.m_category}">[[${mList.m_category}]]</option>
+                                <option th:each=" bList: ${bList}" th:value="${bList.brandId}">[[${bList.brandName}]]</option>
                             </select>
+                            <input type="hidden" id="brand" name="brand">
                         </div>
                         <div class="inputLine">
-                            <label for="sCategory">제품 이름</label><input type="text" class="form-control" id="sCategory" name="sCategory" readonly>
-                            <select class="form-control" name="sCategoryList" id="sCategoryList">
+                            <label for="productName">제품 이름</label><input type="text" class="form-control" id="productName" name="productName" readonly>
+                            <select class="form-control" name="pNameList" id="pNameList">
                                 <option>--선택--</option>
-                                <option value="0">-직접입력-</option>
-                                <option th:each=" sList: ${sCateList}" th:value="${sList.s_category}">[[${sList.s_category}]]</option>
+                                <option th:each=" product: ${pList}" th:value="${product.productId}">[[${product.productName}]]</option>
                             </select>
+                            <input type="hidden" id="productInfo" name="productInfo">
                         </div>
                         <div class="inputLine">
-                            <label for="imageSelect">계약서 파일</label>
-                            <input type="file" class="form-control" id="imageSelect" name="imageSelect">
+                            <label for="contractDate">계약 날짜</label><input type="date" class="form-control" id="contractDate" name="contractDate">
+                        </div>
+                        <div class="inputLine">
+                            <label for="contractSelect">계약서 파일</label>
+                            <input type="file" class="form-control" id="contractSelect" name="contractSelect" accept=".pdf">
                         </div>
                         <div class="btnGroup">
                             <div class="card bg-primary text-white mb-2 prodBtn">
@@ -81,7 +85,7 @@
         });
 
         let originalImage = $('.image').attr('src');
-        $("#imageSelect").on("change", (e) => {
+        $("#contractSelect").on("change", (e) => {
             let miri = $(e.target)[0].files[0];
             if(!miri){
                 $('.image').attr('src', originalImage);

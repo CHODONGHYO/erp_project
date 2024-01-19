@@ -5,7 +5,7 @@
       layout:decorate="~{/layout/layout}">
 <th:block layout:fragment="content">
     <!-- 여기에 생성할 페이지 코드 작성 -->
-    <main class="tableListStyle productList">
+    <main class="tableListStyle contractList">
         <div class="container-fluid px-4">
             <h1 class="mt-4">계약관리</h1>
             <ol class="breadcrumb mb-4">
@@ -30,7 +30,7 @@
                             <th>계약업체</th>
                             <th>계약제품</th>
                             <th>계약날짜</th>
-                            <th>계약서보기</th>
+                            <th>상세</th>
                             <th>삭제</th>
                         </tr>
                         </thead>
@@ -45,10 +45,16 @@
                         </tfoot>
                         <tbody >
                         <tr th:each="contract : ${cList}">
-                            <td><div class="cellStyle brandName" th:text="${contract.brandName}" ></div></td>
+                            <td>
+                                <input type="hidden" class="contractId" th:value="${contract.contractId}">
+                                <div class="cellStyle brandName" th:text="${contract.brandName}" ></div>
+                            </td>
                             <td><div class="cellStyle productName" th:text="${contract.productName}" ></div></td>
                             <td><div class="cellStyle contractDate" th:text="${#temporals.format(contract.contractDate, 'yyyy-MM-dd')}"></div></td>
-                            <td><div class="cellStyle"><a href="#" class="card bg-primary text-white mb-2 listBtn resetLink">계약서</a></div></td>
+                            <td><div class="cellStyle">
+                                <a th:if="${contract.contractFile != '없음'}" th:href="@{|/image/2024/01/19/${contract.contractFile}|}" class="card bg-primary text-white mb-2 listBtn resetLink">등록완료</a>
+                                <div th:unless="${contract.contractFile != '없음'}" class="card bg-primary text-white mb-2 listBtn resetLink processBtn">진행중</div>
+                            </div></td>
                             <td><div class="cellStyle"><div class="card bg-danger text-white mb-2 listBtn">삭제</div></div></td>
                         </tr>
                         </tbody>
@@ -56,7 +62,36 @@
                 </div>
             </div>
         </div>
-        <div class="myModal">
+
+        <div class="myModal detailModal">
+            <div class="card">
+                <div class="card-header">
+                    <div class="modalTitle">계약 상세</div>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th><input type="hidden" class="modalContractId">계약업체</th>
+                            <th>계약제품</th>
+                            <th>계약날짜</th>
+                        </tr>
+                        <tr>
+                            <td class="modalBrandName"></td>
+                            <td class="modalProductName"></td>
+                            <td class="modalContractDate"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <div class="card bg-danger text-white mb-2 moBtn">삭제</div>
+                    <div class="card bg-dark text-white mb-2 moBtn">닫기</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="myModal deleteModal">
             <div class="card">
                 <div class="card-header">
                     <div class="modalTitle">품목 삭제</div>
@@ -65,28 +100,14 @@
                     <table>
                         <tbody>
                         <tr>
-                            <th rowspan="4">
-                                <input type="hidden" class="modalProductId">
-                                <img class="modalImg" src="/image/NoImg.png">
-                            </th>
-                            <th>브랜드</th>
-                            <th>대분류</th>
-                            <th>소분류</th>
+                            <th><input type="hidden" class="modalContractId">계약업체</th>
+                            <th>계약제품</th>
+                            <th>계약날짜</th>
                         </tr>
                         <tr>
-                            <td class="modalBrand"></td>
-                            <td class="modalMCate"></td>
-                            <td class="modalSCate"></td>
-                        </tr>
-                        <tr>
-                            <th>이름</th>
-                            <th>생산가격</th>
-                            <th>판매가격</th>
-                        </tr>
-                        <tr>
-                            <td class="modalName"></td>
-                            <td class="modalOriginal"></td>
-                            <td class="modalSale"></td>
+                            <td class="modalBrandName"></td>
+                            <td class="modalProductName"></td>
+                            <td class="modalContractDate"></td>
                         </tr>
                         </tbody>
                     </table>
@@ -101,16 +122,16 @@
     </main>
 
     <script>
-        $(".myModal .moBtn").on("click", () => {
-            $(".myModal").hide();
+        $(".myModal .moBtn").on("click", (e) => {
+            $(e.target).parents(".myModal").hide();
         })
-        $(".myModal .deleteBtn").on("click", () => {
-            let modalProductId = document.querySelector(".modalProductId").value;
+        $(".myModal.deleteModal .deleteBtn").on("click", () => {
+            let modalContractId = document.querySelector(".modalContractId").value;
             $.ajax({
-                url : "productDelete",
+                url : "contractDelete",
                 type: "post",
                 data: {
-                    productId: modalProductId
+                    contractId: modalContractId
                 },
                 success: function(data) {
                     location.reload();

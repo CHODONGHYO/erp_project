@@ -3,6 +3,7 @@ package com.erp.ezen25.controller;
 import com.erp.ezen25.dto.*;
 import com.erp.ezen25.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,8 +44,10 @@ public class ProductController {
         return "redirect:/ezen25/product/productList";
     }
     @PostMapping("/productDelete")
-    public void deleteProduct(Long productId) {
+    @ResponseBody
+    public ResponseEntity<Void> deleteProduct(@RequestParam("productId") Long productId) {
         productService.deleteProduct(productId);
+        return ResponseEntity.ok().build();
     }
     @GetMapping("/productDetail/{productId}")
     public String productDetail(@PathVariable("productId") Long productId, Model model) {
