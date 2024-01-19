@@ -71,10 +71,6 @@
                 <div class="modal-body">
                     <th:block th:replace="~{/ezen25/stock/withdrawal :: withdrawal}"></th:block>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                    <button type="button" class="btn btn-primary" id="submitWithdrawal">출고하기</button>
-                </div>
             </div>
         </div>
     </div>
@@ -91,11 +87,14 @@
         updateRowIndices();
 
         $('.withdrawalBtn').click(function() {
-             var orderCode = $(this).data('order-code');
+            var orderCode = $(this).data('order-code');
+
             $.ajax({
                 type: "GET",
                 url: "/stock/withdrawal",
-                data: { orderCode : orderCode },
+                data: {
+                    orderCode : orderCode,
+                },
                 success: function(response) {
                     $('#withdrawalModal .modal-body').html(response);
                     $('#withdrawalModal').modal('show');
@@ -106,17 +105,7 @@
             });
         });
 
-        // 닫기 버튼 클릭
-        $('.btn-secondary[data-dismiss="modal"]').click(function() {
-            $(this).closest('.modal').modal('hide');
-        });
-
-        // 출고하기 버튼 클릭
-        $('#submitWithdrawal').click(function() {
-            // 여기에서 출고 처리 Ajax 요청을 추가할 수 있습니다.
-        });
     });
     </script>
-
 </th:block>
 </html>

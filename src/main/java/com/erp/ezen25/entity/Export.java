@@ -33,12 +33,12 @@ public class Export {
     @ColumnDefault("0")
     private Long exportNum;
 
-    @Column(nullable = false)
+    /*@Column(nullable = false)
     private LocalDateTime exportDate;
 
     @Column(length = 1000, nullable = false)
     @ColumnDefault("'미정'")
-    private String exportStatus;
+    private String exportStatus;*/
 
     @Column(length = 1000, nullable = false)
     private String orderCode;

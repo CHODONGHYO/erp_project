@@ -13,7 +13,7 @@
                     <table class="table table-striped table-bordered table-hover">
                         <thead>
                             <tr>
-                                <th><input type="checkbox"></th>
+                                <th><input type="checkbox" id="selectAllCheckbox" checked></th>
                                 <th>이미지</th>
                                 <th>상품코드</th>
                                 <th>상품명</th>
@@ -23,7 +23,7 @@
                         </thead>
                         <tbody>
                             <tr th:each="dto : ${withdrawalList}">
-                                <th><input type="checkbox"></th>
+                                <th><input type="checkbox" name="checkbox" checked></th>
                                 <td th:text="${dto.image}"></td>
                                 <td th:text="${dto.productId}"></td>
                                 <td th:text="${dto.productName}"></td>
@@ -32,8 +32,12 @@
                             </tr>
                         </tbody>
                     </table>
-                    <input type="hidden" name="withdrawalDtoList" th:value="${withdrawalList}">
+                    <input type="hidden" name="withdrawalList" th:value="${withdrawalList}">
                     <input type="hidden" name="orderCode" th:value="${orderCode}">
+                    <div style="text-align:center;">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                        <button type="submit" class="btn btn-primary" id="submitWithdrawal">출고하기</button>
+                    </div>
                 </div>
                 <!-- /.table-responsive -->
             </div>
@@ -41,3 +45,36 @@
         </div>
     </form>
 </th:block>
+
+<script th:inline="javascript">
+    $(document).ready(function() {
+        $("#selectAllCheckbox").click(function() {
+            if ($(this).is(":checked")) {
+                $("input[name=checkbox]").prop("checked", true);
+            } else {
+                $("input[name=checkbox]").prop("checked", false);
+            }
+        });
+
+        $("input[name=checkbox]").click(function() {
+            var total = $("input[name=checkbox]").length;
+            var checked = $("input[name=checkbox]:checked").length;
+
+            if (total != checked) {
+                $("#selectAllCheckbox").prop("checked", false);
+            } else {
+                $("#selectAllCheckbox").prop("checked", true);
+            }
+        });
+
+        // 닫기 버튼 클릭
+        $('.btn-secondary[data-dismiss="modal"]').click(function() {
+            $(this).closest('.modal').modal('hide');
+        });
+
+        // 출고하기 버튼 클릭
+        $('#submitWithdrawal').click(function() {
+            // 추가
+        });
+    });
+</script>

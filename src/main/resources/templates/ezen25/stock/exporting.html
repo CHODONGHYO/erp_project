@@ -43,20 +43,20 @@
                             <th>변경수량</th>
                             <th>단가</th>
                             <th>공급가액</th>
-                            <th>판매가</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dto,stat : ${result}">
+                            <tr th:each="dto,stat : ${exportingList}">
                                 <th>[[${stat.count}]]</th>
                                 <td>[[${dto.image}]]</td>
                                 <td>[[${dto.productId}]]</td>
                                 <td>[[${dto.productName}]]</td>
-                                <td>[[${dto.mCategory}]] / [[${dto.sCategory}]]</td>
-                                <td>[[${dto.originalPrice}]]</td>
-                                <td>[[${dto.sellPrice}]]</td>
-                                <td>[[${dto.productNum}]]</td>
-                                <td th:text="${#temporals.format(dto.importDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td>dto.mCategory / dto.sCategory</td>
+                                <td>dto.productNum</td>
+                                <td>[[${dto.orderNum}]]</td>
+                                <td>productNum-orderNum</td>
+                                <td>dto.sellPrice</td>
+                                <td>sellPrice * orderNum</td>
                             </tr>
                         </tbody>
                     </table>
