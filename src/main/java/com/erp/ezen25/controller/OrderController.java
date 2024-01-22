@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/order")
+@RequestMapping("/ezen25/order")
 @Log4j2
 @RequiredArgsConstructor
 // 발주 관련 Controller

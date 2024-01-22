@@ -28,7 +28,7 @@
                 </div>
                 <div class="card-body">
                     <div class="panel-heading">
-                        <p style="text-align:center; font-size:20px;"><span style="font-weight:bold;">member.name</span>점</p>
+                        <p style="text-align:center; font-size:20px;"><span style="font-weight:bold;">[[${name}]]</span>점</p>
                     </div>
                     <table id="datatablesSimple">
                         <thead>
@@ -46,15 +46,15 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dto,stat : ${exportingList}">
+                            <tr th:each="dto,stat : ${exportList}">
                                 <th>[[${stat.count}]]</th>
                                 <td>[[${dto.image}]]</td>
                                 <td>[[${dto.productId}]]</td>
                                 <td>[[${dto.productName}]]</td>
-                                <td>dto.mCategory / dto.sCategory</td>
+                                <td>[[${dto.mCategory}]] / [[${dto.sCategory}]]</td>
                                 <td>dto.productNum</td>
                                 <td>[[${dto.orderNum}]]</td>
-                                <td>productNum-orderNum</td>
+                                <td>productNum - orderNum</td>
                                 <td>dto.sellPrice</td>
                                 <td>sellPrice * orderNum</td>
                             </tr>

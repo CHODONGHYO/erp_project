@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/stock")
+@RequestMapping("/ezen25/stock")
 @Log4j2
 @RequiredArgsConstructor
 // 재고 관련 Controller
@@ -45,9 +45,11 @@ public class StockController {
 
     // 재고불출 페이지에서 출고하기 버튼 클릭 시 처리
     @PostMapping("/withdrawal")
-    public String withdrawalPOST(Model model) {
+    public String withdrawalPOST(@RequestParam String name, Model model) {
         log.info("출고처리 페이지로 이동........");
-        return "ezen25/stock/exporting";
+        model.addAttribute("name",name);
+        /*model.addAttribute("exportList", withdrawalList);*/
+        return "redirect:/ezen25/stock/exporting";
     }
 
     // 출고처리 페이지로 이동

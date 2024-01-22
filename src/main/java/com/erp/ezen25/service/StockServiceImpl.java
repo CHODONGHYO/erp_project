@@ -3,6 +3,7 @@ package com.erp.ezen25.service;
 import com.erp.ezen25.dto.*;
 import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.Product_Stock;
+import com.erp.ezen25.repository.ProductRepository;
 import com.erp.ezen25.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

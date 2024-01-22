@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="withdrawal">
-    <form id="withdrawalForm" action="/stock/withdrawal" method="post">
+    <form id="withdrawalForm" action="/ezen25/stock/withdrawal" method="post" >
         <div class="panel panel-default">
             <div class="panel-heading">
                 <p><span style="font-weight:bold;">[[${name}]]</span>점</p>
@@ -34,6 +34,7 @@
                     </table>
                     <input type="hidden" name="withdrawalList" th:value="${withdrawalList}">
                     <input type="hidden" name="orderCode" th:value="${orderCode}">
+                    <input type="hidden" name="name" th:value="${name}">
                     <div style="text-align:center;">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
                         <button type="submit" class="btn btn-primary" id="submitWithdrawal">출고하기</button>
@@ -74,7 +75,7 @@
 
         // 출고하기 버튼 클릭
         $('#submitWithdrawal').click(function() {
-            // 추가
+            $("#withdrawalForm").submit();
         });
     });
 </script>
