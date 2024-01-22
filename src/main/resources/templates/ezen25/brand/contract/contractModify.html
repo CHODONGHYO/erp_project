@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<th:block layout:fragment="content">
+    <!-- 여기에 생성할 페이지 코드 작성 -->
+    <main class="formStyle contractAdd contractModify">
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">계약수정</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item">계약관리</li>
+                <li class="breadcrumb-item active">계약수정</li>
+            </ol>
+            <div class="cardGroup">
+                <div class="card mb-4 cardForm">
+                    <div class="card-header">
+                        <div>
+                            <i class="fas fa-table me-1"></i>
+                            입력란
+                        </div>
+                    </div>
+                    <form method="post" class="card-body" id="contractAddForm" enctype="multipart/form-data">
+                        <input type="hidden" id="contractId" name="contractId" th:value="${contract.contractId}">
+                        <div class="inputLine relative">
+                            <label for="brandName">계약 업체</label><input type="text" class="form-control" id="brandName" name="brandName" th:value="${contract.BrandName}" readonly>
+                            <select class="form-control" name="bNameList" id="bNameList">
+                                <option>--선택--</option>
+                                <option th:each=" bList: ${bList}" th:value="${bList.brandId}">[[${bList.brandName}]]</option>
+                            </select>
+                            <input type="hidden" id="brand" name="brand" th:value="${contract.brandId}">
+                            <div class="card bg-primary text-white prodBtn optionAddBtn">
+                                <div class="card-body resetLink" onclick="window.open('/ezen25/brand/register')">업체추가</div>
+                            </div>
+                        </div>
+                        <div class="inputLine relative">
+                            <label for="productName">제품 이름</label><input type="text" class="form-control" id="productName" name="productName" th:value="${contract.productName}" readonly>
+                            <select class="form-control" name="pNameList" id="pNameList">
+                                <option>--선택--</option>
+                                <option th:each=" product: ${pList}" th:value="${product.productId}">[[${product.productName}]]</option>
+                            </select>
+                            <input type="hidden" id="productInfo" name="productInfo" th:value="${contract.productId}">
+                            <div class="card bg-primary text-white prodBtn optionAddBtn">
+                                <div class="card-body resetLink" onclick="window.open('/ezen25/product/productAdd' ,'height=500p,width=500px')">품목추가</div>
+                            </div>
+                        </div>
+                        <div class="inputLine">
+                            <label for="contractDate">계약 날짜</label><input type="date" class="form-control" id="contractDate" th:value="${contract.contractDate}" name="contractDate">
+                        </div>
+                        <div class="inputLine">
+                            <label for="contractSelect">계약서 파일</label>
+                            <input type="file" class="form-control" id="contractSelect" name="contractSelect" accept=".pdf">
+                            <input type="hidden" id="contractFile" name="contractFile" th:value="${contract.contractFile}">
+                        </div>
+                        <div class="mb-2" style="text-align: right;">* 계약서는 pdf 양식으로 제출 바랍니다.</div>
+                        <div class="btnGroup">
+                            <div class="card bg-primary text-white mb-2 prodBtn">
+                                <div class="card-body resetLink registerBtn">계약 수정</div>
+                            </div>
+                            <div class="card bg-primary text-white mb-2 prodBtn">
+                                <a href="../contractList" class="card-body resetLink">목록</a>
+                            </div>
+                        </div>
+                        <div th:if="${contract.contractFile != '없음'}">
+                            <hr>
+                            <h4 style="text-align:center; margin-top: 20px;">계약서 이미지</h4>
+                            <img class="modalContractThumbnail" th:src="@{|/image/${contract.contractFile.substring(0,10).replaceAll('-','/')}/${contract.contractFile.substring(0,contract.contractFile.length()-4)}.jpg|}" alt="이미지 없음">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        $("select").on("change", (e) => {
+            let $select = $(e.target);
+            let insertValue = $select.val();
+            let insertOption = $select.find(`option[value="${insertValue}"]`).text();
+            console.log(insertOption);
+            if ($select.val() == 0) {
+                $select.prev().val("");
+                $select.prev().focus();
+                $select.prev().removeAttr("readonly");
+            } else {
+                $select.next().val(insertValue);
+                $select.prev().val(insertOption);
+                $select.prev().attr("readonly","readonly")
+            }
+        });
+
+        let originalImage = $('.image').attr('src');
+        $("#contractSelect").on("change", (e) => {
+            let miri = $(e.target)[0].files[0];
+            if(!miri){
+                $('.image').attr('src', originalImage);
+                return
+            }
+            let reader = new FileReader();
+            reader.readAsDataURL(miri);
+
+            reader.onload = function(){
+                $('.image').attr('src', reader.result);
+            };
+        })
+
+        $(".registerBtn").on("click", (e) => {
+            console.log("ddd");
+            $("#contractAddForm").submit();
+        })
+    </script>
+</th:block>
+</html>

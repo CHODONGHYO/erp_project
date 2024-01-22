@@ -17,6 +17,10 @@ a.resetLink {
 img {
     width: 100%;
 }
+.relative {
+    position: relative;
+}
+
 /* 모달 스타일 */
 .myModal {
     display: none;
@@ -98,8 +102,16 @@ img {
     margin-top: 10px;
     text-align: center;
 }
-
+.listBtn.processBtn {
+    background-color: var(--bs-gray) !important;
+}
+.tableListStyle .listBtn.processBtn:hover {
+    background-color: var(--bs-gray-900) !important;
+}
 /* 폼 레이아웃 */
+.formStyle {
+    overflow: hidden;
+}
 .formStyle .cardForm {
     width: 60%;
     min-width: 600px;
@@ -163,10 +175,44 @@ img {
 
 
 /* 계약관리 */
-.listBtn.processBtn {
-    background-color: var(--bs-gray) !important;
+
+.contractList a.moBtn {
+    text-decoration: none;
 }
-.tableListStyle .listBtn.processBtn:hover {
-    background-color: var(--bs-gray-900) !important;
+.contractList a.moBtn {
+    text-decoration: none;
+}
+.contractList .detailModal {
+    text-align: center;
+}
+.contractList .detailModal table {
+    width: 80%;
+}
+.contractList .detailModal img {
+    border: 2px solid gray;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 300px;
 }
 
+/* 계약 등록 */
+.contractAdd .optionAddBtn {
+    position: absolute;
+    left: calc(100% + var(--bs-card-spacer-x) * 2);
+}
+.contractAdd .optionAddBtn .resetLink {
+    padding: 4px 6px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.contractAdd .optionAddBtn .resetLink:hover {
+    color: white;
+    background-color: var(--bs-link-hover-color);
+}
+/* 계약 수정 */
+.contractModify img {
+    border: 2px solid gray;
+    width: 100%;
+    max-width: none;
+    margin-top: 20px;
+}

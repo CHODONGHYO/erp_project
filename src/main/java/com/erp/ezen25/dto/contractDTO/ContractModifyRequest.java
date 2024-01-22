@@ -1,0 +1,27 @@
+package com.erp.ezen25.dto.contractDTO;
+
+import com.erp.ezen25.entity.Brand;
+import com.erp.ezen25.entity.Contract;
+import com.erp.ezen25.entity.Product_Info;
+import lombok.Data;
+
+import java.time.LocalDate;
+
+@Data
+public class ContractModifyRequest {
+    private Long contractId;
+    private Product_Info productInfo;
+    private Brand brand;
+    private String contractFile;
+    private LocalDate contractDate;
+
+    public Contract toEntity() {
+        return Contract.builder()
+                .contractId(contractId)
+                .productInfo(productInfo)
+                .Brand(brand)
+                .contractFile(contractFile)
+                .contractDate(contractDate)
+                .build();
+    }
+}

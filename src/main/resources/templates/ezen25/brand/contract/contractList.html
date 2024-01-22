@@ -47,14 +47,17 @@
                         <tr th:each="contract : ${cList}">
                             <td>
                                 <input type="hidden" class="contractId" th:value="${contract.contractId}">
+                                <input type="hidden" class="contractFile" th:value="${contract.contractFile}">
                                 <div class="cellStyle brandName" th:text="${contract.brandName}" ></div>
                             </td>
                             <td><div class="cellStyle productName" th:text="${contract.productName}" ></div></td>
                             <td><div class="cellStyle contractDate" th:text="${#temporals.format(contract.contractDate, 'yyyy-MM-dd')}"></div></td>
-                            <td><div class="cellStyle">
-                                <a th:if="${contract.contractFile != '없음'}" th:href="@{|/image/2024/01/19/${contract.contractFile}|}" class="card bg-primary text-white mb-2 listBtn resetLink">등록완료</a>
-                                <div th:unless="${contract.contractFile != '없음'}" class="card bg-primary text-white mb-2 listBtn resetLink processBtn">진행중</div>
-                            </div></td>
+                            <td>
+                                <div class="cellStyle">
+                                    <div th:if="${contract.contractFile != '없음'}" class="card bg-primary text-white mb-2 listBtn resetLink">등록완료</div>
+                                    <div th:unless="${contract.contractFile != '없음'}" class="card bg-primary text-white mb-2 listBtn resetLink processBtn">진행중</div>
+                                </div>
+                            </td>
                             <td><div class="cellStyle"><div class="card bg-danger text-white mb-2 listBtn">삭제</div></div></td>
                         </tr>
                         </tbody>
@@ -83,10 +86,12 @@
                         </tr>
                         </tbody>
                     </table>
+                    <img class="modalContractThumbnail" src="/image/NoImg.png" alt="이미지 없음">
                 </div>
                 <div class="card-footer">
-                    <div class="card bg-danger text-white mb-2 moBtn">삭제</div>
-                    <div class="card bg-dark text-white mb-2 moBtn">닫기</div>
+                    <a href="#" class="card bg-info text-white mb-2 moBtn modalContractFile">계약서보기</a>
+                    <a href="contractModify" class="card bg-primary text-white mb-2 moBtn modify">수정</a>
+                    <div class="card bg-dark text-white mb-2 moBtn close">닫기</div>
                 </div>
             </div>
         </div>
@@ -115,14 +120,14 @@
                 </div>
                 <div class="card-footer">
                     <div class="card bg-danger text-white mb-2 moBtn deleteBtn">삭제</div>
-                    <div class="card bg-dark text-white mb-2 moBtn">닫기</div>
+                    <div class="card bg-dark text-white mb-2 moBtn close">닫기</div>
                 </div>
             </div>
         </div>
     </main>
 
     <script>
-        $(".myModal .moBtn").on("click", (e) => {
+        $(".myModal .moBtn.close").on("click", (e) => {
             $(e.target).parents(".myModal").hide();
         })
         $(".myModal.deleteModal .deleteBtn").on("click", () => {

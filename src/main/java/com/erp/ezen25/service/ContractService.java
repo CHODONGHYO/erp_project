@@ -1,15 +1,20 @@
 package com.erp.ezen25.service;
 
-import com.erp.ezen25.dto.*;
+import com.erp.ezen25.dto.contractDTO.*;
+import com.erp.ezen25.dto.productDTO.ProductBnameListResponseDTO;
 import com.erp.ezen25.entity.Contract;
+import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.repository.BrandRepository;
 import com.erp.ezen25.repository.ContractRepository;
 import com.erp.ezen25.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -46,8 +51,8 @@ public class ContractService {
     }
 
     public void addContract(ContractAddRequestDTO addRequest, MultipartFile mf) throws IOException {
-        addRequest.setContractFile(prodFileUpload(mf, uploadPath));
-
+        String saveName = prodFileUpload(mf, uploadPath);
+        addRequest.setContractFile(saveName);
 
         Contract contract = addRequest.toEntity();
         contractRepository.save(contract);
@@ -64,7 +69,11 @@ public class ContractService {
         String folderpath = makeFolder() + File.separator;
         String saveName = now+ uuid + orginMainName;
         File file = new File(uploadPath+folderpath+saveName);
+        System.out.println(mf.getContentType());
         mf.transferTo(file);
+        if (mf.getContentType().equals("application/pdf")) {
+            pdfToThumbnail(saveName);
+        }
         return saveName;
     }
     // 날짜 폴더 만들기
@@ -82,7 +91,34 @@ public class ContractService {
         return folderPath;
     }
 
+    // pdf to image
+    private void pdfToThumbnail(String saveName) throws IOException {
+        File file = new File(uploadPath+saveName.substring(0,10).replaceAll("-","/")+"/"+saveName);
+        PDDocument document = PDDocument.load(file);
+        PDFRenderer render = new PDFRenderer(document);
+        BufferedImage bim = render.renderImage(0);
+        File outputFile = new File(uploadPath+saveName.substring(0,10).replaceAll("-","/")+"/"+saveName.substring(0,saveName.length()-4) + ".jpg");
+        ImageIO.write(bim, "jpg", outputFile);
+        System.out.println("썸네일만들기 지나감");
+    }
+
     public void contractDelete (Long contractId) {
         contractRepository.deleteById(contractId);
+    }
+
+    public ContractDetailResponseDTO contractDetail(Long contractId) {
+        return contractRepository.findById(contractId).map(ContractDetailResponseDTO::new).get();
+    }
+
+    public void contractUpdate(ContractModifyRequest updateRequest, MultipartFile mf) throws IOException {
+        String fileURL = prodFileUpload(mf, uploadPath);
+        System.out.println(fileURL);
+        System.out.println("!!!!!!!!!!!!");
+        if (fileURL != null) {
+            updateRequest.setContractFile(fileURL);
+        }
+
+        Contract cModify = updateRequest.toEntity();
+        contractRepository.save(cModify);
     }
 }

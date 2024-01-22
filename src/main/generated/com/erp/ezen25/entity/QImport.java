@@ -30,7 +30,7 @@ public class QImport extends EntityPathBase<Import> {
 
     public final StringPath importStatus = createString("importStatus");
 
-    public final QProduct_Info productId;
+    public final QProduct_Info product;
 
     public final StringPath requestCode = createString("requestCode");
 
@@ -52,7 +52,7 @@ public class QImport extends EntityPathBase<Import> {
 
     public QImport(Class<? extends Import> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
+        this.product = inits.isInitialized("product") ? new QProduct_Info(forProperty("product"), inits.get("product")) : null;
     }
 
 }

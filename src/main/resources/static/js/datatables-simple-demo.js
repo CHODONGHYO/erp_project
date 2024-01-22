@@ -50,11 +50,21 @@ window.addEventListener('DOMContentLoaded', event => {
             let modalBrandName = $(parent$Tr).find(".brandName").text();
             let modalProductName = $(parent$Tr).find(".productName").text();
             let modalContractDate = $(parent$Tr).find(".contractDate").text();
+            let modalContractFile = $(parent$Tr).find(".contractFile").val();
 
             $(".modalContractId").val(modalContractId);
             $(".modalBrandName").text(modalBrandName);
             $(".modalProductName").text(modalProductName);
             $(".modalContractDate").text(modalContractDate);
+            if (modalContractFile == '없음') {
+                $(".modalContractThumbnail").attr("src", '/image/NoImg.png');
+                $(".modalContractFile").attr("onclick", "alert('불러올 수 있는 파일이 없습니다.')");
+            } else {
+                $(".modalContractThumbnail").attr("src", `/image/${modalContractFile.substring(0,10).replaceAll("-", "/")}/${modalContractFile.substring(0,modalContractFile.length-4)}.jpg`)
+                $(".modalContractFile").attr("onclick","window.open('/image/" + modalContractFile.substring(0,10).replaceAll("-", "/") + "/" + modalContractFile + "', '_blank', 'width=800px,height=800px, top=100px, left=400px')")
+            }
+            // window.open(`/image/${modalContractFile.substring(0,10).replaceAll("-", "/")}/${modalContractFile}`, '_blank', 'width=800px,height=800px, top=100px, left=400px')
+            $(".moBtn.modify").attr("href", "contractModify/"+ modalContractId)
 
             $('.myModal.detailModal').show();
         })
