@@ -9,8 +9,6 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Builder
 @AllArgsConstructor
@@ -22,11 +20,11 @@ import java.time.LocalDateTime;
 public class Import {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "importId")
+    @Column(name = "import_id")
     private Long importId;
 
     @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="product_id", nullable = false)
+    @JoinColumn(name = "productId", nullable = false)
     private Product_Info product;
 
     @Column(nullable = false)
@@ -34,7 +32,7 @@ public class Import {
     private Long importNum;
 
     @Column(nullable = false)
-    private LocalDateTime importDate;
+    private String importDate;
 
     @Column(length = 1000, nullable = false)
     private String requestCode;
@@ -43,4 +41,28 @@ public class Import {
     @ColumnDefault("'미정'")
     private String importStatus;
 
+    public void changeImportNum(Long importNum) {
+        this.importNum = importNum;
+    }
+
+    public void changeProductId(Product_Info productId) {
+        this.product = productId;
+    }
+
+    public void changeImportDate(String importDate) {
+        this.importDate = importDate;
+    }
+
+    public void changeRequestCode(String requestCode) {
+        this.requestCode = requestCode;
+    }
+
+    public void changeImportStatus(String importStatus) {
+        this.importStatus = importStatus;
+    }
+
+    public Import setImportId(Long importId) {
+        this.importId = importId;
+        return this;
+    }
 }

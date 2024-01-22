@@ -23,18 +23,16 @@ public class ImportCheck {
     @Column(name = "importCheckId")
     private Long importCheckId;
 
-    @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="product_id", nullable = false)
-    private Long productId;
-
-    @Column(nullable = false)
-    @ColumnDefault("0")
-    private Long requestNum;
+    @ManyToOne(targetEntity = Import.class, fetch = FetchType.LAZY)
+    @JoinColumn(name="importId", nullable = false)
+    private Import importId;
 
     @Column(length = 1000, nullable = false)
-    @ColumnDefault("'미정'")
+    @ColumnDefault("'미완'")
     private String importCheckStatus;
 
-    @Column(length = 1000, nullable = false, unique = true)
-    private String requestCode;
+    public void changeImportCheckStatus(String importCheckStatus) {
+        this.importCheckStatus = importCheckStatus;
+    }
+
 }

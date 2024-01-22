@@ -26,11 +26,7 @@ public class QImportCheck extends EntityPathBase<ImportCheck> {
 
     public final StringPath importCheckStatus = createString("importCheckStatus");
 
-    public final QProduct_Info productId;
-
-    public final StringPath requestCode = createString("requestCode");
-
-    public final NumberPath<Long> requestNum = createNumber("requestNum", Long.class);
+    public final QImport importId;
 
     public QImportCheck(String variable) {
         this(ImportCheck.class, forVariable(variable), INITS);
@@ -50,7 +46,7 @@ public class QImportCheck extends EntityPathBase<ImportCheck> {
 
     public QImportCheck(Class<? extends ImportCheck> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
+        this.importId = inits.isInitialized("importId") ? new QImport(forProperty("importId"), inits.get("importId")) : null;
     }
 
 }

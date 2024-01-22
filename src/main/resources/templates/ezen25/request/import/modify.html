@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="content">
+    <main>
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h1 class="mt-4"> 입고 품목 수정 - #[[${importDTO.importId}]]</h1>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="col-md-12">
+                    <form action="/ezen25/request/import/modify" method="post">
+                        <!--페이지 번호 hidden으로 받기-->
+                        <input name="importId" th:value="${importDTO.importId}" type="hidden">
+                        <div class="white_shd full margin_bottom_30">
+                            <input name="page" th:value="${pageRequestDTO.page}" type="hidden">
+                            <input name="type" th:value="${pageRequestDTO.type}" type="hidden">
+                            <input name="keyword" th:value="${pageRequestDTO.keyword}" type="hidden">
+
+                            <div class="full graph_head">
+                                <table class="table_for_details" width="100%">
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">요청서 코드</td>
+                                        <td class="td_for_details">
+                                            [[${importDTO.requestCode}]]
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">품목 코드</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control"
+                                                   name="productId"
+                                                   th:value="${importDTO.productId}"
+                                                   type="text">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">개수</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control"
+                                                   name="importNum"
+                                                   th:value="${importDTO.importNum}"
+                                                   type="text">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">날짜</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control"
+                                                   name="importDate"
+                                                   th:value="${importDTO.importDate}"
+                                                   type="text">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">상태</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control"
+                                                   name="importStatus"
+                                                   th:value="${importDTO.importStatus}"
+                                                   type="text">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div style="float:right;">
+                <button class="btn btn-primary modifyBtn" type="button">Modify</button>
+
+                <button class="btn btn-info listBtn" type="button">List</button>
+
+                <button class="btn btn-danger removeBtn" type="button">Remove</button>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script th:inline="javascript">
+            var actionForm = $("form");
+
+            $(".removeBtn").click(function(){
+
+                actionForm
+                    .attr("action", "/ezen25/request/import/remove")
+                    .attr("method", "post");
+
+                actionForm.submit();
+
+            });
+
+            $(".modifyBtn").click(function() {
+
+                if(!confirm("수정하겠습니까?")) {
+                    return ;
+                }
+
+                actionForm
+                    .attr("action", "/ezen25/request/import/modify")
+                    .attr("method", "post")
+                    .submit();
+            });
+
+            $('.listBtn').click(function() {
+
+                var page = $("input[name='page']");
+                var type = $("input[name='type']");
+                var keyword = $("input[name='keyword']");
+
+                actionForm.empty();
+                actionForm.append(page);
+                actionForm.append(type);
+                actionForm.append(keyword);
+
+                actionForm
+                    .attr("action", "/ezen25/request/import/list")
+                    .attr("method", "get");
+
+                console.log(actionForm.html());
+                actionForm.submit();
+            });
+        </script>
+
+    </main>
+</th:block>
+</html>

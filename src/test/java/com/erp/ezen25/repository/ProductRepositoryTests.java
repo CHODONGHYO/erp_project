@@ -32,7 +32,7 @@ public class ProductRepositoryTests {
             Product_Info product = Product_Info.builder()
                     .productName("product"+i)
                     .productDescription("product"+i+" is ...")
-                    .brandId(brand)  // brandId에 Brand 객체 설정
+                    .brand(brand)  // brandId에 Brand 객체 설정
                     .mCategory("mCategory"+(i%6))
                     .sCategory("sCategory"+i)
                     .originalPrice((long) (5000+i))
