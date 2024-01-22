@@ -9,11 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ImportDTO {
+public class ImportCheckDTO {
+    private Long importCheckId;
     private Long importId;
-    private Long productId;
-    private Long importNum;
-    private String importDate;
-    private String requestCode;
-    private String importStatus;
+    private String importCheckStatus;
 }

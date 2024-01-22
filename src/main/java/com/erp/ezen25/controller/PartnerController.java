@@ -1,8 +1,6 @@
 package com.erp.ezen25.controller;
 
 import com.erp.ezen25.dto.*;
-import com.erp.ezen25.entity.Brand;
-import com.erp.ezen25.entity.Contract;
 import com.erp.ezen25.service.BrandService;
 import com.erp.ezen25.service.ContractService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -123,4 +119,6 @@ public class PartnerController {
         contractService.contractDelete(contractId);
         return ResponseEntity.ok().build();
     }
+
+
 }
