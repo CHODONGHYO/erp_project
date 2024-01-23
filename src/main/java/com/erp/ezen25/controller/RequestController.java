@@ -76,7 +76,7 @@ public class RequestController {
 
     }
 
-    @GetMapping({"/read", "/modify"})
+    @GetMapping({"/read", "/modify", "/print"})
     public void requestRead(@RequestParam("requestId") Long requestId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model) {
         log.info("Get Read/Modify. requestId : " + requestId);
 
@@ -108,6 +108,8 @@ public class RequestController {
 
         return "redirect:/ezen25/request/read";
     }
+
+
 
     // import (입고) 관련 -------------------------------------------------------------------------
     @GetMapping("/import")

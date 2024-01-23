@@ -116,7 +116,12 @@
                                             <td>[[${exportDTO.exportDate}]]</td>
                                             <td>[[${exportDTO.orderCode}]]</td>
                                             <td>[[${exportDTO.exportStatus}]]</td>
-                                            <td>a</td>
+                                            <td>
+                                                <a th:href="@{/ezen25/order/export/print(exportId = ${exportDTO.exportId}, page= ${exportResult.page},
+                        type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+                                                    <b>명세서 보기</b>
+                                                </a>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
