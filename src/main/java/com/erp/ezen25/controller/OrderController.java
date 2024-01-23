@@ -79,7 +79,7 @@ public class OrderController {
 
     }
 
-    @GetMapping({"/export/read", "/export/modify"})
+    @GetMapping({"/export/read", "/export/modify", "/export/print"})
     public void exportRead(@RequestParam("exportId") Long exportId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model) {
         log.info("Get Read/Modify. exportId : " + exportId);
 

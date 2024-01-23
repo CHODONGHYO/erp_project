@@ -49,16 +49,13 @@
                                                     전체
                                                 </option>
                                                 <option th:selected="${pageRequestDTO.type == 'n'}" value="n">
-                                                    이름
+                                                    품목코드
                                                 </option>
                                                 <option th:selected="${pageRequestDTO.type == 'p'}" value="p">
-                                                    연락처
+                                                    요청서코드
                                                 </option>
                                                 <option th:selected="${pageRequestDTO.type == 'e'}" value="e">
-                                                    이메일
-                                                </option>
-                                                <option th:selected="${pageRequestDTO.type == 'd'}" value="d">
-                                                    설명
+                                                    상태
                                                 </option>
 
                                             </select>
@@ -78,11 +75,23 @@
 
                             </div>
                         </div>
+
                         <div class="table_section padding_infor_info">
                             <div class="table-responsive-sm">
                                 <form action="/ezen25/common/requestSelectDelete" method="post">
                                     <table class="table" style="text-align:center;">
                                         <thead>
+                                        <tr id="tr1">
+                                            <th></th>
+                                            <th><button id="sortBtn2" type="button">2</button></th>
+                                            <th><button id="sortBtn3" type="button">3</button></th>
+                                            <th><button id="sortBtn4" type="button">4</button></th>
+                                            <th><button id="sortBtn5" type="button">5</button></th>
+                                            <th><button id="sortBtn6" type="button">6</button></th>
+                                            <th><button id="sortBtn7" type="button">7</button></th>
+                                            <th><button id="sortBtn8" type="button">8</button></th>
+                                            <th></th>
+                                        </tr>
                                         <tr>
                                             <th><input id="selectAll" type="checkbox"></th>
                                             <th>요청서 코드</th>
@@ -105,7 +114,6 @@
                                             <td><input name="requestDeleteList" th:value="${requestdto.requestId}"
                                                        type="checkbox">
                                             </td>
-                                            <input name="requestId" th:value="${requestdto.requestId}" type="hidden">
                                             <td>
                                                 <a th:href="@{/ezen25/request/read(requestId = ${requestdto.requestId}, page= ${requestResult.page},
                         type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
@@ -118,7 +126,12 @@
                                             <td>[[${requestdto.requestOutDate}]]</td>
                                             <td>[[${requestdto.requestDescription}]]</td>
                                             <td>[[${requestdto.requestStatus}]]</td>
-                                            <td>a</td>
+                                            <td>
+                                                <a th:href="@{/ezen25/request/print(requestId = ${requestdto.requestId}, page= ${requestResult.page},
+                        type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+                                                    <b>명세서 보기</b>
+                                                </a>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
