@@ -1,7 +1,6 @@
 package com.erp.ezen25.controller;
 
 import com.erp.ezen25.dto.*;
-import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.service.OrderService;
 import com.erp.ezen25.service.StockService;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -45,17 +45,9 @@ public class StockController {
 
     // 재고불출 페이지에서 출고하기 버튼 클릭 시 처리
     @PostMapping("/withdrawal")
-    public String withdrawalPOST(@RequestParam String name, Model model) {
+    public String withdrawalPOST(@RequestParam(value = "name") String name, Model model) {
         log.info("출고처리 페이지로 이동........");
         model.addAttribute("name",name);
-        /*model.addAttribute("exportList", withdrawalList);*/
-        return "redirect:/ezen25/stock/exporting";
-    }
-
-    // 출고처리 페이지로 이동
-    @GetMapping("/exporting")
-    public String exportGET() {
-        log.info("출고처리 페이지로 이동........");
         return "ezen25/stock/exporting";
     }
 

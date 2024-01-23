@@ -1,6 +1,7 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.*;
+import com.erp.ezen25.entity.Export;
 import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.Product_Stock;
 import com.erp.ezen25.repository.ProductRepository;
@@ -22,12 +23,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StockServiceImpl implements StockService {
 
-    private final StockRepository repository;
+    private final StockRepository stockRepository;
 
     @Override
     @Transactional(readOnly = true)
     public List<StockDTO> getListWithProduct() {
-        List<Object[]> result = repository.getImportDateWithImport();
+        List<Object[]> result = stockRepository.getImportDateWithImport();
         return result.stream()
                 .map(this::objectArrayToStockDTOWithProduct)
                 .collect(Collectors.toList());
