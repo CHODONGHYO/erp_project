@@ -1,11 +1,12 @@
 package com.erp.ezen25.controller;
 
-import com.erp.ezen25.dto.*;
+import com.erp.ezen25.dto.ExportDTO;
+import com.erp.ezen25.dto.OrderDTO;
+import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.service.ExportService;
 import com.erp.ezen25.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
-@RequestMapping("/order")
+@RequestMapping("/ezen25/order")
 @Log4j2
 @RequiredArgsConstructor
 // 발주 관련 Controller
@@ -24,8 +25,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    @Autowired
-    private ExportService exportService;
+    private final ExportService exportService;
 
     @GetMapping("/list")
     public String orderList(Model model) {
