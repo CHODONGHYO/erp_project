@@ -22,9 +22,13 @@ public class QExport extends EntityPathBase<Export> {
 
     public static final QExport export = new QExport("export");
 
+    public final StringPath exportDate = createString("exportDate");
+
     public final NumberPath<Long> exportId = createNumber("exportId", Long.class);
 
     public final NumberPath<Long> exportNum = createNumber("exportNum", Long.class);
+
+    public final StringPath exportStatus = createString("exportStatus");
 
     public final StringPath orderCode = createString("orderCode");
 

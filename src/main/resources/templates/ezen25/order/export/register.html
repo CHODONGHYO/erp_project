@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="content">
+    <main>
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>입고 등록</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <!-- table section -->
+                <div class="col-md-12">
+                    <form action="/ezen25/request/import/register" th:method="post">
+                        <div class="white_shd full margin_bottom_30">
+                            <div class="full graph_head">
+                                <table class="table_for_details" width="100%">
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">요청서 코드</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" name="requestCode" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">품목 코드</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" name="productId" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">개수</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" name="importNum" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">날짜</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" name="importDate" type="date" th:value="${Now}">
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                        <div style="float:right;">
+                            <a th:href="@{/ezen25/request/import/list?page=1}">
+                                <button class="btn btn-primary">목록으로</button>
+                            </a>
+                            <button class="btn btn-primary" type="submit">등록하기</button>
+                            <button class="btn btn-primary" type="reset">다시하기</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</th:block>
+
+</html>

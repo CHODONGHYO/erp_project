@@ -26,11 +26,7 @@ public class QExportCheck extends EntityPathBase<ExportCheck> {
 
     public final StringPath exportCheckStatus = createString("exportCheckStatus");
 
-    public final StringPath orderCode = createString("orderCode");
-
-    public final NumberPath<Long> orderNum = createNumber("orderNum", Long.class);
-
-    public final QProduct_Info productId;
+    public final QExport exportId;
 
     public QExportCheck(String variable) {
         this(ExportCheck.class, forVariable(variable), INITS);
@@ -50,7 +46,7 @@ public class QExportCheck extends EntityPathBase<ExportCheck> {
 
     public QExportCheck(Class<? extends ExportCheck> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
+        this.exportId = inits.isInitialized("exportId") ? new QExport(forProperty("exportId"), inits.get("exportId")) : null;
     }
 
 }
