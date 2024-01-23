@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class ExportDTO {
-
     private Long exportId;
     private Long productId;
     private String image;
@@ -23,4 +22,8 @@ public class ExportDTO {
     private Long exportNum; //출고 수량
     private String orderStatus; //발주상태 0: 발주요청 1:불출 2: 출고처리완료
 
+    // Entity에 있는 내용 추가함 (240123, 노솔진)
+    private String exportDate;
+    private String exportStatus;
+    private String orderCode;
 }
