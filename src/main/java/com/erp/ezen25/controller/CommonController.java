@@ -65,4 +65,12 @@ public class CommonController {
         }
         return "redirect:/ezen25/request/returns/list?page=1";
     }
+
+    @PostMapping("/exportSelectDelete")
+    public String exportSelectDelete(@RequestParam("exportDeleteList") List<Long> export_ids) {
+        for (Long exportId : export_ids) {
+            importService.remove(exportId);
+        }
+        return "redirect:/ezen25/order/export/list?page=1";
+    }
 }

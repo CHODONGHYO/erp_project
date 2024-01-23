@@ -10,21 +10,21 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h2>입고 등록</h2>
+                        <h2>출하 등록</h2>
                     </div>
                 </div>
             </div>
             <div class="">
                 <!-- table section -->
                 <div class="col-md-12">
-                    <form action="/ezen25/request/import/register" th:method="post">
+                    <form action="/ezen25/order/export/register" th:method="post">
                         <div class="white_shd full margin_bottom_30">
                             <div class="full graph_head">
                                 <table class="table_for_details" width="100%">
                                     <tr class="tr_for_details">
-                                        <td class="td_for_details">요청서 코드</td>
+                                        <td class="td_for_details">발주 코드</td>
                                         <td class="td_for_details">
-                                            <input class="form-control" name="requestCode" type="text">
+                                            <input class="form-control" name="orderCode" type="text">
                                         </td>
                                     </tr>
                                     <tr class="tr_for_details">
@@ -36,7 +36,7 @@
                                     <tr class="tr_for_details">
                                         <td class="td_for_details">개수</td>
                                         <td class="td_for_details">
-                                            <input class="form-control" name="importNum" type="text">
+                                            <input class="form-control" name="exportNum" type="text">
                                         </td>
                                     </tr>
                                     <tr class="tr_for_details">
@@ -50,7 +50,7 @@
                             </div>
                         </div>
                         <div style="float:right;">
-                            <a th:href="@{/ezen25/request/import/list?page=1}">
+                            <a th:href="@{/ezen25/order/export/list?page=1}">
                                 <button class="btn btn-primary">목록으로</button>
                             </a>
                             <button class="btn btn-primary" type="submit">등록하기</button>

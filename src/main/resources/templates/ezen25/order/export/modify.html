@@ -10,15 +10,15 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h1 class="mt-4"> 입고 품목 수정 - #[[${importDTO.importId}]]</h1>
+                        <h1 class="mt-4"> 출하 품목 수정 - #[[${exportDTO.exportId}]]</h1>
                     </div>
                 </div>
             </div>
             <div>
                 <div class="col-md-12">
-                    <form action="/ezen25/request/import/modify" method="post">
+                    <form action="/ezen25/order/export/modify" method="post">
                         <!--페이지 번호 hidden으로 받기-->
-                        <input name="importId" th:value="${importDTO.importId}" type="hidden">
+                        <input name="exportId" th:value="${exportDTO.exportId}" type="hidden">
                         <div class="white_shd full margin_bottom_30">
                             <input name="page" th:value="${pageRequestDTO.page}" type="hidden">
                             <input name="type" th:value="${pageRequestDTO.type}" type="hidden">
@@ -27,9 +27,9 @@
                             <div class="full graph_head">
                                 <table class="table_for_details" width="100%">
                                     <tr class="tr_for_details">
-                                        <td class="td_for_details">요청서 코드</td>
+                                        <td class="td_for_details">발주 코드</td>
                                         <td class="td_for_details">
-                                            [[${importDTO.requestCode}]]
+                                            [[${exportDTO.orderCode}]]
                                         </td>
                                     </tr>
                                     <tr class="tr_for_details">
@@ -37,7 +37,7 @@
                                         <td class="td_for_details">
                                             <input class="form-control"
                                                    name="productId"
-                                                   th:value="${importDTO.productId}"
+                                                   th:value="${exportDTO.productId}"
                                                    type="text">
                                         </td>
                                     </tr>
@@ -45,8 +45,8 @@
                                         <td class="td_for_details">개수</td>
                                         <td class="td_for_details">
                                             <input class="form-control"
-                                                   name="importNum"
-                                                   th:value="${importDTO.importNum}"
+                                                   name="exportNum"
+                                                   th:value="${exportDTO.exportNum}"
                                                    type="text">
                                         </td>
                                     </tr>
@@ -54,8 +54,8 @@
                                         <td class="td_for_details">날짜</td>
                                         <td class="td_for_details">
                                             <input class="form-control"
-                                                   name="importDate"
-                                                   th:value="${importDTO.importDate}"
+                                                   name="exportDate"
+                                                   th:value="${exportDTO.exportDate}"
                                                    type="text">
                                         </td>
                                     </tr>
@@ -63,8 +63,8 @@
                                         <td class="td_for_details">상태</td>
                                         <td class="td_for_details">
                                             <input class="form-control"
-                                                   name="importStatus"
-                                                   th:value="${importDTO.importStatus}"
+                                                   name="exportStatus"
+                                                   th:value="${exportDTO.exportStatus}"
                                                    type="text">
                                         </td>
                                     </tr>
@@ -91,7 +91,7 @@
             $(".removeBtn").click(function(){
 
                 actionForm
-                    .attr("action", "/ezen25/request/import/remove")
+                    .attr("action", "/ezen25/order/export/remove")
                     .attr("method", "post");
 
                 actionForm.submit();
@@ -105,7 +105,7 @@
                 }
 
                 actionForm
-                    .attr("action", "/ezen25/request/import/modify")
+                    .attr("action", "/ezen25/order/export/modify")
                     .attr("method", "post")
                     .submit();
             });
@@ -122,14 +122,13 @@
                 actionForm.append(keyword);
 
                 actionForm
-                    .attr("action", "/ezen25/request/import/list")
+                    .attr("action", "/ezen25/order/export/list")
                     .attr("method", "get");
 
                 console.log(actionForm.html());
                 actionForm.submit();
             });
         </script>
-
     </main>
 </th:block>
 </html>
