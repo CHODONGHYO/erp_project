@@ -18,9 +18,6 @@ public class OrderRepositoryTests {
     @Autowired
     private ExportRepository exportRepository;
 
-    @Autowired
-    private ExportCheckRepository exportCheckRepository;
-
     LocalDateTime time = LocalDateTime.now();
     String outDate = time.format(
             DateTimeFormatter.ofPattern("yyyy-MM-dd")
@@ -55,19 +52,6 @@ public class OrderRepositoryTests {
                     .build();
 
             exportRepository.save(dummyExport);
-        });
-    }
-
-    @Test
-    public void insertDummiesExportCheck() {
-        IntStream.rangeClosed(1, 100).forEach(ec -> {
-            ExportCheck dummyEC = ExportCheck.builder()
-                    .exportCheckId((long)ec)
-                    .exportId(Export.builder().exportId((long) ec).build())
-                    .exportCheckStatus("" + ec + ec)
-                    .build();
-
-            exportCheckRepository.save(dummyEC);
         });
     }
 }
