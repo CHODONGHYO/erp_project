@@ -33,7 +33,7 @@ public interface ImportCheckService {
     default ImportCheckDTO entityToDTO(ImportCheck importCheck) {
         ImportCheckDTO dto = ImportCheckDTO.builder()
                 .importCheckId(importCheck.getImportCheckId())
-                .importId(importCheck.getImportCheckId())
+                .importId(importCheck.getImportId().getImportId())
                 .importCheckStatus(importCheck.getImportCheckStatus())
                 .build();
 
