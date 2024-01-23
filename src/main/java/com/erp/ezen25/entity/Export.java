@@ -25,7 +25,7 @@ public class Export {
 
     @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
-    private Product_Info productId;
+    private Product_Info product;
 
     @Column(nullable = false)
     @ColumnDefault("0")
@@ -42,7 +42,7 @@ public class Export {
     private String orderCode;
 
     public void changeProductId(Product_Info productId) {
-        this.productId = productId;
+        this.product = productId;
     }
 
     public void changeExportNum(Long exportNum) {
