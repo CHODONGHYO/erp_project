@@ -5,7 +5,7 @@
     <form id="withdrawalForm" action="/ezen25/stock/withdrawal" method="post">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <p><span style="font-weight:bold;">[[${name}]]</span>점</p>
+                <p><span style="font-weight:bold;">[[${name}]]</span>점 ([[${orderCode}]])</p>
             </div>
             <!-- /* /.panel-heading */ -->
             <div class="panel-body">
@@ -34,6 +34,7 @@
                     </table>
                     <input type="hidden" name="orderCode" th:value="${orderCode}">
                     <input type="hidden" name="name" th:value="${name}">
+                    <input type="hidden" name="selectedProductIds" th:value="${selectedProductIds}">
                     <div style="text-align:center;">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
                         <button type="submit" class="btn btn-primary" id="submitWithdrawal">출고하기</button>
@@ -74,7 +75,15 @@
 
         // 출고하기 버튼 클릭
         $('#submitWithdrawal').click(function() {
-           $("#withdrawalForm").submit();
+            var selectedProductIds = [];
+
+            $("input[name='checkbox']:checked").each(function () {
+               selectedProductIds.push($(this).closest('tr').find("td:eq(1)").text());
+            });
+
+            $("input[name='selectedProductIds']").val(selectedProductIds);
+
+            $("#withdrawalForm").submit();
         });
     });
 </script>

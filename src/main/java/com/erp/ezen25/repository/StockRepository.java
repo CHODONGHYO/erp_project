@@ -12,4 +12,7 @@ import java.util.List;
 public interface StockRepository extends JpaRepository<Product_Stock, Long> {
     @Query("select ps, i.importDate from Product_Stock ps left join Import i on i.product = ps.product")
     List<Object[]> getImportDateWithImport();
+
+    /*@Query("")
+    List<Export> getListForExportByOrderCodeAndProductIds(String orderCode, List<Long> productIds);*/
 }

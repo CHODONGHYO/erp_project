@@ -45,9 +45,19 @@ public class StockController {
 
     // 재고불출 페이지에서 출고하기 버튼 클릭 시 처리
     @PostMapping("/withdrawal")
-    public String withdrawalPOST(@RequestParam(value = "name") String name, Model model) {
+    public String withdrawalPOST(@RequestParam(value = "name") String name,
+                                 @RequestParam(value = "orderCode") String orderCode,
+                                 @RequestParam(value = "selectedProductIds") List<Long> selectedProductIds,
+                                 Model model) {
         log.info("출고처리 페이지로 이동........");
+        log.info("발주번호 : " + orderCode);
+        log.info("체크된 상품코드 : " + selectedProductIds);
+
+        /*List<ExportDTO> exportList = stockService.getListForExportByOrderCodeAndProductIds(orderCode, selectedProductIds);
+        model.addAttribute("exportList",exportList);*/
         model.addAttribute("name",name);
+        model.addAttribute("orderCode",orderCode);
+
         return "ezen25/stock/exporting";
     }
 

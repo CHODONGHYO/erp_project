@@ -58,4 +58,16 @@ public class StockServiceImpl implements StockService {
 
         return dto;
     }
+
+    /*@Override
+    @Transactional(readOnly = true)
+    public List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode, List<Long> productIds) {
+        List<Export> exportList = stockRepository.getListForExportByOrderCodeAndProductIds(orderCode, productIds);
+        return exportList.stream()
+                .map(this::entityToExportDTO)
+                .collect(Collectors.toList());
+    }
+    private ExportDTO entityToExportDTO(Export export) {
+
+    }*/
 }

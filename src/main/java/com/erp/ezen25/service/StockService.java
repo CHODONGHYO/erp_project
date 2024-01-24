@@ -1,6 +1,7 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.*;
+import com.erp.ezen25.entity.Export;
 import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.Product_Stock;
@@ -10,6 +11,8 @@ import java.util.List;
 public interface StockService {
 
     List<StockDTO> getListWithProduct();
+
+    /*List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode, List<Long> productIds);*/
 
     default Product_Stock dtoToEntity(StockDTO dto) {
         Product_Stock entity = Product_Stock.builder()
