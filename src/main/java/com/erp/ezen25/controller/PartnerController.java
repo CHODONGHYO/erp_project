@@ -1,8 +1,8 @@
 package com.erp.ezen25.controller;
 
 import com.erp.ezen25.dto.*;
-import com.erp.ezen25.dto.contractDTO.*;
-import com.erp.ezen25.dto.productDTO.ProductBnameListResponseDTO;
+import com.erp.ezen25.dto.contractDTOs.*;
+import com.erp.ezen25.dto.productDTOs.ProductBnameListResponseDTO;
 import com.erp.ezen25.service.BrandService;
 import com.erp.ezen25.service.ContractService;
 import lombok.RequiredArgsConstructor;
@@ -117,7 +117,7 @@ public class PartnerController {
 
     @PostMapping("/contract/contractDelete")
     @ResponseBody
-    public ResponseEntity<Void> contractDelete (@RequestParam("contractId")Long contractId) {
+    public ResponseEntity<Void> contractDelete (@RequestParam("contractId") Long contractId) {
         contractService.contractDelete(contractId);
         return ResponseEntity.ok().build();
     }

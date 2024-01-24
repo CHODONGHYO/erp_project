@@ -174,8 +174,7 @@ img {
 
 
 
-/* 계약관리 */
-
+/* ----- 계약관리 ----- */
 .contractList a.moBtn {
     text-decoration: none;
 }
@@ -215,4 +214,69 @@ img {
     width: 100%;
     max-width: none;
     margin-top: 20px;
+}
+
+/* ----- 계획 관리 ------ */
+
+/* 계획 등록 */
+.planAdd .prodBtn {
+    margin: 0 !important;
+    font-size: 0.875rem;
+}
+.planAdd .prodBtn .card-body {
+    padding: 2px 6px;
+}
+.planAdd .prodBtn a:hover {
+    color: white;
+    background-color: var(--bs-link-hover-color);
+}
+
+.planAdd .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.planAdd .dateSelect {
+    display: flex;
+}
+.planAdd .dateSelect span {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+.planAdd #planAddForm .inputLine:first-child {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+}
+.planAdd #planAddForm .inputLine:first-child .prodBtn {
+    display:inline-block;
+}
+.planAdd #planAddForm select {
+    width: 100%;
+}
+.planAdd .inputListTable {
+    width: 100%;
+    text-align:center;
+}
+
+.planAdd .inputListTable th,
+.planAdd .inputListTable td {
+    border: 1px solid var(--bs-border-color);
+}
+.planAdd .inputListTable th:nth-child(1) {
+    width: 25%;
+}
+.planAdd .inputListTable th:nth-child(2) {
+    width: 50%;
+}
+.planAdd .inputListTable th:nth-child(3) {
+    width: 25%;
+}
+.planAdd .addTd .card-body {
+    padding: 6px 12px;
+    cursor: pointer;
+}
+.planAdd .addTd .card-body:hover {
+    color: white;
+    background-color: var(--bs-link-hover-color);
 }

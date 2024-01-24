@@ -1,6 +1,6 @@
 package com.erp.ezen25.controller;
 
-import com.erp.ezen25.dto.productDTO.*;
+import com.erp.ezen25.dto.productDTOs.*;
 import com.erp.ezen25.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.erp.ezen25.dto.productDTO;
+package com.erp.ezen25.dto.productDTOs;
 
 import com.erp.ezen25.entity.Brand;
 import lombok.Getter;

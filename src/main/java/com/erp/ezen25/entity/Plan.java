@@ -27,11 +27,11 @@ public class Plan {
 
     @ManyToOne(targetEntity = Brand.class, fetch = FetchType.LAZY)
     @JoinColumn(name="brand_id", nullable = false)
-    private Long brandId;
+    private Brand brand;
 
     @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
-    private Long productId;
+    private Product_Info productInfo;
 
     @Column(nullable = false)
     @ColumnDefault("0")

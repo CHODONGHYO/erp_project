@@ -22,7 +22,7 @@ public class QPlan extends EntityPathBase<Plan> {
 
     public static final QPlan plan = new QPlan("plan");
 
-    public final QBrand brandId;
+    public final QBrand brand;
 
     public final DateTimePath<java.time.LocalDateTime> completeDate = createDateTime("completeDate", java.time.LocalDateTime.class);
 
@@ -32,7 +32,7 @@ public class QPlan extends EntityPathBase<Plan> {
 
     public final StringPath planStatus = createString("planStatus");
 
-    public final QProduct_Info productId;
+    public final QProduct_Info productInfo;
 
     public QPlan(String variable) {
         this(Plan.class, forVariable(variable), INITS);
@@ -52,8 +52,8 @@ public class QPlan extends EntityPathBase<Plan> {
 
     public QPlan(Class<? extends Plan> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.brandId = inits.isInitialized("brandId") ? new QBrand(forProperty("brandId")) : null;
-        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
+        this.brand = inits.isInitialized("brand") ? new QBrand(forProperty("brand")) : null;
+        this.productInfo = inits.isInitialized("productInfo") ? new QProduct_Info(forProperty("productInfo"), inits.get("productInfo")) : null;
     }
 
 }

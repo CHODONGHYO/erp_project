@@ -1,4 +1,4 @@
-package com.erp.ezen25.dto.contractDTO;
+package com.erp.ezen25.dto.contractDTOs;
 
 import com.erp.ezen25.entity.Product_Info;
 import lombok.Getter;

@@ -1,9 +1,8 @@
 package com.erp.ezen25.service;
 
-import com.erp.ezen25.dto.contractDTO.*;
-import com.erp.ezen25.dto.productDTO.ProductBnameListResponseDTO;
+import com.erp.ezen25.dto.contractDTOs.*;
+import com.erp.ezen25.dto.productDTOs.ProductBnameListResponseDTO;
 import com.erp.ezen25.entity.Contract;
-import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.repository.BrandRepository;
 import com.erp.ezen25.repository.ContractRepository;
 import com.erp.ezen25.repository.ProductRepository;

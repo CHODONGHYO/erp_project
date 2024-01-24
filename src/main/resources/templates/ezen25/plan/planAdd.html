@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<th:block layout:fragment="content">
+    <!-- 여기에 생성할 페이지 코드 작성 -->
+    <main class="formStyle planAdd">
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">계획등록</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item">조달계획</li>
+                <li class="breadcrumb-item active">계획등록</li>
+            </ol>
+            <div class="cardGroup">
+                <div class="card mb-4 cardForm">
+                    <div class="card-header">
+                        <div class="dateSelect">
+                            <input type="date" class="form-control" id="completeDate" name="completeDate">
+                            <span>등록날짜</span>
+                        </div>
+                        <div>
+                            <div class="card bg-primary text-white mb-2 prodBtn">
+                                <a href="#" class="card-body resetLink">현재 재고보기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <form method="post" class="card-body" id="planAddForm">
+                        <div class="inputLine">
+                            <select class="form-control" id="pbSelect">
+                                <option>품목선택</option>
+                                <option th:each="probrand : ${proList}" th:value="${probrand.productId}" th:data-bname="${probrand.brandName}" th:data-bid="${probrand.brandId}">[[${probrand.productName}]]</option>
+                            </select>
+                            <input class="form-control" type="text" id="selectNum" placeholder="수량">
+                            <div>
+                                <div class="card bg-primary text-white mb-2 prodBtn addTd">
+                                    <div class="card-body resetLink">추가</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inputLine">
+                            <table class="inputListTable">
+                                <tr>
+                                    <th>협력업체</th>
+                                    <th>품목</th>
+                                    <th>수량</th>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="btnGroup">
+                            <div class="card bg-primary text-white mb-2 prodBtn">
+                                <div class="card-body resetLink registerBtn">계획 등록</div>
+                            </div>
+                            <div class="card bg-primary text-white mb-2 prodBtn">
+                                <a href="planList" class="card-body resetLink">목록</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <aside class="sideCard">
+                    <div class="card imageCard">
+                        <div class="card-header">품목 이미지</div>
+                        <div class="card-body">
+                            <img class="image" src="/image/NoImg.png" alt="이미지"/>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        $("#pbSelect").on("change", (e) => {
+            let bname = e.target.options[e.target.selectedIndex].dataset.bname
+            let bid = e.target.options[e.target.selectedIndex].dataset.bid
+
+            $(e.target).attr("data-selectbname", bname);
+            $(e.target).attr("data-selectbid", bid);
+
+            $(e.target).next().val("");
+            $(e.target).next().focus();
+        })
+        let addCount=0;
+        $(".addTd").on("click", (e) => {
+            let productId = $("#pbSelect").val();
+            let productName = $("#pbSelect").find(`option[value="${productId}"]`).text();
+
+            let brandName = $("#pbSelect")[0].dataset.selectbname;
+            let brandId = $("#pbSelect")[0].dataset.selectbid;
+            let number = $("#selectNum").val();
+
+            $(".inputListTable tbody").append(`<tr>`
+                +`<td>${brandName}`
+                    +`<input type=hidden id=brand${addCount} name=brand${addCount} value="${brandId}">`
+                +`<td>${productName}`
+                    +`<input type=hidden id=product${addCount} name=product${addCount} value="${productId}">`
+                +`<td id=addNum${addCount}>${number}`
+            +`</tr>`)
+
+            addCount++;
+        })
+
+        let registerBtn = document.querySelector(".registerBtn");
+        registerBtn.addEventListener("click", () => {
+
+            let trCount = document.querySelectorAll(".inputListTable tbody tr:not(:first-child)");
+            let objList = [];
+            trCount.forEach((e,idx)=> {
+                let obj = {
+                    productId: $(e).find(`#product${idx}`).val(),
+                    brandId: $(e).find(`#brand${idx}`).val(),
+                }
+                objList.push(obj);
+            })
+
+            $.ajax({
+                url: "planAdd",
+                method: "POST",
+                traditional : true,
+                data: {
+                    inputPlanList: JSON.stringify(objList)
+                },
+                success: (result) => {
+                    console.log("성공");
+                    // location.href= "/ezen25/plan/planList";
+                },
+                error: (request, error) => {
+                    alert("code:" + request.status+ "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            })
+        })
+    </script>
+</th:block>
+</html>

@@ -1,4 +1,4 @@
-package com.erp.ezen25.dto.productDTO;
+package com.erp.ezen25.dto.productDTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
