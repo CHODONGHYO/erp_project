@@ -3,8 +3,11 @@ package com.erp.ezen25.service;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.dto.RequestDTO;
+import com.erp.ezen25.entity.Import;
+import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.QRequest;
 import com.erp.ezen25.entity.Request;
+import com.erp.ezen25.repository.ImportRepository;
 import com.erp.ezen25.repository.RequestRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -23,12 +26,23 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class RequestServiceImpl implements RequestService {
     private final RequestRepository requestRepository;
+    private final ImportRepository importRepository;
 
     @Override
     public Long register(RequestDTO requestDTO) {
         Request request = dtoToEntity(requestDTO);
 
         requestRepository.save(request);
+
+        Import i = Import.builder()
+                .product(Product_Info.builder().build().setProductId(request.getProductId()))
+                .importNum(request.getRequestNum())
+                .importDate(request.getRequestOutDate())
+                .requestCode(request.getRequestCode())
+                .importStatus("미완")
+                .build();
+
+        importRepository.save(i);
 
         return request.getRequestId();
     }
@@ -44,6 +58,24 @@ public class RequestServiceImpl implements RequestService {
 
         return new PageResultDTO<>(result, fn);
     }
+
+    @Override
+    public PageResultDTO<RequestDTO, Request> getListByBrandId(PageRequestDTO pageRequestDTO, RequestDTO requestDTO) {
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("requestId").descending());
+
+        BooleanBuilder booleanBuilder = getSearch(pageRequestDTO);
+
+        booleanBuilder.and(QRequest.request.brandId.eq(requestDTO.getBrandId()));
+
+        Page<Request> result = requestRepository.findAll(booleanBuilder, pageable);
+
+        Function<Request, RequestDTO> fn = (this::entityToDTO);
+
+        return new PageResultDTO<>(result, fn);
+    }
+
+
+
     @Override
     public RequestDTO read(Long requestId) {
         Optional<Request> oRequest = requestRepository.findById(requestId);

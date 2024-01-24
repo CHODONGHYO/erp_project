@@ -16,7 +16,6 @@
                 </div>
             </div>
             <input name="importId" th:value="${importDTO.importId}" type="hidden">
-
             <div>
                 <div class="col-md-12">
                     <div class="white_shd full margin_bottom_30">
@@ -48,6 +47,9 @@
                 </div>
             </div>
             <div style="float:right;">
+                <form id="deleteForm" action="/ezen25/request/import/remove" method="post">
+                    <input name="importId" th:value="${importDTO.importId}" type="hidden">
+                </form>
                 <a th:href="@{/ezen25/request/import/modify(importId = ${importDTO.importId}, page = ${pageRequestDTO.page},
          type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-primary" type="button">Modify</button>
@@ -57,8 +59,25 @@
          keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-info" type="button">List</button>
                 </a>
+                <button class="btn btn-danger removeBtn" type="button">삭제하기</button>
+
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script th:inline="javascript">
+            $(document).ready(function() {
+                var actionForm = $("#deleteForm");
+
+                $(".removeBtn").click(function() {
+                    if(confirm("삭제하겠습니까?")) {
+                        alert("삭제가 완료되었습니다.");
+                        actionForm.submit();
+                    } else {
+                        return;
+                    }
+                });
+            });
+        </script>
     </main>
 </th:block>
 </html>

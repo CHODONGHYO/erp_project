@@ -76,11 +76,14 @@
                 </div>
             </div>
             <div style="float:right;">
-                <button class="btn btn-primary modifyBtn" type="button">Modify</button>
+                <button class="btn btn-primary modifyBtn" type="button">수정완료</button>
 
-                <button class="btn btn-info listBtn" type="button">List</button>
+                <a th:href="@{/ezen25/request/import/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
+         keyword = ${pageRequestDTO.keyword})}">
+                    <button class="btn btn-info" type="button">목록</button>
+                </a>
 
-                <button class="btn btn-danger removeBtn" type="button">Remove</button>
+                <button class="btn btn-danger removeBtn" type="button">삭제하기</button>
             </div>
         </div>
 
@@ -89,7 +92,9 @@
             var actionForm = $("form");
 
             $(".removeBtn").click(function(){
-
+                if(!confirm("삭제하겠습니까?")) {
+                    return ;
+                }
                 actionForm
                     .attr("action", "/ezen25/request/import/remove")
                     .attr("method", "post");
@@ -108,25 +113,6 @@
                     .attr("action", "/ezen25/request/import/modify")
                     .attr("method", "post")
                     .submit();
-            });
-
-            $('.listBtn').click(function() {
-
-                var page = $("input[name='page']");
-                var type = $("input[name='type']");
-                var keyword = $("input[name='keyword']");
-
-                actionForm.empty();
-                actionForm.append(page);
-                actionForm.append(type);
-                actionForm.append(keyword);
-
-                actionForm
-                    .attr("action", "/ezen25/request/import/list")
-                    .attr("method", "get");
-
-                console.log(actionForm.html());
-                actionForm.submit();
             });
         </script>
 
