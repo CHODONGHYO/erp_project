@@ -56,7 +56,7 @@ public class PartnerController {
 
     }
 
-    @GetMapping({"/read", "/modify"})
+    @GetMapping({"/read", "/modify", "/print"})
     public void brandRead(@RequestParam("brandId") Long brandId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model) {
         log.info("Get Read/Modify. gno : " + brandId);
 

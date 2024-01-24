@@ -92,9 +92,10 @@
                                             <th>요청서 코드</th>
                                             <th>상태</th>
                                             <th>
-                                                <button class="new-button" onclick="return importDeleteSelected()"
+                                                <button class="new-button"
+                                                        onclick="return importDeleteSelected()"
                                                         type="submit">
-                                                    <strong>선택 삭제</strong>
+                                                    선택 삭제
                                                 </button>
                                             </th>
                                         </tr>
@@ -116,7 +117,11 @@
                                             <td>[[${importDTO.importDate}]]</td>
                                             <td>[[${importDTO.requestCode}]]</td>
                                             <td>[[${importDTO.importStatus}]]</td>
-                                            <td></td>
+                                            <td>
+                                                <button class="removeBtn" onclick="confirmDelete()">
+                                                    삭제
+                                                </button>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -161,6 +166,23 @@
             });
 
         </script>
+        <script th:inline="javascript">
+            var actionForm = $("form");
+
+            function confirmDelete() {
+                if(confirm("삭제하겠습니까?")) {
+                        alert("삭제가 완료되었습니다.");
+                        actionForm
+                        .attr("action", "/ezen25/request/import/remove")
+                        .attr("method", "post");
+
+                    actionForm.submit();
+                } else {
+                    return;
+                }
+
+            }
+        </script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script th:inline="javascript">
             $(document).ready(function() {
@@ -198,6 +220,7 @@
               }
           }
         </script>
+
     </main>
 </th:block>
 </html>

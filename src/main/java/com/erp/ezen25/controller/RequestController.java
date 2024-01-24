@@ -1,12 +1,7 @@
 package com.erp.ezen25.controller;
 
-import com.erp.ezen25.dto.ImportCheckDTO;
-import com.erp.ezen25.dto.ImportDTO;
-import com.erp.ezen25.dto.PageRequestDTO;
-import com.erp.ezen25.dto.RequestDTO;
-import com.erp.ezen25.service.ImportCheckService;
-import com.erp.ezen25.service.ImportService;
-import com.erp.ezen25.service.RequestService;
+import com.erp.ezen25.dto.*;
+import com.erp.ezen25.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +14,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Controller
-@RequestMapping("/ezen25/request/*")
+@RequestMapping("/ezen25/request")
 @Log4j2
 @RequiredArgsConstructor
 // 협력업체 관련 Controller
@@ -33,7 +28,10 @@ public class RequestController {
     @Autowired
     private ImportCheckService importCheckService;
 
-    @GetMapping("/")
+    @Autowired
+    private BrandService brandService;
+
+    @GetMapping({"/", ""})
     public String RequestHome() {
         return "redirect:/ezen25/request/list";
     }
@@ -112,7 +110,7 @@ public class RequestController {
 
 
     // import (입고) 관련 -------------------------------------------------------------------------
-    @GetMapping("/import")
+    @GetMapping({"/import", "/import/"})
     public String importListGet() {
         return "redirect:/ezen25/request/import/list";
     }

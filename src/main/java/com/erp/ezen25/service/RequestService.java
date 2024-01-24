@@ -15,6 +15,8 @@ public interface RequestService {
 
     void modify(RequestDTO requestDTO);
 
+    PageResultDTO<RequestDTO, Request> getListByBrandId(PageRequestDTO pageRequestDTO, RequestDTO requestDTO);
+
     default Request dtoToEntity(RequestDTO requestDTO) {
         Request request = Request.builder()
                 .requestId(requestDTO.getRequestId())
