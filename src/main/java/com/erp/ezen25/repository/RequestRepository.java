@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface RequestRepository extends JpaRepository<Request, Long>, QuerydslPredicateExecutor<Request> {
     Optional<Request> findByBrandId(Long brandId);
+    Optional<Request> findByRequestCode(String requestCode);
 }
