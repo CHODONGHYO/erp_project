@@ -6,7 +6,9 @@ import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.entity.Import;
 import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.QImport;
+import com.erp.ezen25.entity.Request;
 import com.erp.ezen25.repository.ImportRepository;
+import com.erp.ezen25.repository.RequestRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ import java.util.function.Function;
 public class ImportServiceImpl implements ImportService {
 
     private final ImportRepository importRepository;
+    private final RequestRepository requestRepository;
 
     @Override
     public Long register(ImportDTO importDTO) {
@@ -54,7 +57,26 @@ public class ImportServiceImpl implements ImportService {
     }
     @Override
     public void remove(Long importId){
-        importRepository.deleteById(importId);
+        Optional<Import> optionalImport = importRepository.findById(importId);
+
+        if(optionalImport.isPresent()) {
+            Import importEntity = optionalImport.get();
+
+            // Delete the Import entity
+            importRepository.deleteById(importId);
+
+            // Get the requestCode from the Import entity
+            String requestCode = importEntity.getRequestCode();
+
+            // Find the related Request entity by requestCode
+            Optional<Request> optionalRequest = requestRepository.findByRequestCode(requestCode);
+
+            if(optionalRequest.isPresent()) {
+                Request r = optionalRequest.get();
+                r.changeRequestStatus("완료");
+                requestRepository.save(r);
+            }
+        }
     }
     @Override
     public void modify(ImportDTO importDTO){
