@@ -53,7 +53,8 @@ public class StockController {
         log.info("발주번호 : " + orderCode);
         log.info("체크된 상품코드 : " + selectedProductIds);
 
-        /*List<ExportDTO> exportList = stockService.getListForExportByOrderCodeAndProductIds(orderCode, selectedProductIds);
+        stockService.updateOrderStatus(orderCode,selectedProductIds);
+       /* List<ExportDTO> exportList = stockService.getListForExportByOrderCodeAndProductIds(orderCode, selectedProductIds);
         model.addAttribute("exportList",exportList);*/
         model.addAttribute("name",name);
         model.addAttribute("orderCode",orderCode);

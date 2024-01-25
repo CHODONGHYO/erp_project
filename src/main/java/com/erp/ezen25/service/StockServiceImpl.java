@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import javax.swing.text.html.parser.Entity;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,15 +60,9 @@ public class StockServiceImpl implements StockService {
         return dto;
     }
 
-    /*@Override
-    @Transactional(readOnly = true)
-    public List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode, List<Long> productIds) {
-        List<Export> exportList = stockRepository.getListForExportByOrderCodeAndProductIds(orderCode, productIds);
-        return exportList.stream()
-                .map(this::entityToExportDTO)
-                .collect(Collectors.toList());
+    @Override
+    @Transactional
+    public void updateOrderStatus(String orderCode, List<Long> productIds) {
+        stockRepository.updateOrderStatus(orderCode, productIds);
     }
-    private ExportDTO entityToExportDTO(Export export) {
-
-    }*/
 }

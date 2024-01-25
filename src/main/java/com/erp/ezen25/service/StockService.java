@@ -12,7 +12,11 @@ public interface StockService {
 
     List<StockDTO> getListWithProduct();
 
-    /*List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode, List<Long> productIds);*/
+/*
+    List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode, List<Long> productIds);
+*/
+
+    void updateOrderStatus(String orderCode, List<Long> productIds);
 
     default Product_Stock dtoToEntity(StockDTO dto) {
         Product_Stock entity = Product_Stock.builder()
