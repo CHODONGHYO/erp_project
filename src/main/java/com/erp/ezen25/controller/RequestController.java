@@ -167,6 +167,7 @@ public class RequestController {
 
         importService.remove(importId);
 
+
         return "redirect:/ezen25/request/import/list";
     }
 
@@ -244,6 +245,13 @@ public class RequestController {
         log.info("Post Remove. requestId : " + importCheckId);
 
         importCheckService.remove(importCheckId);
+
+        return "redirect:/ezen25/request/importCheck/list";
+    }
+
+    @PostMapping("/importCheck/review")
+    public String icReview(@RequestParam("importCheckId") Long importCheckId, @RequestParam("num") Long num) {
+        importCheckService.review(importCheckId, num);
 
         return "redirect:/ezen25/request/importCheck/list";
     }

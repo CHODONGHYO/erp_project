@@ -15,6 +15,7 @@ public interface ImportCheckService {
     ImportCheckDTO read(Long importCheckId);
 
     void remove(Long importCheckId);
+    void review(Long importCheckId, Long requestNum);
 
     void modify(ImportCheckDTO importCheckDTO);
 
