@@ -102,13 +102,14 @@
 
         let registerBtn = document.querySelector(".registerBtn");
         registerBtn.addEventListener("click", () => {
-
+            let planDate = document.querySelector("#completeDate").value;
             let trCount = document.querySelectorAll(".inputListTable tbody tr:not(:first-child)");
             let objList = [];
             trCount.forEach((e,idx)=> {
                 let obj = {
                     productId: $(e).find(`#product${idx}`).val(),
                     brandId: $(e).find(`#brand${idx}`).val(),
+                    planNumber: $(e).find(`#addNum${idx}`).text(),
                 }
                 objList.push(obj);
             })
@@ -118,6 +119,7 @@
                 method: "POST",
                 traditional : true,
                 data: {
+                    planDate : planDate,
                     inputPlanList: JSON.stringify(objList)
                 },
                 success: (result) => {

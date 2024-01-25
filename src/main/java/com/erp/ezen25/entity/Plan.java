@@ -9,6 +9,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -38,7 +39,7 @@ public class Plan {
     private Long planNumber;
 
     @Column(nullable = false)
-    private LocalDateTime completeDate;
+    private LocalDate completeDate;
 
     @Column(length = 1000, nullable = false)
     @ColumnDefault("'미정'")

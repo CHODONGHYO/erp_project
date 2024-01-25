@@ -24,7 +24,7 @@ public class QPlan extends EntityPathBase<Plan> {
 
     public final QBrand brand;
 
-    public final DateTimePath<java.time.LocalDateTime> completeDate = createDateTime("completeDate", java.time.LocalDateTime.class);
+    public final DatePath<java.time.LocalDate> completeDate = createDate("completeDate", java.time.LocalDate.class);
 
     public final NumberPath<Long> planId = createNumber("planId", Long.class);
 
