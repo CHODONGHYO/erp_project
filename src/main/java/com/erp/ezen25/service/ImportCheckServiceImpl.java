@@ -3,9 +3,13 @@ package com.erp.ezen25.service;
 import com.erp.ezen25.dto.ImportCheckDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
+import com.erp.ezen25.entity.Import;
 import com.erp.ezen25.entity.ImportCheck;
 import com.erp.ezen25.entity.QImportCheck;
+import com.erp.ezen25.entity.Request;
 import com.erp.ezen25.repository.ImportCheckRepository;
+import com.erp.ezen25.repository.ImportRepository;
+import com.erp.ezen25.repository.RequestRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +27,8 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class ImportCheckServiceImpl implements ImportCheckService{
     private final ImportCheckRepository importCheckRepository;
+    private final RequestRepository requestRepository;
+    private final ImportRepository importRepository;
 
     @Override
     public Long register(ImportCheckDTO importCheckDTO) {
@@ -70,7 +76,42 @@ public class ImportCheckServiceImpl implements ImportCheckService{
 
     @Override
     public void remove(Long importCheckId) {
-        importCheckRepository.deleteById(importCheckId);
+        Optional<ImportCheck> optionalImportCheck = importCheckRepository.findById(importCheckId);
+
+        if(optionalImportCheck.isPresent()) {
+            ImportCheck importCheck = optionalImportCheck.get();
+            importCheckRepository.deleteById(importCheckId);
+
+            Optional<Import> optionalImport = importRepository.findById(importCheck.getImportId().getImportId());
+            if(optionalImport.isPresent()) {
+                Import importEntity = optionalImport.get();
+                String requestCode = importEntity.getRequestCode();
+                Optional<Request> optionalRequest = requestRepository.findByRequestCode(requestCode);
+
+                if(optionalRequest.isPresent()) {
+                    Request r = optionalRequest.get();
+                    r.changeRequestStatus("완료");
+                    requestRepository.save(r);
+                }
+            }
+        }
+    }
+    @Override
+    public void review(Long importCheckId, Long requestNum) {
+        Optional<ImportCheck> optionalImportCheck = importCheckRepository.findById(importCheckId);
+
+        if(optionalImportCheck.isPresent()) {
+            ImportCheck importCheck = optionalImportCheck.get();
+            importCheckRepository.deleteById(importCheckId);
+            Optional<Import> optionalImport = importRepository.findById(importCheck.getImportId().getImportId());
+            if(optionalImport.isPresent()) {
+                Import importEntity = optionalImport.get();
+                Long num = importEntity.getImportNum();
+                importEntity.changeImportStatus(((requestNum/(float)num)*100)  + "% 완료");
+                importEntity.changeImportNum(num - requestNum);
+                importRepository.save(importEntity);
+            }
+        }
     }
 
     @Override

@@ -80,11 +80,9 @@
                         </div>
                         <div class="table_section padding_infor_info">
                             <div class="table-responsive-sm">
-                                <form action="/ezen25/common/importSelectDelete" method="post">
                                     <table class="table" style="text-align:center;">
                                         <thead>
                                         <tr>
-                                            <th><input id="selectAll" type="checkbox"></th>
                                             <th>#</th>
                                             <th>품목 코드</th>
                                             <th>개수</th>
@@ -92,19 +90,11 @@
                                             <th>요청서 코드</th>
                                             <th>상태</th>
                                             <th>
-                                                <button class="new-button"
-                                                        onclick="return importDeleteSelected()"
-                                                        type="submit">
-                                                    선택 삭제
-                                                </button>
                                             </th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr th:each="importDTO : ${importResult.dtoList}">
-                                            <td><input name="importDeleteList" th:value="${importDTO.importId}"
-                                                       type="checkbox">
-                                            </td>
                                             <input name="importId" th:value="${importDTO.importId}" type="hidden">
                                             <td>
                                                 <a th:href="@{/ezen25/request/import/read(importId = ${importDTO.importId}, page= ${importResult.page},
@@ -118,14 +108,13 @@
                                             <td>[[${importDTO.requestCode}]]</td>
                                             <td>[[${importDTO.importStatus}]]</td>
                                             <td>
-                                                <button class="removeBtn" onclick="confirmDelete()">
+                                                <button class="removeBtn">
                                                     출하
                                                 </button>
                                             </td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                </form>
                                 <ul class="pagination h-100 justify-content-center align-items-center">
                                     <li class="page-item " th:if="${importResult.prev}">
                                         <a class="page-link" tabindex="-1" th:href="@{/ezen25/request/import/list(page = ${importResult.start-1}, type=${pageRequestDTO.type},
@@ -166,61 +155,36 @@
             });
 
         </script>
-        <script th:inline="javascript">
-            var actionForm = $("form");
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-            function confirmDelete() {
-                if(confirm("삭제하겠습니까?")) {
-                        alert("삭제가 완료되었습니다.");
-                        actionForm
-                        .attr("action", "/ezen25/request/import/remove")
-                        .attr("method", "post");
+        <script>
+            // 출하 버튼 클릭 시 AJAX를 통해 importId를 서버로 전송하고 해당 기록 삭제
+            $(".removeBtn").click(function () {
+                // 현재 버튼이 속한 행에서 importId 값을 가져오기
+                var importId = $(this).closest('tr').find('[name="importId"]').val();
 
-                    actionForm.submit();
-                } else {
+                // 사용자에게 삭제 여부를 묻기
+                var confirmRemove = confirm("이 수입 기록을 삭제하시겠습니까?");
+                if (!confirmRemove) {
                     return;
                 }
 
-            }
+                // AJAX 요청 설정
+                $.ajax({
+                    type: "POST",
+                    url: "/ezen25/request/import/remove",
+                    data: { "importId": importId },
+                    success: function (response) {
+                        // 삭제 성공 시 import 목록 페이지로 리다이렉트
+                        window.location.href = '/ezen25/request/import/list';
+                    },
+                    error: function (error) {
+                        console.error("수입 기록 삭제 중 오류 발생: " + error);
+                        // 오류 처리를 추가하십시오 (예: 사용자에게 알림)
+                    }
+                });
+            });
         </script>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script th:inline="javascript">
-            $(document).ready(function() {
-              // 전체 선택 체크박스
-              $("#selectAll").click(function() {
-                  $("input[name='importDeleteList']").prop('checked', this.checked);
-              });
-          });
-          // 선택 삭제 함수
-          function importDeleteSelected() {
-              var selectedItems = [];
-
-              // 선택된 체크박스 가져오기
-              $('input[name="importDeleteList"]:checked').each(function() {
-                  selectedItems.push($(this).val());
-              });
-
-              // 선택된 항목이 없을 경우 알림
-              if (selectedItems.length === 0) {
-                  alert("선택된 항목이 없습니다.");
-                  return false;
-              }
-
-              // 사용자에게 삭제 여부 확인
-              var isConfirmed = confirm("선택한 항목을 삭제하시겠습니까?");
-
-              // 사용자가 확인을 눌렀을 때 삭제 요청
-              if (isConfirmed) {
-                  console.log("deleteSelected 함수 호출됨");
-                  alert("삭제완료");
-                  return true;
-
-              } else {
-                  return false;
-              }
-          }
-        </script>
-
     </main>
 </th:block>
 </html>

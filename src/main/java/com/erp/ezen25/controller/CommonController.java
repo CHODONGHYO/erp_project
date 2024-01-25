@@ -6,7 +6,6 @@ import com.erp.ezen25.service.ImportService;
 import com.erp.ezen25.service.RequestService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,14 +17,13 @@ import java.util.List;
 @Log4j2
 @RequiredArgsConstructor
 public class CommonController {
-    @Autowired
-    private BrandService brandService;
-    @Autowired
-    private RequestService requestService;
-    @Autowired
-    private ImportService importService;
-    @Autowired
-    private ImportCheckService importCheckService;
+    private final BrandService brandService;
+
+    private final RequestService requestService;
+
+    private final ImportService importService;
+
+    private final ImportCheckService importCheckService;
 
     @PostMapping("/brandSelectDelete")
     public String brandSelectDelete(@RequestParam("brandDeleteList") List<Long> brand_ids) {

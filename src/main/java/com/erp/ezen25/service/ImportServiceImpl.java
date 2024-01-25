@@ -4,11 +4,11 @@ import com.erp.ezen25.dto.ImportDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.entity.Import;
+import com.erp.ezen25.entity.ImportCheck;
 import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.QImport;
-import com.erp.ezen25.entity.Request;
+import com.erp.ezen25.repository.ImportCheckRepository;
 import com.erp.ezen25.repository.ImportRepository;
-import com.erp.ezen25.repository.RequestRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +27,7 @@ import java.util.function.Function;
 public class ImportServiceImpl implements ImportService {
 
     private final ImportRepository importRepository;
-    private final RequestRepository requestRepository;
+    private final ImportCheckRepository importCheckRepository;
 
     @Override
     public Long register(ImportDTO importDTO) {
@@ -57,27 +57,21 @@ public class ImportServiceImpl implements ImportService {
     }
     @Override
     public void remove(Long importId){
-        Optional<Import> optionalImport = importRepository.findById(importId);
+            Import importEntity = importRepository.findImportByImportId(importId);
+            ImportDTO importDTO = entityToDTO(importEntity);
+            importDTO.setImportStatus("완료");
+            importEntity = dtoToEntity(importDTO);;
+            importRepository.save(importEntity);
 
-        if(optionalImport.isPresent()) {
-            Import importEntity = optionalImport.get();
+            ImportCheck importCheck = ImportCheck.builder()
+                    .importId(importEntity)
+                    .importCheckStatus("미완")
+                    .build();
 
-            // Delete the Import entity
-            importRepository.deleteById(importId);
+            importCheckRepository.save(importCheck);
 
-            // Get the requestCode from the Import entity
-            String requestCode = importEntity.getRequestCode();
-
-            // Find the related Request entity by requestCode
-            Optional<Request> optionalRequest = requestRepository.findByRequestCode(requestCode);
-
-            if(optionalRequest.isPresent()) {
-                Request r = optionalRequest.get();
-                r.changeRequestStatus("완료");
-                requestRepository.save(r);
-            }
-        }
     }
+
     @Override
     public void modify(ImportDTO importDTO){
         Optional<Import> oImport = importRepository.findById(importDTO.getImportId());

@@ -78,29 +78,38 @@
 
                             </div>
                         </div>
+                        <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="reviewModalLabel">숫자를 입력하세요</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" id="numInput" class="form-control" placeholder="숫자를 입력하세요">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                        <button type="button" class="btn btn-primary" id="submitBtn">확인</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="table_section padding_infor_info">
                             <div class="table-responsive-sm">
-                                <form action="/ezen25/common/icSelectDelete" method="post">
                                     <table class="table" style="text-align:center;">
                                         <thead>
                                         <tr>
-                                            <th><input id="selectAll" type="checkbox"></th>
                                             <th>#</th>
                                             <th>입고 번호</th>
                                             <th>상태</th>
-                                            <th>
-                                                <button class="new-button" onclick="return icDeleteSelected()"
-                                                        type="submit">
-                                                    <strong>선택 삭제</strong>
-                                                </button>
-                                            </th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr th:each="icDTO : ${icResult.dtoList}">
-                                            <td><input name="icDeleteList" th:value="${icDTO.importCheckId}"
-                                                       type="checkbox">
-                                            </td>
                                             <input name="importCheckId" th:value="${icDTO.importCheckId}" type="hidden">
                                             <td>
                                                 <a th:href="@{/ezen25/request/importCheck/read(importCheckId = ${icDTO.importCheckId}, page= ${icResult.page},
@@ -110,11 +119,18 @@
                                             </td>
                                             <td>[[${icDTO.importId}]]</td>
                                             <td>[[${icDTO.importCheckStatus}]]</td>
-                                            <td>a</td>
+                                            <td>
+                                                <button class="removeBtn" onclick="confirmDelete(this)">
+                                                    검수완료
+                                                </button>
+                                                <button class="reviewBtn" onclick="openReviewModal(this)">
+                                                    반품처리
+                                                    <input name="importCheckId" th:value="${icDTO.importCheckId}" type="hidden">
+                                                </button>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                </form>
                                 <ul class="pagination h-100 justify-content-center align-items-center">
                                     <li class="page-item " th:if="${icResult.prev}">
                                         <a class="page-link" tabindex="-1" th:href="@{/ezen25/request/importCheck/list(page = ${icResult.start-1}, type=${pageRequestDTO.type},
@@ -138,6 +154,51 @@
                 </div>
             </div>
         </div>
+        <script>
+            function openReviewModal(button) {
+                // 나중에 사용할 수 있도록 모달에 importCheckId 설정
+                var importCheckId = $(button).closest('tr').find('[name="importCheckId"]').val();
+                console.log('importCheckId:', importCheckId); // 추가된 로그
+                $('#reviewModal').data('importCheckId', importCheckId); // 변경된 부분
+
+                // 모달 표시
+                $('#reviewModal').modal('show');
+            }
+
+            $(document).ready(function () {
+                $("#submitBtn").click(function () {
+                    var num = $("#numInput").val();
+                    var importCheckId = $('#reviewModal').data('importCheckId');
+                    console.log('data-importCheckId:', importCheckId); // 추가된 로그
+
+                    if (!isNaN(num) && num !== "" && importCheckId !== undefined) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/ezen25/request/importCheck/review",
+                            data: {
+                                importCheckId: importCheckId,
+                                num: num
+                            },
+                            success: function (data) {
+                                // 처리가 성공한 경우 리다이렉트
+                                window.location.href = "/ezen25/request/importCheck/list";
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('에러:', error);
+                            }
+                        });
+
+                        $('#reviewModal').modal('hide'); // 모달 닫기
+                    } else {
+                        alert("올바른 숫자를 입력하세요.");
+                    }
+                });
+            });
+        </script>
+
+
+
+
         <script th:inline="javascript">
 
             var searchForm = $("#searchForm");
@@ -155,43 +216,35 @@
             });
 
         </script>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script th:inline="javascript">
-            $(document).ready(function() {
-              // 전체 선택 체크박스
-              $("#selectAll").click(function() {
-                  $("input[name='icDeleteList']").prop('checked', this.checked);
-              });
-          });
-          // 선택 삭제 함수
-          function icDeleteSelected() {
-              var selectedItems = [];
+            function confirmDelete(button) {
+                if (confirm('정말로 삭제하시겠습니까?')) {
+                    // Get the importCheckId from the hidden input field in the same row
+                    var importCheckId = $(button).closest('tr').find('input[name="importCheckId"]').val();
 
-              // 선택된 체크박스 가져오기
-              $('input[name="icDeleteList"]:checked').each(function() {
-                  selectedItems.push($(this).val());
-              });
+                    // Alternatively, you can use pure JavaScript to get the value
+                    // var importCheckId = document.getElementsByName('importCheckId')[0].value;
 
-              // 선택된 항목이 없을 경우 알림
-              if (selectedItems.length === 0) {
-                  alert("선택된 항목이 없습니다.");
-                  return false;
-              }
+                    // If the user confirms, send an Ajax request to delete the record
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ezen25/request/importCheck/remove',
+                        data: { importCheckId: importCheckId },
+                        success: function (data) {
+                            // Optionally, handle the response from the server
+                            console.log('Delete response:', data);
 
-              // 사용자에게 삭제 여부 확인
-              var isConfirmed = confirm("선택한 항목을 삭제하시겠습니까?");
-
-              // 사용자가 확인을 눌렀을 때 삭제 요청
-              if (isConfirmed) {
-                  console.log("deleteSelected 함수 호출됨");
-                  alert("삭제완료");
-                  return true;
-
-              } else {
-                  return false;
-              }
-          }
+                            // Redirect to the list page after successful deletion
+                            window.location.href = '/ezen25/request/importCheck/list';
+                        },
+                        error: function (error) {
+                            console.error('Error deleting record:', error);
+                        }
+                    });
+                }
+            }
         </script>
+
     </main>
 </th:block>
 </html>
