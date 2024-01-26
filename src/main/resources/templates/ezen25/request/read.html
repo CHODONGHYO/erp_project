@@ -4,50 +4,66 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<style th:inline="text">
+    @media print {
+        /* 프린트 페이지에 적용될 스타일 */
+        printPageSet {
+            font-size: 12pt;
+        }
+        .page_title h1 {
+            font-size: 16pt;
+        }
+        .print-hidden {
+            display: none !important;
+        }
+    }
+</style>
 <th:block layout:fragment="content">
     <!-- 여기에 생성할 페이지 코드 작성 -->
     <main>
         <div class="container-fluid">
-            <div class="row column_title">
-                <div class="col-md-12">
-                    <div class="page_title">
-                        <h1 class="mt-4">요청사항</h1>
+            <div class="jasonNoh">
+                <div class="row column_title">
+                    <div class="col-md-12">
+                        <div class="page_title">
+                            <h1 class="mt-4">요청사항</h1>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <input name="requestId" th:value="${requestdto.requestId}" type="hidden">
+                <input name="requestId" th:value="${requestdto.requestId}" type="hidden">
 
-            <div>
-                <div class="col-md-12">
-                    <div class="white_shd full margin_bottom_30">
-                        <div class="full graph_head">
-                            <table class="table_for_details" width="100%">
-                                <tr class="tr_for_details">
-                                    <td class="td_for_details">품목 코드</td>
-                                    <td class="td_for_details">[[${requestdto.requestCode}]]</td>
-                                    <td class="td_for_details">개수</td>
-                                    <td class="td_for_details">[[${requestdto.requestNum}]]개</td>
-                                </tr>
-                                <tr class="tr_for_details">
-                                    <td class="td_for_details">브랜드</td>
-                                    <td class="td_for_details">[[${requestdto.brandId}]]</td>
-                                    <td class="td_for_details">요청일자</td>
-                                    <td class="td_for_details">[[${requestdto.requestDate}]]</td>
-                                </tr>
-                                <tr class="tr_for_details">
-                                    <td class="td_for_details">완료예정</td>
-                                    <td class="td_for_details">[[${requestdto.requestOutDate}]]</td>
-                                    <td class="td_for_details">상태</td>
-                                    <td class="td_for_details">[[${requestdto.requestStatus}]]</td>
-                                </tr>
-                                <tr class="tr_for_details">
-                                    <td class="td_for_details" colspan="1">비고</td>
-                                    <td class="td_for_details" colspan="5">
+                <div>
+                    <div class="col-md-12">
+                        <div class="white_shd full margin_bottom_30">
+                            <div class="full graph_head">
+                                <table class="table_for_details" width="100%">
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">품목 코드</td>
+                                        <td class="td_for_details">[[${requestdto.requestCode}]]</td>
+                                        <td class="td_for_details">개수</td>
+                                        <td class="td_for_details">[[${requestdto.requestNum}]]개</td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">브랜드</td>
+                                        <td class="td_for_details">[[${requestdto.brandId}]]</td>
+                                        <td class="td_for_details">요청일자</td>
+                                        <td class="td_for_details">[[${requestdto.requestDate}]]</td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">완료예정</td>
+                                        <td class="td_for_details">[[${requestdto.requestOutDate}]]</td>
+                                        <td class="td_for_details">상태</td>
+                                        <td class="td_for_details">[[${requestdto.requestStatus}]]</td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details" colspan="1">비고</td>
+                                        <td class="td_for_details" colspan="5">
                                         <textarea class="form-control" name="requestDescription" readonly style="height: 225px;
                                         ">[[${requestdto.requestDescription}]]</textarea>
-                                    </td>
-                                </tr>
-                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -57,13 +73,16 @@
          type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-primary" type="button">Modify</button>
                 </a>
-                <a></a>
                 <a th:href="@{/ezen25/request/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
          keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-info" type="button">List</button>
                 </a>
+                <a th:href="@{/ezen25/request/print(requestId = ${requestdto.requestId})}">
+                    <button class="btn btn-success">Print</button>
+                </a>
             </div>
         </div>
+
     </main>
 </th:block>
 </html>

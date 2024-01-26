@@ -11,7 +11,7 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h1 class="mt-4">브랜드 상세보기</h1>
+                        <h1 class="mt-4">협력업체 상세보기</h1>
                     </div>
                 </div>
             </div>
@@ -50,6 +50,9 @@
                 <a th:href="@{/ezen25/brand/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
          keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-info" type="button">List</button>
+                </a>
+                <a th:href="@{/ezen25/brand/print(brandId = ${dto.brandId})}">
+                    <button class="btn btn-success">Print</button>
                 </a>
             </div>
         </div>

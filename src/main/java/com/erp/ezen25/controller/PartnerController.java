@@ -1,19 +1,21 @@
 package com.erp.ezen25.controller;
 
-import com.erp.ezen25.dto.BrandDTO;
-import com.erp.ezen25.dto.ContractListResponseDTO;
-import com.erp.ezen25.dto.PageRequestDTO;
-import com.erp.ezen25.entity.Brand;
+import com.erp.ezen25.dto.*;
+import com.erp.ezen25.dto.contractDTOs.*;
+import com.erp.ezen25.dto.productDTOs.ProductBnameListResponseDTO;
 import com.erp.ezen25.service.BrandService;
 import com.erp.ezen25.service.ContractService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -56,7 +58,7 @@ public class PartnerController {
 
     }
 
-    @GetMapping({"/read", "/modify"})
+    @GetMapping({"/read", "/modify", "/print"})
     public void brandRead(@RequestParam("brandId") Long brandId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model) {
         log.info("Get Read/Modify. gno : " + brandId);
 
@@ -100,5 +102,41 @@ public class PartnerController {
     }
     @GetMapping("/contract/contractAdd")
     public void contractAddForm (Model model) {
+        List<ProductBnameListResponseDTO> bList = contractService.bnameList();
+        List<ContractPnameListResponseDTO> pList = contractService.prodList();
+
+        model.addAttribute("bList",bList);
+        model.addAttribute("pList",pList);
+    }
+
+    @PostMapping("/contract/contractAdd")
+    public String contractAdd (ContractAddRequestDTO addRequest, @RequestParam("contractSelect") MultipartFile mf) throws IOException {
+        contractService.addContract(addRequest, mf);
+        return "redirect:/ezen25/brand/contract/contractList";
+    }
+
+    @PostMapping("/contract/contractDelete")
+    @ResponseBody
+    public ResponseEntity<Void> contractDelete (@RequestParam("contractId") Long contractId) {
+        contractService.contractDelete(contractId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/contract/contractModify/{contractId}")
+    public String contractModifyForm(@PathVariable("contractId") Long contractId, Model model) {
+        List<ProductBnameListResponseDTO> bList = contractService.bnameList();
+        List<ContractPnameListResponseDTO> pList = contractService.prodList();
+        ContractDetailResponseDTO contract = contractService.contractDetail(contractId);
+
+        model.addAttribute("bList",bList);
+        model.addAttribute("pList",pList);
+        model.addAttribute("contract",contract);
+
+        return "/ezen25/brand/contract/contractModify";
+    }
+    @PostMapping("/contract/contractModify/{contractid}")
+    public String contractModify(ContractModifyRequest updateRequest, @RequestParam("contractSelect") MultipartFile mf) throws IOException {
+        contractService.contractUpdate(updateRequest, mf);
+        return "redirect:/ezen25/brand/contract/contractList";
     }
 }

@@ -9,6 +9,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -27,18 +28,18 @@ public class Plan {
 
     @ManyToOne(targetEntity = Brand.class, fetch = FetchType.LAZY)
     @JoinColumn(name="brand_id", nullable = false)
-    private Long brandId;
+    private Brand brand;
 
     @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
-    private Long productId;
+    private Product_Info productInfo;
 
     @Column(nullable = false)
     @ColumnDefault("0")
     private Long planNumber;
 
     @Column(nullable = false)
-    private LocalDateTime completeDate;
+    private LocalDate completeDate;
 
     @Column(length = 1000, nullable = false)
     @ColumnDefault("'미정'")

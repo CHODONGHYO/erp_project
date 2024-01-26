@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,8 +12,8 @@ import java.time.LocalDateTime;
 public class ImportDTO {
     private Long importId;
     private Long productId;
-    private Long productNum;
-    private LocalDateTime importDate;
+    private Long importNum;
+    private String importDate;
     private String requestCode;
     private String importStatus;
 }

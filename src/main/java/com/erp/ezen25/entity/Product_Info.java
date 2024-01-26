@@ -5,6 +5,12 @@ import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.*;
 
 @Entity
 @Builder
@@ -27,6 +33,7 @@ public class Product_Info {
     private String productDescription;
 
     @ManyToOne(targetEntity = Brand.class, fetch=FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="brandId",nullable = false)
     private Brand brand;
 
@@ -46,7 +53,6 @@ public class Product_Info {
     private Long sellPrice;
 
     @Column(length = 1000)
-    @ColumnDefault("'없음'")
     private String image;
 
     public Product_Info setProductId(Long productId) {

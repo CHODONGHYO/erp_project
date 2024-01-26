@@ -9,8 +9,6 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Builder
 @AllArgsConstructor
@@ -27,13 +25,40 @@ public class Export {
 
     @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
+
     private Product_Info productId;
+
 
     @Column(nullable = false)
     @ColumnDefault("0")
     private Long exportNum;
 
+
     @Column(length = 1000, nullable = false)
     private String orderCode;
 
+    public void changeProductId(Product_Info productId) {
+        this.product = productId;
+    }
+
+    public void changeExportNum(Long exportNum) {
+        this.exportNum = exportNum;
+    }
+
+    public void changeExportDate(String exportDate) {
+        this.exportDate = exportDate;
+    }
+
+    public void changeExportStatus(String exportStatus) {
+        this.exportStatus = exportStatus;
+    }
+
+    public void changeOrderCode(String orderCode) {
+        this.orderCode = orderCode;
+    }
+
+    public Export setExportId(Long exportId) {
+        this.exportId = exportId;
+        return this;
+    }
 }

@@ -22,11 +22,11 @@ public class QProduct_Stock extends EntityPathBase<Product_Stock> {
 
     public static final QProduct_Stock product_Stock = new QProduct_Stock("product_Stock");
 
-    public final QMember memberId;
+    public final QMember member;
 
     public final NumberPath<Long> pNumId = createNumber("pNumId", Long.class);
 
-    public final QProduct_Info productId;
+    public final QProduct_Info product;
 
     public final NumberPath<Long> productNum = createNumber("productNum", Long.class);
 
@@ -50,8 +50,8 @@ public class QProduct_Stock extends EntityPathBase<Product_Stock> {
 
     public QProduct_Stock(Class<? extends Product_Stock> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.memberId = inits.isInitialized("memberId") ? new QMember(forProperty("memberId")) : null;
-        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
+        this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
+        this.product = inits.isInitialized("product") ? new QProduct_Info(forProperty("product"), inits.get("product")) : null;
     }
 
 }

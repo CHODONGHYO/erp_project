@@ -14,4 +14,6 @@ public interface ProductRepository extends JpaRepository<Product_Info, Long> {
     List<MCategoryListMapping> productInfoGroupByMCategory ();
     @Query(value = "select s_category as s_category from product_info group by s_category", nativeQuery = true)
     List<SCategoryListMapping> productInfoGroupBySCategory ();
+
+    List<Product_Info> findAllByOrderByProductNameAsc ();
 }

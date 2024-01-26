@@ -17,6 +17,10 @@ a.resetLink {
 img {
     width: 100%;
 }
+.relative {
+    position: relative;
+}
+
 /* 모달 스타일 */
 .myModal {
     display: none;
@@ -80,8 +84,34 @@ img {
 .tableListStyle .listBtn.bg-danger:hover {
     background-color: var(--bs-code-color) !important;
 }
-
+.tableListStyle .myModal img {
+    width: 100px;
+}
+.tableListStyle .myModal table {
+    border-collapse: collapse;
+    text-align:center;
+    margin: 0 auto;
+}
+.tableListStyle .myModal th,
+.tableListStyle .myModal td {
+    padding: 6px 10px;
+    border: 1px solid gray;
+}
+.tableListStyle .myModal p {
+    font-size: 18px;
+    margin-top: 10px;
+    text-align: center;
+}
+.listBtn.processBtn {
+    background-color: var(--bs-gray) !important;
+}
+.tableListStyle .listBtn.processBtn:hover {
+    background-color: var(--bs-gray-900) !important;
+}
 /* 폼 레이아웃 */
+.formStyle {
+    overflow: hidden;
+}
 .formStyle .cardForm {
     width: 60%;
     min-width: 600px;
@@ -142,22 +172,111 @@ img {
 /* --- 품목관리 스타일 --- */
 /* 품목리스트 */
 
-.productList .myModal img {
-    width: 100px;
+
+
+/* ----- 계약관리 ----- */
+.contractList a.moBtn {
+    text-decoration: none;
 }
-.productList .myModal table {
-    border-collapse: collapse;
-    text-align:center;
-    margin: 0 auto;
+.contractList a.moBtn {
+    text-decoration: none;
 }
-.productList .myModal th,
-.productList .myModal td {
-    padding: 6px 10px;
-    border: 1px solid gray;
-}
-.productList .myModal p {
-    font-size: 18px;
-    margin-top: 10px;
+.contractList .detailModal {
     text-align: center;
 }
+.contractList .detailModal table {
+    width: 80%;
+}
+.contractList .detailModal img {
+    border: 2px solid gray;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 300px;
+}
 
+/* 계약 등록 */
+.contractAdd .optionAddBtn {
+    position: absolute;
+    left: calc(100% + var(--bs-card-spacer-x) * 2);
+}
+.contractAdd .optionAddBtn .resetLink {
+    padding: 4px 6px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.contractAdd .optionAddBtn .resetLink:hover {
+    color: white;
+    background-color: var(--bs-link-hover-color);
+}
+/* 계약 수정 */
+.contractModify img {
+    border: 2px solid gray;
+    width: 100%;
+    max-width: none;
+    margin-top: 20px;
+}
+
+/* ----- 계획 관리 ------ */
+
+/* 계획 등록 */
+.planAdd .prodBtn {
+    margin: 0 !important;
+    font-size: 0.875rem;
+}
+.planAdd .prodBtn .card-body {
+    padding: 2px 6px;
+}
+.planAdd .prodBtn a:hover {
+    color: white;
+    background-color: var(--bs-link-hover-color);
+}
+
+.planAdd .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.planAdd .dateSelect {
+    display: flex;
+}
+.planAdd .dateSelect span {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+.planAdd #planAddForm .inputLine:first-child {
+    display: grid;
+    grid-template-columns: 2fr 2fr 1fr;
+}
+.planAdd #planAddForm .inputLine:first-child .prodBtn {
+    display:inline-block;
+}
+.planAdd #planAddForm select {
+    width: 100%;
+}
+.planAdd .inputListTable {
+    width: 100%;
+    text-align:center;
+}
+
+.planAdd .inputListTable th,
+.planAdd .inputListTable td {
+    border: 1px solid var(--bs-border-color);
+}
+.planAdd .inputListTable th:nth-child(1) {
+    width: 25%;
+}
+.planAdd .inputListTable th:nth-child(2) {
+    width: 50%;
+}
+.planAdd .inputListTable th:nth-child(3) {
+    width: 25%;
+}
+.planAdd .addTd .card-body {
+    padding: 6px 12px;
+    cursor: pointer;
+}
+.planAdd .addTd .card-body:hover {
+    color: white;
+    background-color: var(--bs-link-hover-color);
+}

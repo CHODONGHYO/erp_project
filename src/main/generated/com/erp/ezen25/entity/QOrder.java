@@ -22,7 +22,7 @@ public class QOrder extends EntityPathBase<Order> {
 
     public static final QOrder order = new QOrder("order1");
 
-    public final QMember memberId;
+    public final QMember member;
 
     public final StringPath orderCode = createString("orderCode");
 
@@ -38,7 +38,7 @@ public class QOrder extends EntityPathBase<Order> {
 
     public final StringPath orderStatus = createString("orderStatus");
 
-    public final QProduct_Info productId;
+    public final QProduct_Info product;
 
     public QOrder(String variable) {
         this(Order.class, forVariable(variable), INITS);
@@ -58,8 +58,8 @@ public class QOrder extends EntityPathBase<Order> {
 
     public QOrder(Class<? extends Order> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.memberId = inits.isInitialized("memberId") ? new QMember(forProperty("memberId")) : null;
-        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
+        this.member = inits.isInitialized("member") ? new QMember(forProperty("member")) : null;
+        this.product = inits.isInitialized("product") ? new QProduct_Info(forProperty("product"), inits.get("product")) : null;
     }
 
 }
