@@ -25,9 +25,7 @@ public class Export {
 
     @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
-
     private Product_Info productId;
-
 
     @Column(nullable = false)
     @ColumnDefault("0")
