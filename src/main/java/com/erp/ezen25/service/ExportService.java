@@ -23,7 +23,6 @@ public interface ExportService {
                 .exportNum(exportDTO.getExportNum())
                 .exportDate(exportDTO.getExportDate())
                 .orderCode(exportDTO.getOrderCode())
-                .exportStatus(exportDTO.getExportStatus())
                 .build();
 
         return entity;
@@ -36,7 +35,6 @@ public interface ExportService {
                 .exportNum(export.getExportNum())
                 .exportDate(export.getExportDate())
                 .orderCode(export.getOrderCode())
-                .exportStatus(export.getExportStatus())
                 .build();
 
         return dto;

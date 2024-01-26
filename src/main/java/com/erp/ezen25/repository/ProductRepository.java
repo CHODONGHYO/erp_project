@@ -16,4 +16,6 @@ public interface ProductRepository extends JpaRepository<Product_Info, Long> {
     List<SCategoryListMapping> productInfoGroupBySCategory ();
 
     List<Product_Info> findAllByOrderByProductNameAsc ();
+
+    Product_Info findByProductId(Long productId);
 }

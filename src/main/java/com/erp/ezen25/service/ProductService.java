@@ -117,4 +117,13 @@ public class ProductService {
         Product_Info pInfo = updateRequest.toEntity();
         productRepository.save(pInfo);
     }
+
+    public String getProductName(Long productId) {
+        // Implement logic to retrieve the product name from Product_Info entity
+        // You can use your repository or any other method to fetch data
+        Product_Info productInfo = productRepository.findByProductId(productId);
+
+        // Check if the productInfo is not null before accessing the productName
+        return (productInfo != null) ? productInfo.getProductName() : "Unknown Product";
+    }
 }
