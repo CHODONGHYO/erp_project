@@ -28,9 +28,11 @@ public class QExport extends EntityPathBase<Export> {
 
     public final NumberPath<Long> exportNum = createNumber("exportNum", Long.class);
 
+    public final StringPath exportStatus = createString("exportStatus");
+
     public final StringPath orderCode = createString("orderCode");
 
-    public final QProduct_Info product;
+    public final QProduct_Info productId;
 
     public QExport(String variable) {
         this(Export.class, forVariable(variable), INITS);
@@ -50,7 +52,7 @@ public class QExport extends EntityPathBase<Export> {
 
     public QExport(Class<? extends Export> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.product = inits.isInitialized("product") ? new QProduct_Info(forProperty("product"), inits.get("product")) : null;
+        this.productId = inits.isInitialized("productId") ? new QProduct_Info(forProperty("productId"), inits.get("productId")) : null;
     }
 
 }

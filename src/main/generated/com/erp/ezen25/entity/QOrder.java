@@ -34,8 +34,6 @@ public class QOrder extends EntityPathBase<Order> {
 
     public final NumberPath<Long> orderNum = createNumber("orderNum", Long.class);
 
-    public final DateTimePath<java.time.LocalDateTime> orderOutDate = createDateTime("orderOutDate", java.time.LocalDateTime.class);
-
     public final StringPath orderStatus = createString("orderStatus");
 
     public final QProduct_Info product;
