@@ -86,6 +86,7 @@ public class ExportServiceImpl implements ExportService {
 
         BooleanBuilder sBuilder = new BooleanBuilder();
 
+
         if (type.contains("p")) {
             sBuilder.or(qExport.productId.productId.stringValue().contains(keyword));
         }

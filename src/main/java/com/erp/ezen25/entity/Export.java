@@ -35,7 +35,6 @@ public class Export {
     @Column(nullable = false)
     private String exportDate;
 
-
     @Column(length = 1000, nullable = false)
     private String orderCode;
 

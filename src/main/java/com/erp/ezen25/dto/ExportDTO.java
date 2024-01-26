@@ -21,9 +21,6 @@ public class ExportDTO {
     private Long sellPrice; //단가
     private Long exportNum; //출고 수량
     private String orderStatus; //발주상태 0: 발주요청 1:불출 2: 출고처리완료
-
-    // Entity에 있는 내용 추가함 (240123, 노솔진)
     private String exportDate;
-    private String exportStatus;
     private String orderCode;
 }

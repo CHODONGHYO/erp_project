@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Log4j2
 @RequiredArgsConstructor
-@RequestMapping("/ezen25/main/*")
+@RequestMapping("/ezen25/main")
 // 메인 관련 Controller
 public class MainController {
     private final MemberService memberService;
 
-    @GetMapping("/mainPage")
-    public void mainPage() {
-
+    @GetMapping("")
+    public String mainPage() {
+        return "ezen25/main/mainPage";
     }
 
     @GetMapping("/signup")
@@ -66,7 +66,5 @@ public class MainController {
     public String postLogin() {
         return null;
     }
-
-
 
 }
