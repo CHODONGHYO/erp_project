@@ -32,11 +32,11 @@
                     <div class="white_shd full margin_bottom_30">
                         <div class="full graph_head">
                             <div class="heading1 margin_0">
-                                <h2>입고 대기 리스트</h2>
+                                <h2>입고 요청 목록</h2>
                             </div>
-                            <a th:href="@{/ezen25/request/import/register}">
+                            <!--<a th:href="@{/ezen25/request/import/register}">
                                 <button class="btn btn-outline-primary" style="float:right;" type="button">등록하기</button>
-                            </a>
+                            </a>-->
                         </div>
                         <div class="full graph_head">
                             <div>
@@ -45,20 +45,20 @@
                                         <input name="page" type="hidden" value="1">
                                         <div class="input-group-prepend">
                                             <select class="custom-select" name="type">
-                                                <option th:selected="${pageRequestDTO.type == 'nped'}" value="nped">
+                                                <option th:selected="${pageRequestDTO.type == 'prsd'}" value="prsd">
                                                     전체
                                                 </option>
-                                                <option th:selected="${pageRequestDTO.type == 'n'}" value="n">
-                                                    이름
-                                                </option>
                                                 <option th:selected="${pageRequestDTO.type == 'p'}" value="p">
-                                                    연락처
+                                                    품목 코드
                                                 </option>
-                                                <option th:selected="${pageRequestDTO.type == 'e'}" value="e">
-                                                    이메일
+                                                <option th:selected="${pageRequestDTO.type == 'r'}" value="r">
+                                                    요청서 코드
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 's'}" value="s">
+                                                    상태
                                                 </option>
                                                 <option th:selected="${pageRequestDTO.type == 'd'}" value="d">
-                                                    설명
+                                                    날짜
                                                 </option>
 
                                             </select>
@@ -85,6 +85,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>품목 코드</th>
+                                            <th>품목 이름</th>
                                             <th>개수</th>
                                             <th>날짜</th>
                                             <th>요청서 코드</th>
@@ -103,6 +104,7 @@
                                                 </a>
                                             </td>
                                             <td>[[${importDTO.productId}]]</td>
+                                            <td th:text="${@productService.getProductName(importDTO.productId)}"></td>
                                             <td>[[${importDTO.importNum}]]</td>
                                             <td>[[${importDTO.importDate}]]</td>
                                             <td>[[${importDTO.requestCode}]]</td>

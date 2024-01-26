@@ -32,7 +32,7 @@
                     <div class="white_shd full margin_bottom_30">
                         <div class="full graph_head">
                             <div class="heading1 margin_0">
-                                <h2>출하 대기 리스트</h2>
+                                <h2>출하 목록</h2>
                             </div>
                             <a th:href="@{/ezen25/order/export/register}">
                                 <button class="btn btn-outline-primary" style="float:right;" type="button">등록하기</button>
@@ -45,21 +45,19 @@
                                         <input name="page" type="hidden" value="1">
                                         <div class="input-group-prepend">
                                             <select class="custom-select" name="type">
-                                                <option th:selected="${pageRequestDTO.type == 'nped'}" value="nped">
+                                                <option th:selected="${pageRequestDTO.type == 'pod'}" value="pod">
                                                     전체
                                                 </option>
-                                                <option th:selected="${pageRequestDTO.type == 'n'}" value="n">
-                                                    이름
-                                                </option>
                                                 <option th:selected="${pageRequestDTO.type == 'p'}" value="p">
-                                                    연락처
+                                                    품목 코드
                                                 </option>
-                                                <option th:selected="${pageRequestDTO.type == 'e'}" value="e">
-                                                    이메일
+                                                <option th:selected="${pageRequestDTO.type == 'o'}" value="o">
+                                                    발주 코드
                                                 </option>
                                                 <option th:selected="${pageRequestDTO.type == 'd'}" value="d">
-                                                    설명
+                                                    날짜
                                                 </option>
+
 
                                             </select>
                                         </div>
@@ -147,6 +145,7 @@
                 </div>
             </div>
         </div>
+
         <script th:inline="javascript">
 
             var searchForm = $("#searchForm");

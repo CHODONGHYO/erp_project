@@ -1,10 +1,12 @@
 package com.erp.ezen25.controller;
 
-import com.erp.ezen25.dto.*;
+import com.erp.ezen25.dto.ImportCheckDTO;
+import com.erp.ezen25.dto.ImportDTO;
+import com.erp.ezen25.dto.PageRequestDTO;
+import com.erp.ezen25.dto.RequestDTO;
 import com.erp.ezen25.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,17 +21,11 @@ import java.time.format.DateTimeFormatter;
 @RequiredArgsConstructor
 // 협력업체 관련 Controller
 public class RequestController {
-
-    @Autowired
-    private RequestService requestService;
-
-    @Autowired
-    private ImportService importService;
-    @Autowired
-    private ImportCheckService importCheckService;
-
-    @Autowired
-    private BrandService brandService;
+    private final RequestService requestService;
+    private final ImportService importService;
+    private final ImportCheckService importCheckService;
+    private final BrandService brandService;
+    private final ProductService productService;
 
     @GetMapping({"/", ""})
     public String RequestHome() {

@@ -10962,7 +10962,7 @@ body {
   z-index: 1039;
 }
 .sb-topnav .navbar-brand {
-  width: 225px;
+  width: 170px;
   margin: 0;
 }
 .sb-topnav.navbar-dark #sidebarToggle {
@@ -11043,9 +11043,7 @@ body {
 .sb-sidenav-dark .sb-sidenav-menu .nav-link.active .sb-nav-link-icon {
   color: #fff;
 }
-.sb-sidenav-dark .sb-sidenav-footer {
-  background-color: #343a40;
-}
+
 
 .sb-sidenav-light {
   background-color: #f8f9fa;
