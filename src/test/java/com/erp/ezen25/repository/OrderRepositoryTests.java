@@ -32,7 +32,6 @@ public class OrderRepositoryTests {
                     .product(new Product_Info().setProductId(1L))
                     .orderNum(100L)
                     .orderDescription("description" + i)
-                    .orderOutDate(LocalDateTime.now())
                     .orderStatus("1")
                     .orderCode("10000" + i)
                     .build();
@@ -44,7 +43,7 @@ public class OrderRepositoryTests {
     public void insertDummiesExport() {
         IntStream.rangeClosed(1, 100).forEach(e -> {
             Export dummyExport = Export.builder()
-                    .product(Product_Info.builder().productId(410L).build())
+                    .productId(Product_Info.builder().productId(410L).build())
                     .exportNum((long) e)
                     .exportDate(outDate)
                     .exportStatus("미완")

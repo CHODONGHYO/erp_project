@@ -2,12 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <th:block th:fragment="withdrawal">
-    <form id="withdrawalForm" action="/stock/withdrawal" method="post">
+    <form id="withdrawalForm" action="/ezen25/stock/withdrawal" method="post">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <p><span style="font-weight:bold;">[[${name}]]</span>점</p>
+                <p><span style="font-weight:bold;">[[${name}]]</span>점 ([[${orderCode}]])</p>
             </div>
-            <!-- /.panel-heading -->
+            <!-- /* /.panel-heading */ -->
             <div class="panel-body">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover">
@@ -32,40 +32,48 @@
                             </tr>
                         </tbody>
                     </table>
-                    <input type="hidden" name="withdrawalList" th:value="${withdrawalList}">
                     <input type="hidden" name="orderCode" th:value="${orderCode}">
+                    <input type="hidden" name="name" th:value="${name}">
+                    <input type="hidden" name="selectedProductIds" th:value="${selectedProductIds}">
                     <div style="text-align:center;">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
                         <button type="submit" class="btn btn-primary" id="submitWithdrawal">출고하기</button>
                     </div>
                 </div>
-                <!-- /.table-responsive -->
+                <!-- /* /.table-responsive */ -->
             </div>
-            <!-- /.panel-body -->
+            <!-- /* /.panel-body */ -->
         </div>
     </form>
 </th:block>
 
 <script th:inline="javascript">
     $(document).ready(function() {
+
+        $("tr").click(function(e) {
+
+            if ($(e.target).is(":checkbox")) {
+                return;
+            }
+
+            var checkbox = $(this).find("input[name='checkbox']");
+            checkbox.prop("checked", !checkbox.prop("checked"));
+
+            updateSelectAllCheckbox();
+        });
+
+        // '전체 선택' 체크박스 클릭 이벤트 처리
         $("#selectAllCheckbox").click(function() {
-            if ($(this).is(":checked")) {
-                $("input[name=checkbox]").prop("checked", true);
-            } else {
-                $("input[name=checkbox]").prop("checked", false);
-            }
+            $("input[name='checkbox']").prop("checked", $(this).prop("checked"));
         });
 
-        $("input[name=checkbox]").click(function() {
-            var total = $("input[name=checkbox]").length;
-            var checked = $("input[name=checkbox]:checked").length;
+        // 개별 체크박스 상태에 따라 '전체 선택' 체크박스 업데이트 함수
+        function updateSelectAllCheckbox() {
+            var total = $("input[name='checkbox']").length;
+            var checked = $("input[name='checkbox']:checked").length;
 
-            if (total != checked) {
-                $("#selectAllCheckbox").prop("checked", false);
-            } else {
-                $("#selectAllCheckbox").prop("checked", true);
-            }
-        });
+            $("#selectAllCheckbox").prop("checked", total === checked);
+        }
 
         // 닫기 버튼 클릭
         $('.btn-secondary[data-dismiss="modal"]').click(function() {
@@ -74,7 +82,15 @@
 
         // 출고하기 버튼 클릭
         $('#submitWithdrawal').click(function() {
-            // 추가
+            var selectedProductIds = [];
+
+            $("input[name='checkbox']:checked").each(function () {
+               selectedProductIds.push($(this).closest('tr').find("td:eq(1)").text());
+            });
+
+            $("input[name='selectedProductIds']").val(selectedProductIds);
+
+            $("#withdrawalForm").submit();
         });
     });
 </script>

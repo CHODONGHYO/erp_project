@@ -35,8 +35,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<WithdrawalDTO> getWithdrawalList(String orderCode) {
 
-        List<Order> result = repository.findByOrderCode(orderCode); /*발주요청리스트에서 보낼 orderCode*/
-
+        List<Order> result = repository.findByOrderCode(orderCode);
         return result.stream()
                 .map(this::entityToDtoForWithdrawal)
                 .collect(Collectors.toList());
@@ -49,9 +48,8 @@ public class OrderServiceImpl implements OrderService {
         if (!result.isEmpty()) {
             return result.get(0).getMember().getName();
         } else {
-            // Handle the case where the list is empty
             log.error("No order found for orderCode: {}", orderCode);
-            return "";
+            return "/bootstrapHTML/500";
         }
     }
 

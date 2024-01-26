@@ -10,7 +10,7 @@
         <div class="container-fluid px-4">
             <h1 class="mt-4">재고관리</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a th:href="@{/stock/exporting}">출고처리</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/ezen25/stock/exporting}">출고처리</a></li>
                 <li class="breadcrumb-item active">재고관리</li>
             </ol>
             <div class="card mb-4">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="card-body">
                     <div class="panel-heading">
-                        <p style="text-align:center; font-size:20px;"><span style="font-weight:bold;">member.name</span>점</p>
+                        <p style="text-align:center; font-size:20px;"><span style="font-weight:bold;">[[${name}]]</span>점 ([[${orderCode}]])</p>
                     </div>
                     <table id="datatablesSimple">
                         <thead>
@@ -46,17 +46,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dto,stat : ${exportingList}">
+                            <tr th:each="dto,stat : ${exportList}">
                                 <th>[[${stat.count}]]</th>
                                 <td>[[${dto.image}]]</td>
                                 <td>[[${dto.productId}]]</td>
                                 <td>[[${dto.productName}]]</td>
-                                <td>dto.mCategory / dto.sCategory</td>
-                                <td>dto.productNum</td>
+                                <td>[[${dto.mCategory}]] / [[${dto.sCategory}]]</td>
+                                <td>[[${dto.productNum}]]</td>
                                 <td>[[${dto.orderNum}]]</td>
-                                <td>productNum-orderNum</td>
-                                <td>dto.sellPrice</td>
-                                <td>sellPrice * orderNum</td>
+                                <td>[[${dto.productNum - dto.orderNum}]]</td>
+                                <td>[[${dto.sellPrice}]]</td>
+                                <td>[[${dto.sellPrice * dto.orderNum}]]</td>
                             </tr>
                         </tbody>
                     </table>
