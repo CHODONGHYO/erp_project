@@ -67,7 +67,6 @@ public class ExportServiceImpl implements ExportService {
             e.changeProductId(Product_Info.builder().productId(exportDTO.getProductId()).build());
             e.changeExportNum(exportDTO.getExportNum());
             e.changeExportDate(exportDTO.getExportDate());
-            e.changeExportStatus(exportDTO.getExportStatus());
             exportRepository.save(e);
         }
     }
@@ -86,10 +85,6 @@ public class ExportServiceImpl implements ExportService {
         }
 
         BooleanBuilder sBuilder = new BooleanBuilder();
-
-        if (type.contains("s")) {
-            sBuilder.or(qExport.exportStatus.contains(keyword));
-        }
 
         builder.and(sBuilder);
 

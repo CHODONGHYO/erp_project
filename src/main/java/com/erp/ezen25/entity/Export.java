@@ -36,9 +36,6 @@ public class Export {
     @Column(nullable = false)
     private String exportDate;
 
-    @Column(nullable = false)
-    private String exportStatus;
-
     @Column(length = 1000, nullable = false)
     private String orderCode;
 
@@ -54,9 +51,6 @@ public class Export {
         this.exportDate = exportDate;
     }
 
-    public void changeExportStatus(String exportStatus) {
-        this.exportStatus = exportStatus;
-    }
 
     public void changeOrderCode(String orderCode) {
         this.orderCode = orderCode;

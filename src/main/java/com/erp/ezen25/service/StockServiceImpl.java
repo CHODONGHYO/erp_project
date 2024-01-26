@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,6 +37,9 @@ public class StockServiceImpl implements StockService {
         Product_Stock Stock = (Product_Stock) objects[0];
         Hibernate.initialize(Stock.getProduct());
         Product_Info product = Stock.getProduct();
+
+        String dateString = objects[1].toString();
+        LocalDateTime importDate = LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         StockDTO dto = StockDTO.builder()
                 .pNumId(Stock.getPNumId())
