@@ -5,8 +5,6 @@ import com.erp.ezen25.dto.WithdrawalDTO;
 import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.entity.Product_Info;
-import org.springframework.data.repository.query.Param;
-
 
 import java.util.List;
 
@@ -23,7 +21,6 @@ public interface OrderService {
                 .product(new Product_Info().setProductId(dto.getProductId()))
                 .orderNum(dto.getOrderNum())
                 .orderDescription(dto.getOrderDescription())
-                .orderOutDate(dto.getOrderOutDate())
                 .orderCode(dto.getOrderCode())
                 .build();
         return entity;
@@ -38,7 +35,6 @@ public interface OrderService {
                 .productId(entity.getProduct().getProductId())
                 .orderNum(entity.getOrderNum())
                 .orderDescription(entity.getOrderDescription())
-                .orderOutDate(entity.getOrderOutDate())
                 .orderCode(entity.getOrderCode())
                 .orderStatus(entity.getOrderStatus())
                 .build();

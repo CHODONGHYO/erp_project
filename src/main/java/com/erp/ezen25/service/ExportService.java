@@ -19,7 +19,7 @@ public interface ExportService {
     default Export dtoToEntity(ExportDTO exportDTO) {
         Export entity = Export.builder()
                 .exportId(exportDTO.getExportId())
-                .product(new Product_Info().setProductId(exportDTO.getProductId()))
+                .productId(new Product_Info().setProductId(exportDTO.getProductId()))
                 .exportNum(exportDTO.getExportNum())
                 .exportDate(exportDTO.getExportDate())
                 .orderCode(exportDTO.getOrderCode())
@@ -32,7 +32,7 @@ public interface ExportService {
     default ExportDTO entityToDTO(Export export) {
         ExportDTO dto = ExportDTO.builder()
                 .exportId(export.getExportId())
-                .productId(export.getProduct().getProductId())
+                .productId(export.getProductId().getProductId())
                 .exportNum(export.getExportNum())
                 .exportDate(export.getExportDate())
                 .orderCode(export.getOrderCode())
