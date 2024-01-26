@@ -2,7 +2,7 @@
 <html lang="ko" layout:decorate="~{/layout/layout}"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <th:block layout:fragment="content">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -21,7 +21,7 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h2>요청서 관리</h2>
+                        <h2>출하 관리</h2>
                     </div>
                 </div>
             </div>
@@ -32,15 +32,15 @@
                     <div class="white_shd full margin_bottom_30">
                         <div class="full graph_head">
                             <div class="heading1 margin_0">
-                                <h2>요청서 리스트</h2>
+                                <h2>출하 대기 리스트</h2>
                             </div>
-                            <a th:href="@{/ezen25/request/register}">
+                            <a th:href="@{/ezen25/order/export/register}">
                                 <button class="btn btn-outline-primary" style="float:right;" type="button">등록하기</button>
                             </a>
                         </div>
                         <div class="full graph_head">
                             <div>
-                                <form action="/ezen25/request/list" id="searchForm" method="get">
+                                <form action="/ezen25/order/export/list" id="searchForm" method="get">
                                     <div class="input-group">
                                         <input name="page" type="hidden" value="1">
                                         <div class="input-group-prepend">
@@ -49,13 +49,16 @@
                                                     전체
                                                 </option>
                                                 <option th:selected="${pageRequestDTO.type == 'n'}" value="n">
-                                                    품목코드
+                                                    이름
                                                 </option>
                                                 <option th:selected="${pageRequestDTO.type == 'p'}" value="p">
-                                                    요청서코드
+                                                    연락처
                                                 </option>
                                                 <option th:selected="${pageRequestDTO.type == 'e'}" value="e">
-                                                    상태
+                                                    이메일
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'd'}" value="d">
+                                                    설명
                                                 </option>
 
                                             </select>
@@ -75,23 +78,21 @@
 
                             </div>
                         </div>
-
                         <div class="table_section padding_infor_info">
                             <div class="table-responsive-sm">
-                                <form action="/ezen25/common/requestSelectDelete" method="post">
+                                <form action="/ezen25/common/importSelectDelete" method="post">
                                     <table class="table" style="text-align:center;">
                                         <thead>
                                         <tr>
                                             <th><input id="selectAll" type="checkbox"></th>
-                                            <th>요청서 코드</th>
+                                            <th>#</th>
                                             <th>품목 코드</th>
                                             <th>개수</th>
-                                            <th>요청일자</th>
-                                            <th>완료일자</th>
-                                            <th>비고</th>
+                                            <th>날짜</th>
+                                            <th>발주 코드</th>
                                             <th>상태</th>
                                             <th>
-                                                <button class="new-button" onclick="return requestDeleteSelected()"
+                                                <button class="new-button" onclick="return exportDeleteSelected()"
                                                         type="submit">
                                                     <strong>선택 삭제</strong>
                                                 </button>
@@ -99,24 +100,24 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:each="requestdto : ${requestResult.dtoList}">
-                                            <td><input name="requestDeleteList" th:value="${requestdto.requestId}"
+                                        <tr th:each="exportDTO : ${exportResult.dtoList}">
+                                            <td><input name="exportDeleteList" th:value="${exportDTO.exportId}"
                                                        type="checkbox">
                                             </td>
+                                            <input name="exportId" th:value="${exportDTO.exportId}" type="hidden">
                                             <td>
-                                                <a th:href="@{/ezen25/request/read(requestId = ${requestdto.requestId}, page= ${requestResult.page},
+                                                <a th:href="@{/ezen25/order/export/read(exportId = ${exportDTO.exportId}, page= ${exportResult.page},
                         type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
-                                                    [[${requestdto.requestCode}]]
+                                                    [[${exportDTO.exportId}]]
                                                 </a>
                                             </td>
-                                            <td>[[${requestdto.productId}]]</td>
-                                            <td>[[${requestdto.requestNum}]]</td>
-                                            <td>[[${requestdto.requestDate}]]</td>
-                                            <td>[[${requestdto.requestOutDate}]]</td>
-                                            <td>[[${requestdto.requestDescription}]]</td>
-                                            <td>[[${requestdto.requestStatus}]]</td>
+                                            <td>[[${exportDTO.productId}]]</td>
+                                            <td>[[${exportDTO.exportNum}]]</td>
+                                            <td>[[${exportDTO.exportDate}]]</td>
+                                            <td>[[${exportDTO.orderCode}]]</td>
+                                            <td>[[${exportDTO.exportStatus}]]</td>
                                             <td>
-                                                <a th:href="@{/ezen25/request/print(requestId = ${requestdto.requestId}, page= ${requestResult.page},
+                                                <a th:href="@{/ezen25/order/export/print(exportId = ${exportDTO.exportId}, page= ${exportResult.page},
                         type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
                                                     <b>명세서 보기</b>
                                                 </a>
@@ -126,19 +127,19 @@
                                     </table>
                                 </form>
                                 <ul class="pagination h-100 justify-content-center align-items-center">
-                                    <li class="page-item " th:if="${requestResult.prev}">
-                                        <a class="page-link" tabindex="-1" th:href="@{/ezen25/request/list(page = ${requestResult.start-1}, type=${pageRequestDTO.type},
+                                    <li class="page-item " th:if="${exportResult.prev}">
+                                        <a class="page-link" tabindex="-1" th:href="@{/ezen25/order/export/list(page = ${exportResult.start-1}, type=${pageRequestDTO.type},
                 keyword=${pageRequestDTO.keyword})}"><</a>
                                     </li>
 
-                                    <li th:class="'page-item ' + ${requestResult.page == page?'active':''}"
-                                        th:each="page: ${requestResult.pageList}">
-                                        <a class="page-link" th:href="@{/ezen25/request/list(page = ${page}, type=${pageRequestDTO.type},
+                                    <li th:class="'page-item ' + ${exportResult.page == page?'active':''}"
+                                        th:each="page: ${exportResult.pageList}">
+                                        <a class="page-link" th:href="@{/ezen25/order/export/list(page = ${page}, type=${pageRequestDTO.type},
                 keyword=${pageRequestDTO.keyword})}">[[${page}]]</a>
                                     </li>
 
-                                    <li class="page-item" th:if="${requestResult.next}">
-                                        <a class="page-link" th:href="@{/ezen25/request/list(page = ${requestResult.end + 1}, type=${pageRequestDTO.type},
+                                    <li class="page-item" th:if="${exportResult.next}">
+                                        <a class="page-link" th:href="@{/ezen25/order/export/list(page = ${exportResult.end + 1}, type=${pageRequestDTO.type},
                 keyword=${pageRequestDTO.keyword})}">></a>
                                     </li>
                                 </ul>
@@ -170,15 +171,15 @@
             $(document).ready(function() {
               // 전체 선택 체크박스
               $("#selectAll").click(function() {
-                  $("input[name='requestDeleteList']").prop('checked', this.checked);
+                  $("input[name='exportDeleteList']").prop('checked', this.checked);
               });
           });
           // 선택 삭제 함수
-          function requestDeleteSelected() {
+          function exportDeleteSelected() {
               var selectedItems = [];
 
               // 선택된 체크박스 가져오기
-              $('input[name="requestDeleteList"]:checked').each(function() {
+              $('input[name="exportDeleteList"]:checked').each(function() {
                   selectedItems.push($(this).val());
               });
 

@@ -15,10 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @Log4j2
 @RequiredArgsConstructor
-@RequestMapping("/ezen25/main")
+@RequestMapping("/ezen25/main/*")
 // 메인 관련 Controller
 public class MainController {
     private final MemberService memberService;
+
+    @GetMapping("/mainPage")
+    public void mainPage() {
+
+    }
 
     @GetMapping("/signup")
     public String signup(MemberCreateForm memberCreateForm) {
@@ -49,7 +54,7 @@ public class MainController {
             return "signupForm";
         }
 
-        return "redirect:/ezen25/main/main";
+        return "ezen25/main/mainPage";
     }
 
     @GetMapping("/login")
@@ -61,42 +66,7 @@ public class MainController {
     public String postLogin() {
         return null;
     }
-    @GetMapping("/")
-    public String mainView() {
-        return "bootstrapHTML/index";
-    }
-
-    @GetMapping("/charts")
-    public String showCharts() {
-        return "bootstrapHTML/charts";
-    }
-
-    @GetMapping("/error401")
-    public String showError401() {
-        return "bootstrapHTML/401";
-    }
-
-    @GetMapping("/error404")
-    public String showError404() {
-        return "bootstrapHTML/404";
-    }
-    @GetMapping("/error500")
-    public String showError500() {
-        return "bootstrapHTML/500";
-    }
 
 
-    @GetMapping("/password")
-    public String showPassword() {
-        return "bootstrapHTML/password";
-    }
-    @GetMapping("/register")
-    public String showRegister() {
-        return "bootstrapHTML/register";
-    }
-    @GetMapping("/tables")
-    public String showTables() {
-        return "bootstrapHTML/tables";
-    }
 
 }

@@ -22,7 +22,7 @@ public class QImport extends EntityPathBase<Import> {
 
     public static final QImport import$ = new QImport("import$");
 
-    public final DateTimePath<java.time.LocalDateTime> importDate = createDateTime("importDate", java.time.LocalDateTime.class);
+    public final StringPath importDate = createString("importDate");
 
     public final NumberPath<Long> importId = createNumber("importId", Long.class);
 

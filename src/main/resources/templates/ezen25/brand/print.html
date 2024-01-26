@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+<link rel="stylesheet" th:href="@{/css/styles.css}"/>
+<link rel="stylesheet" th:href="@{/css/commonStyle.css}"/>
+<script th:src="@{/js/jQuery-min.js}"></script>
+<script crossorigin="anonymous" th:src="@{https://use.fontawesome.com/releases/v6.3.0/js/all.js}"></script>
+<main>
+    <div class="container-fluid">
+        <div class="jasonNoh">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h1 class="mt-4">계약서</h1>
+                    </div>
+                </div>
+            </div>
+            <input name="brandId" th:value="${dto.brandId}" type="hidden">
+
+            <div>
+                <div class="col-md-12">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <table class="table_for_details" width="100%">
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details">협력업체 이름</td>
+                                    <td class="td_for_details">[[${dto.brandName}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details">연락처</td>
+                                    <td class="td_for_details">[[${dto.brandPhone}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details">이메일</td>
+                                    <td class="td_for_details">[[${dto.brandEmail}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details" colspan="1">내용</td>
+                                    <td class="td_for_details" colspan="5">
+                                        <textarea class="form-control" name="requestDescription" readonly style="height: 225px;
+                                        ">[[${dto.brandDescription}]]</textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div style="float:right;">
+                    <a th:href="@{/ezen25/brand/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
+         keyword = ${pageRequestDTO.keyword})}">
+                        <button class="btn btn-info" type="button">List</button>
+                    </a>
+
+                    <a>
+                        <button class="btn btn-success" onclick="printPage()">Print</button>
+                    </a>
+                </div>
+            </div>
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            <script th:inline="javascript">
+                function printPage() {
+                    // 프린트 버튼 클릭 시 버튼 숨기기
+                    $('.btn-success').hide();
+                    $('.btn-info').hide();
+
+                    // 실제 프린트 명령
+                    window.print();
+
+                    // 프린트 후에 다시 버튼 보이게 하기 (예: 2초 후)
+                    setTimeout(function(){
+                        $('.btn-success').show();
+                        $('.btn-info').show();
+                    }, 500); // 2000 밀리초 = 2초
+                }
+            </script>
+        </div>
+    </div>
+</main>
+</html>
