@@ -10,7 +10,7 @@
         <div class="container-fluid px-4">
             <h1 class="mt-4">발주관리</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a th:href="@{/order/list}">발주 요청리스트</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/ezen25/order/list}">발주 요청리스트</a></li>
                 <li class="breadcrumb-item active">발주관리</li>
             </ol>
             <div class="card mb-4">
@@ -91,7 +91,7 @@
 
             $.ajax({
                 type: "GET",
-                url: "/stock/withdrawal",
+                url: "/ezen25/stock/withdrawal",
                 data: {
                     orderCode : orderCode,
                 },

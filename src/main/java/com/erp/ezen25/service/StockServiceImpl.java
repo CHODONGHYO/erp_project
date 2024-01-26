@@ -20,12 +20,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class StockServiceImpl implements StockService {
 
-    private final StockRepository repository;
+    private final StockRepository stockRepository;
 
+    // 재고리스트 불러오기
     @Override
     @Transactional(readOnly = true)
     public List<StockDTO> getListWithProduct() {
-        List<Object[]> result = repository.getImportDateWithImport();
+        List<Object[]> result = stockRepository.getImportDateWithImport();
         return result.stream()
                 .map(this::objectArrayToStockDTOWithProduct)
                 .collect(Collectors.toList());
@@ -55,4 +56,12 @@ public class StockServiceImpl implements StockService {
 
         return dto;
     }
+
+    //withdrawal 페이지에서 exporting 페이지로 넘어갈 때, orderCode = '0' 에서 '1'로 변경
+    @Override
+    @Transactional
+    public void updateOrderStatus(String orderCode, List<Long> productIds) {
+        stockRepository.updateOrderStatus(orderCode, productIds);
+    }
+
 }
