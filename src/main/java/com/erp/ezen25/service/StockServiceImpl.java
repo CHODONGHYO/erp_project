@@ -1,10 +1,8 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.*;
-import com.erp.ezen25.entity.Export;
 import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.Product_Stock;
-import com.erp.ezen25.repository.ProductRepository;
 import com.erp.ezen25.repository.StockRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -13,9 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import javax.swing.text.html.parser.Entity;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +22,7 @@ public class StockServiceImpl implements StockService {
 
     private final StockRepository stockRepository;
 
+    // 재고리스트 불러오기
     @Override
     @Transactional(readOnly = true)
     public List<StockDTO> getListWithProduct() {
@@ -60,9 +57,11 @@ public class StockServiceImpl implements StockService {
         return dto;
     }
 
+    //withdrawal 페이지에서 exporting 페이지로 넘어갈 때, orderCode = '0' 에서 '1'로 변경
     @Override
     @Transactional
     public void updateOrderStatus(String orderCode, List<Long> productIds) {
         stockRepository.updateOrderStatus(orderCode, productIds);
     }
+
 }
