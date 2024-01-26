@@ -1,6 +1,7 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.*;
+import com.erp.ezen25.entity.Export;
 import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.Product_Stock;
 import com.erp.ezen25.repository.StockRepository;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +65,6 @@ public class StockServiceImpl implements StockService {
             return dto;
         } catch (DateTimeParseException e) {
             log.error("Error parsing date string: " + dateString, e);
-            // 예외 처리 코드 추가 (예: 기본값으로 대체)
             return null;
         }
     }
@@ -73,6 +74,12 @@ public class StockServiceImpl implements StockService {
     @Transactional
     public void updateOrderStatus(String orderCode, List<Long> productIds) {
         stockRepository.updateOrderStatus(orderCode, productIds);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode, List<Long> productIds) {
+        return stockRepository.getListForExportByOrderCodeAndProductIds(orderCode, productIds);
     }
 
 }
