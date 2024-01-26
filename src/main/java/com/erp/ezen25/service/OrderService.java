@@ -1,19 +1,39 @@
 package com.erp.ezen25.service;
 
-import com.erp.ezen25.dto.OrderDTO;
-import com.erp.ezen25.dto.WithdrawalDTO;
+import com.erp.ezen25.dto.*;
 import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.entity.Product_Info;
-import org.springframework.data.repository.query.Param;
+import com.erp.ezen25.queryMapping.SCategoryListMapping;
+import com.erp.ezen25.repository.OrderRepository;
+import com.erp.ezen25.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.List;
 
 public interface OrderService {
+
+
+    List<Object[]> joinOrderAndProduct();
     List<OrderDTO> getList();
     List<WithdrawalDTO> getWithdrawalList(String orderCode);
     String getNameByOrderCode(String orderCode);
+    OrderDTO findByOrderId(Long orderId);
+
+    List<OrderDTO> getListByMemberId(Long memberId);
+    void deleteById(Long orderId);
+
+    List<String> getMCategoryList();
+    List<String> getSCategoryList(String uppercateno);
+    // 서브 카테고리 가져오기
+    List<String> getProductList(String subcategory);
+
+
+
+
+    /*void modify(OrderDTO dto);*/
+
 
     default Order dtoToEntity(OrderDTO dto) {
         Order entity = Order.builder()

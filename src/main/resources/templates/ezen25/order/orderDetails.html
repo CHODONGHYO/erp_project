@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<th:block layout:fragment="content">
+    <main>
+        <h2>발주서 상세</h2>
+        <table>
+            <tr>
+                <td>발주일자</td>
+                <td th:text="${order.orderDate}"></td>
+                <td>납기일자</td>
+                <td th:text="${order.orderOutDate}"></td>
+            </tr>
+            <tr>
+                <td>발신</td>
+                <td th:text="${order.memberId}"></td>
+            </tr>
+            <tr>
+                <th>번호</th>
+                <th>상품번호</th>
+                <th>수량</th>
+            </tr>
+            <tr th:each="item, iterationStatus : ${order}">
+                <td th:text="${iterationStatus.index + 1}"></td>
+                <td th:text="${item.productId}"></td>
+                <td th:text="${item.orderNum}"></td>
+            </tr>
+            <tr>
+                <td>특이사항</td>
+                <td th:text="${order.orderDescription}"></td>
+
+            </tr>
+            <tr>
+                <td>납기일자</td>
+                <td th:text="${order.orderOutDate}"></td>
+            </tr>
+        </table>
+        <button type="button" th:onclick="|location.href='@{/order/search}'|">목록</button>
+    </main>
+</th:block>
+</html>
