@@ -30,8 +30,6 @@ public class QPlan extends EntityPathBase<Plan> {
 
     public final NumberPath<Long> planNumber = createNumber("planNumber", Long.class);
 
-    public final StringPath planStatus = createString("planStatus");
-
     public final QProduct_Info productInfo;
 
     public QPlan(String variable) {

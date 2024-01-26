@@ -20,7 +20,9 @@ img {
 .relative {
     position: relative;
 }
-
+.flex {
+    display: flex;
+}
 /* 모달 스타일 */
 .myModal {
     display: none;
@@ -52,7 +54,9 @@ img {
 .myModal .card .moBtn.bg-dark {
     background-color: var(--bs-gray) !important;
 }
-
+#layoutSidenav_content {
+    overflow: hidden;
+}
 /* 리스트 스타일 */
 .tableListStyle #datatablesSimple th {
     text-align: center
@@ -109,9 +113,6 @@ img {
     background-color: var(--bs-gray-900) !important;
 }
 /* 폼 레이아웃 */
-.formStyle {
-    overflow: hidden;
-}
 .formStyle .cardForm {
     width: 60%;
     min-width: 600px;
@@ -236,8 +237,12 @@ img {
     align-items: center;
     justify-content: space-between;
 }
+.planAdd .headerRight {
+    justify-content: end;
+}
 .planAdd .dateSelect {
     display: flex;
+    gap: 10px;
 }
 .planAdd .dateSelect span {
     white-space: nowrap;
@@ -254,6 +259,7 @@ img {
 .planAdd #planAddForm select {
     width: 100%;
 }
+
 .planAdd .inputListTable,
 .planAdd .sideListTable {
     width: 100%;
@@ -270,10 +276,13 @@ img {
     width: 25%;
 }
 .planAdd .inputListTable th:nth-child(2) {
-    width: 50%;
+    width: 40%;
 }
 .planAdd .inputListTable th:nth-child(3) {
     width: 25%;
+}
+.planAdd .inputListTable th:nth-child(4) {
+    width: 10%;
 }
 .planAdd .addTd .card-body {
     padding: 6px 12px;
@@ -303,9 +312,63 @@ img {
 .planAdd .sideListTable th:nth-child(3) {
     width: 25%;
 }
-.planAdd .inputListTable tbody tr:not(:first-child) {
+.planAdd .inputListTable tbody tr:not(:first-child) .addNums,
+.planAdd .inputListTable tbody tr:not(:first-child) .deleteLine {
     cursor:pointer;
 }
-.planAdd .inputListTable tbody tr:not(:first-child):hover {
+.planAdd .inputListTable tbody tr:not(:first-child) .numSetting {
     border: 2px solid blue;
+}
+
+.planAdd .inputListTable tbody tr:not(:first-child) .addNums:hover {
+    border: 2px solid blue;
+}
+.planAdd .inputListTable tbody tr:not(:first-child) .deleteLine:hover {
+    border: 2px solid red;
+}
+
+.planAdd .numSetBoard {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 90%;
+    padding: 4px 6px;
+    z-index: 1;
+}
+.planAdd .numSetBoard .numBtnGroup {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+}
+.planAdd .numSetBoard {
+    background-color: var(--bs-gray-100);
+}
+.planAdd .numSetBoard .numBtns{
+    background-color: var(--bs-gray-400);
+    border:1px solid black;
+    border-radius: 0.375rem;
+    margin: 3px;
+    padding: 2px 2px 2px 6px;
+    cursor: pointer;
+}
+.planAdd .numSetBoard .numBtns:hover {
+    background-color: var(--bs-gray-500);
+}
+.planAdd .numSetBoard .flex {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 10px;
+}
+.planAdd .numSetBoard .flex {
+    display: grid;
+    place-items: center;
+}
+.planAdd .setBoardConfirm {
+    cursor: pointer;
+}
+.planAdd .setBoardConfirm {
+    background-color: var(--bs-purple) !important;
+    cursor: pointer;
+}
+.planAdd .setBoardConfirm:hover {
+    background-color: var(--bs-indigo) !important;
 }

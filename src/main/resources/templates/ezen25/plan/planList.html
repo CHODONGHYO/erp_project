@@ -33,7 +33,6 @@
                             <th>수량</th>
                             <th>상세</th>
                             <th>삭제</th>
-                            <th>계획상태</th>
                         </tr>
                         </thead>
                         <tfoot>
@@ -44,7 +43,6 @@
                             <th>수량</th>
                             <th>상세</th>
                             <th>삭제</th>
-                            <th>계획상태</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -58,7 +56,6 @@
                             <td><div class="cellStyle sCategory" th:text="${plan.planNumber}"></div></td>
                             <td><div class="cellStyle"><a href="#" class="card bg-primary text-white mb-2 listBtn resetLink">상세</a></div></td>
                             <td><div class="cellStyle"><div class="card bg-danger text-white mb-2 listBtn">삭제</div></div></td>
-                            <td><div class="cellStyle sCategory" th:text="${plan.planStatus}"></div></td>
                         </tr>
                         </tbody>
                     </table>
@@ -74,28 +71,16 @@
                     <table>
                         <tbody>
                         <tr>
-                            <th rowspan="4">
-                                <input type="hidden" class="modalplanId">
-                                <img class="modalImg" src="/image/NoImg.png" alt="">
-                            </th>
-                            <th>브랜드</th>
-                            <th>대분류</th>
-                            <th>소분류</th>
+                            <th>날짜</th>
+                            <th>협력업체</th>
+                            <th>품목</th>
+                            <th>수량</th>
                         </tr>
                         <tr>
                             <td class="modalBrand"></td>
                             <td class="modalMCate"></td>
                             <td class="modalSCate"></td>
-                        </tr>
-                        <tr>
-                            <th>이름</th>
-                            <th>생산가격</th>
-                            <th>판매가격</th>
-                        </tr>
-                        <tr>
-                            <td class="modalName"></td>
-                            <td class="modalOriginal"></td>
-                            <td class="modalSale"></td>
+                            <td class="modalSCate"></td>
                         </tr>
                         </tbody>
                     </table>

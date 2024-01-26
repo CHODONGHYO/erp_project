@@ -40,8 +40,4 @@ public class Plan {
 
     @Column(nullable = false)
     private LocalDate completeDate;
-
-    @Column(length = 1000, nullable = false)
-    @ColumnDefault("'미정'")
-    private String planStatus;
 }

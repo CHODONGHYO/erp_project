@@ -14,7 +14,7 @@
             </ol>
             <div class="cardGroup">
                 <div class="card mb-4 cardForm">
-                    <div class="card-header">
+                    <div class="card-header headerRight">
                         <div class="dateSelect">
                             <span>등록날짜</span>
                             <input type="date" class="form-control" id="completeDate" name="completeDate">
@@ -40,8 +40,27 @@
                                     <th>협력업체</th>
                                     <th>품목</th>
                                     <th>수량</th>
+                                    <th>삭제</th>
                                 </tr>
                             </table>
+                            <div class="card numSetBoard">
+                                <div class="flex">
+                                    <input type="text" class="form-control setNum">
+                                    <div class="card bg-primary text-white mb-2 prodBtn setBoardConfirm">
+                                        <div class="card-body resetLink ">확인</div>
+                                    </div>
+                                </div>
+                                <div class="numBtnGroup">
+                                    <div class="numBtns">-1</div>
+                                    <div class="numBtns">-10</div>
+                                    <div class="numBtns">-100</div>
+                                    <div class="numBtns">-1000</div>
+                                    <div class="numBtns">+1</div>
+                                    <div class="numBtns">+10</div>
+                                    <div class="numBtns">+100</div>
+                                    <div class="numBtns">+1000</div>
+                                </div>
+                            </div>
                         </div>
                         <div class="btnGroup">
                             <div class="card bg-primary text-white mb-2 prodBtn">
@@ -98,17 +117,41 @@
 
             $(".inputListTable tbody").append(`<tr>`
                 +`<td>${brandName}`
-                    +`<input type=hidden id=brand${addCount} name=brand${addCount} value="${brandId}">`
+                    +`<input type=hidden id=brand${addCount} name=brand${addCount} class=brandIds value="${brandId}">`
                 +`<td>${productName}`
-                    +`<input type=hidden id=product${addCount} name=product${addCount} value="${productId}">`
-                +`<td id=addNum${addCount}>${number}`
+                    +`<input type=hidden id=product${addCount} name=product${addCount} class=productIds value="${productId}">`
+                +`<td id=addNum${addCount} class=addNums>${number}`
+                +`<td class=deleteLine>x`
             +`</tr>`)
 
             addCount++;
+
+            $(`.inputListTable tbody tr:nth-child(${addCount+1}) .addNums`).on("click", (e) => {
+                console.log(e.target.offsetTop);
+                $(".numSetting").removeClass("numSetting");
+                $(e.target).addClass("numSetting")
+                $(".planAdd .numSetBoard").css({
+                    display: "block",
+                    top: e.target.offsetTop
+                })
+                $(".numSetBoard .setNum").val($(e.target).text());
+            })
+
+            $(`.inputListTable tbody tr:nth-child(${addCount+1}) .deleteLine`).on("click", (e) => {
+                $(e.target).parent().remove();
+            })
         })
 
-        $(".inputListTable tbody tr:not(:first-child)").on("click", (e) => {
-            console.log("ddd");
+        $(".numBtns").on("click", (e) => {
+            $(".numSetBoard .setNum").val(Number($(".numSetBoard .setNum").val()) + Number($(e.target).text()))
+        })
+
+        $(".setBoardConfirm").on("click", () => {
+            $(".inputListTable tbody tr .numSetting").text($(".numSetBoard .setNum").val())
+             $(".numSetBoard .setNum").val("");
+             $(".inputListTable tbody tr .numSetting").removeClass("numSetting");
+             $(".planAdd .numSetBoard").css({
+                    display: "none",})
         })
 
         let registerBtn = document.querySelector(".registerBtn");
@@ -118,9 +161,9 @@
             let objList = [];
             trCount.forEach((e,idx)=> {
                 let obj = {
-                    productId: $(e).find(`#product${idx}`).val(),
-                    brandId: $(e).find(`#brand${idx}`).val(),
-                    planNumber: $(e).find(`#addNum${idx}`).text(),
+                    productId: $(e).find(`.productIds`).val(),
+                    brandId: $(e).find(`.brandIds`).val(),
+                    planNumber: $(e).find(`.addNums`).text()
                 }
                 objList.push(obj);
             })
