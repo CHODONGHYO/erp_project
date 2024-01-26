@@ -15,6 +15,12 @@ public interface ImportService {
     void remove(Long importId);
 
     void modify(ImportDTO importDTO);
+    String showProductInfo(Long productId);
+
+    String findRequestCodeByImportId(Long importId);
+    Long findProductIdByImportId(Long importId);
+    Long findImportNumByImportId(Long importId);
+    String findImportDateByImportId(Long importId);
 
     default Import dtoToEntity(ImportDTO importDTO) {
         Import entity = Import.builder()

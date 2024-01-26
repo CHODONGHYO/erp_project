@@ -63,34 +63,44 @@
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapse4" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                요청서 목록
-                            </a>
-                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                요청서 등록
-                            </a>
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" th:href="@{/ezen25/request/}">요청 목록</a>
+                            <a class="nav-link" th:href="@{/ezen25/request/register}">요청 등록</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse4">
+                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                        입고 관리
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapse5" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" th:href="@{/ezen25/request/import}">입고 목록</a>
+                            <a class="nav-link" th:href="@{/ezen25/request/importCheck}">입고 검수</a>
+                            <a class="nav-link" th:href="@{/ezen25/request/returns}">반품 목록</a>
+                            <a class="nav-link" th:href="@{/ezen25/order/export}">출하 내역</a>
                         </nav>
                     </div>
 
+
                     <div class="sb-sidenav-menu-heading">지점</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse5">
                         <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                         계약관리
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapse5" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <div class="collapse" id="collapse6" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" href="#">계약서 목록</a>
                             <a class="nav-link" href="#">계약등록</a>
                         </nav>
                     </div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse6">
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         발주관리
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
-                    <div class="collapse" id="collapse6" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <div class="collapse" id="collapse8" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" th:href="@{/ezen25/order/list}">발주 리스트</a>
                         </nav>

@@ -121,8 +121,20 @@ public class RequestServiceImpl implements RequestService {
 
         BooleanBuilder sBuilder = new BooleanBuilder();
 
-        if (type.contains("s")) {
+        if(type.contains("p")) {
+            sBuilder.or(qRequest.productId.stringValue().contains(keyword));
+        }
+
+        if(type.contains("r")) {
+            sBuilder.or(qRequest.requestCode.contains(keyword));
+        }
+
+        if(type.contains("s")) {
             sBuilder.or(qRequest.requestStatus.contains(keyword));
+        }
+
+        if(type.contains("d")) {
+            sBuilder.or(qRequest.requestDate.contains(keyword));
         }
 
         builder.and(sBuilder);

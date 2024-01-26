@@ -28,7 +28,6 @@ public class Export {
 
     private Product_Info productId;
 
-
     @Column(nullable = false)
     @ColumnDefault("0")
     private Long exportNum;
@@ -50,7 +49,6 @@ public class Export {
     public void changeExportDate(String exportDate) {
         this.exportDate = exportDate;
     }
-
 
     public void changeOrderCode(String orderCode) {
         this.orderCode = orderCode;
