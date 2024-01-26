@@ -1,6 +1,8 @@
 package com.erp.ezen25.controller;
 
 import com.erp.ezen25.dto.*;
+import com.erp.ezen25.dto.contractDTOs.*;
+import com.erp.ezen25.dto.productDTOs.ProductBnameListResponseDTO;
 import com.erp.ezen25.service.BrandService;
 import com.erp.ezen25.service.ContractService;
 import lombok.RequiredArgsConstructor;
@@ -108,17 +110,33 @@ public class PartnerController {
     }
 
     @PostMapping("/contract/contractAdd")
-    public String contractAdd (ContractAddRequestDTO addRequest,@RequestParam("contractSelect") MultipartFile mf) throws IOException {
+    public String contractAdd (ContractAddRequestDTO addRequest, @RequestParam("contractSelect") MultipartFile mf) throws IOException {
         contractService.addContract(addRequest, mf);
         return "redirect:/ezen25/brand/contract/contractList";
     }
 
     @PostMapping("/contract/contractDelete")
     @ResponseBody
-    public ResponseEntity<Void> contractDelete (@RequestParam("contractId")Long contractId) {
+    public ResponseEntity<Void> contractDelete (@RequestParam("contractId") Long contractId) {
         contractService.contractDelete(contractId);
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/contract/contractModify/{contractId}")
+    public String contractModifyForm(@PathVariable("contractId") Long contractId, Model model) {
+        List<ProductBnameListResponseDTO> bList = contractService.bnameList();
+        List<ContractPnameListResponseDTO> pList = contractService.prodList();
+        ContractDetailResponseDTO contract = contractService.contractDetail(contractId);
 
+        model.addAttribute("bList",bList);
+        model.addAttribute("pList",pList);
+        model.addAttribute("contract",contract);
+
+        return "/ezen25/brand/contract/contractModify";
+    }
+    @PostMapping("/contract/contractModify/{contractid}")
+    public String contractModify(ContractModifyRequest updateRequest, @RequestParam("contractSelect") MultipartFile mf) throws IOException {
+        contractService.contractUpdate(updateRequest, mf);
+        return "redirect:/ezen25/brand/contract/contractList";
+    }
 }

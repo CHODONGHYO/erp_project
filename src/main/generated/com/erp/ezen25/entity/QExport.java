@@ -28,8 +28,6 @@ public class QExport extends EntityPathBase<Export> {
 
     public final NumberPath<Long> exportNum = createNumber("exportNum", Long.class);
 
-    public final StringPath exportStatus = createString("exportStatus");
-
     public final StringPath orderCode = createString("orderCode");
 
     public final QProduct_Info product;

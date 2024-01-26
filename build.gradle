@@ -47,6 +47,12 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	// pdf 관련
+	implementation 'org.apache.pdfbox:pdfbox:2.0.24'
+
+	// JSON parsing
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
 }
 test {
 	useJUnitPlatform()

@@ -1,6 +1,6 @@
 package com.erp.ezen25.service;
 
-import com.erp.ezen25.dto.*;
+import com.erp.ezen25.dto.productDTOs.*;
 import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.repository.BrandRepository;
