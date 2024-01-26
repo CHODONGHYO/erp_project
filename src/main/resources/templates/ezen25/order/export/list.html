@@ -90,7 +90,6 @@
                                             <th>개수</th>
                                             <th>날짜</th>
                                             <th>발주 코드</th>
-                                            <th>상태</th>
                                             <th>
                                                 <button class="new-button" onclick="return exportDeleteSelected()"
                                                         type="submit">
@@ -115,7 +114,6 @@
                                             <td>[[${exportDTO.exportNum}]]</td>
                                             <td>[[${exportDTO.exportDate}]]</td>
                                             <td>[[${exportDTO.orderCode}]]</td>
-                                            <td>[[${exportDTO.exportStatus}]]</td>
                                             <td>
                                                 <a th:href="@{/ezen25/order/export/print(exportId = ${exportDTO.exportId}, page= ${exportResult.page},
                         type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
