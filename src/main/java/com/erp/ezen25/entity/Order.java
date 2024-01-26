@@ -43,9 +43,6 @@ public class Order {
     @Column(length = 1000)
     private String orderDescription;
 
-    @Column(nullable = false)
-    private LocalDateTime orderOutDate;
-
     @Column(length = 1000, nullable = false)
     @ColumnDefault("'0'")
     private String orderStatus;

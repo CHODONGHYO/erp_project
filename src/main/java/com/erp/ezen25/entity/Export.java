@@ -33,12 +33,17 @@ public class Export {
     @ColumnDefault("0")
     private Long exportNum;
 
+    @Column(nullable = false)
+    private String exportDate;
+
+    @Column(nullable = false)
+    private String exportStatus;
 
     @Column(length = 1000, nullable = false)
     private String orderCode;
 
     public void changeProductId(Product_Info productId) {
-        this.product = productId;
+        this.productId = productId;
     }
 
     public void changeExportNum(Long exportNum) {
