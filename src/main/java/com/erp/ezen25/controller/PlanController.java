@@ -1,26 +1,18 @@
 package com.erp.ezen25.controller;
 
 import com.erp.ezen25.dto.planDTOs.PbListResponseDTO;
-import com.erp.ezen25.dto.planDTOs.PlanAddRequestDTO;
+import com.erp.ezen25.dto.planDTOs.PlanAddOrderListResponseDTO;
 import com.erp.ezen25.dto.planDTOs.PlanListResponseDTO;
-import com.erp.ezen25.entity.Plan;
-import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.service.PlanService;
 import lombok.RequiredArgsConstructor;
-import org.apache.pdfbox.pdmodel.common.function.type4.Parser;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
+
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -40,8 +32,10 @@ public class PlanController {
     @GetMapping("/planAdd")
     public void planAddForm(Model model) {
         List<PbListResponseDTO> pbList = planService.addFormOptionList();
+        List<PlanAddOrderListResponseDTO> oList = planService.getOrderAndStock();
 
         model.addAttribute("proList", pbList);
+        model.addAttribute("oList", oList);
     }
 
     @PostMapping("/planAdd")

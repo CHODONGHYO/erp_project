@@ -2,12 +2,14 @@ package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.BrandDTO;
 import com.erp.ezen25.dto.planDTOs.PbListResponseDTO;
+import com.erp.ezen25.dto.planDTOs.PlanAddOrderListResponseDTO;
 import com.erp.ezen25.dto.planDTOs.PlanAddRequestDTO;
 import com.erp.ezen25.dto.planDTOs.PlanListResponseDTO;
 import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.entity.Plan;
 import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.repository.BrandRepository;
+import com.erp.ezen25.repository.OrderRepository;
 import com.erp.ezen25.repository.PlanRepository;
 import com.erp.ezen25.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class PlanService {
     private final PlanRepository planRepository;
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
+    private final OrderRepository orderRepository;
     public List<PlanListResponseDTO> getPlanList () {
         List<Plan> pList = planRepository.findAllByOrderByCompleteDateDesc();
 
@@ -69,5 +72,10 @@ public class PlanService {
     }
     public Product_Info getProdById (Long id) {
         return productRepository.getReferenceById(id);
+    }
+    public List<PlanAddOrderListResponseDTO> getOrderAndStock() {
+        return orderRepository.findOrderAndStockList().stream()
+                .map(PlanAddOrderListResponseDTO::new)
+                .toList();
     }
 }

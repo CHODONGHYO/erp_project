@@ -254,13 +254,16 @@ img {
 .planAdd #planAddForm select {
     width: 100%;
 }
-.planAdd .inputListTable {
+.planAdd .inputListTable,
+.planAdd .sideListTable {
     width: 100%;
     text-align:center;
 }
 
 .planAdd .inputListTable th,
-.planAdd .inputListTable td {
+.planAdd .inputListTable td,
+.planAdd .sideListTable th,
+.planAdd .sideListTable td {
     border: 1px solid var(--bs-border-color);
 }
 .planAdd .inputListTable th:nth-child(1) {
@@ -279,4 +282,30 @@ img {
 .planAdd .addTd .card-body:hover {
     color: white;
     background-color: var(--bs-link-hover-color);
+}
+.planAdd .cardForm {
+    width: 50%;
+    min-width: 500px;
+}
+
+.planAdd .sideCard {
+    width: 40%;
+    min-width: 350px;
+    max-width: none;
+}
+
+.planAdd .sideListTable th:nth-child(1) {
+    width: 50%;
+}
+.planAdd .sideListTable th:nth-child(2) {
+    width: 25%;
+}
+.planAdd .sideListTable th:nth-child(3) {
+    width: 25%;
+}
+.planAdd .inputListTable tbody tr:not(:first-child) {
+    cursor:pointer;
+}
+.planAdd .inputListTable tbody tr:not(:first-child):hover {
+    border: 2px solid blue;
 }

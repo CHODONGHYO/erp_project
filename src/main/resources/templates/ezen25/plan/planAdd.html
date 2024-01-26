@@ -16,13 +16,9 @@
                 <div class="card mb-4 cardForm">
                     <div class="card-header">
                         <div class="dateSelect">
-                            <input type="date" class="form-control" id="completeDate" name="completeDate">
                             <span>등록날짜</span>
-                        </div>
-                        <div>
-                            <div class="card bg-primary text-white mb-2 prodBtn">
-                                <a href="#" class="card-body resetLink">현재 재고보기</a>
-                            </div>
+                            <input type="date" class="form-control" id="completeDate" name="completeDate">
+
                         </div>
                     </div>
                     <form method="post" class="card-body" id="planAddForm">
@@ -38,7 +34,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="inputLine">
+                        <div class="inputLine relative">
                             <table class="inputListTable">
                                 <tr>
                                     <th>협력업체</th>
@@ -61,11 +57,16 @@
                     <div class="card imageCard">
                         <div class="card-header">발주 현황</div>
                         <div class="card-body">
-                            <table class="inputListTable">
+                            <table class="sideListTable">
                                 <tr>
                                     <th>품목</th>
-                                    <th>수량</th>
-                                    <th>재고</th>
+                                    <th>필요수량</th>
+                                    <th>현재재고</th>
+                                </tr>
+                                <tr th:each="order : ${oList}">
+                                    <td th:text="${order.productName}"></td>
+                                    <td th:text="${order.orderNum}"></td>
+                                    <td th:text="${order.productNum}"></td>
                                 </tr>
                             </table>
                         </div>
@@ -106,6 +107,10 @@
             addCount++;
         })
 
+        $(".inputListTable tbody tr:not(:first-child)").on("click", (e) => {
+            console.log("ddd");
+        })
+
         let registerBtn = document.querySelector(".registerBtn");
         registerBtn.addEventListener("click", () => {
             let planDate = document.querySelector("#completeDate").value;
@@ -130,7 +135,7 @@
                 },
                 success: (result) => {
                     console.log("성공");
-                    // location.href= "/ezen25/plan/planList";
+                    location.href= "/ezen25/plan/planList";
                 },
                 error: (request, error) => {
                     alert("code:" + request.status+ "\n" + "message:" + request.responseText + "\n" + "error:" + error);
