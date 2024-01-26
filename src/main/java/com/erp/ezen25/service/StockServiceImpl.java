@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,26 +40,32 @@ public class StockServiceImpl implements StockService {
         Product_Info product = Stock.getProduct();
 
         String dateString = objects[1].toString();
-        LocalDateTime importDate = LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        try {
+            LocalDateTime importDate = LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        StockDTO dto = StockDTO.builder()
-                .pNumId(Stock.getPNumId())
-                .productId(product.getProductId())
-                .productNum(Stock.getProductNum())
-                .memberId(Stock.getMember().getMemberId())
-                .totalPrice(Stock.getTotalPrice())
-                .productName(product.getProductName())
-                .mCategory(product.getMCategory())
-                .sCategory(product.getSCategory())
-                .originalPrice(String.valueOf(product.getOriginalPrice()))
-                .sellPrice(String.valueOf(product.getSellPrice()))
-                .image(product.getImage())
-                .importDate(LocalDateTime.parse(objects[1].toString()))
-                .build();
+            StockDTO dto = StockDTO.builder()
+                    .pNumId(Stock.getPNumId())
+                    .productId(product.getProductId())
+                    .productNum(Stock.getProductNum())
+                    .memberId(Stock.getMember().getMemberId())
+                    .totalPrice(Stock.getTotalPrice())
+                    .productName(product.getProductName())
+                    .mCategory(product.getMCategory())
+                    .sCategory(product.getSCategory())
+                    .originalPrice(String.valueOf(product.getOriginalPrice()))
+                    .sellPrice(String.valueOf(product.getSellPrice()))
+                    .image(product.getImage())
+                    .importDate(importDate)
+                    .build();
 
-        dto.setProduct(product);
+            dto.setProduct(product);
 
-        return dto;
+            return dto;
+        } catch (DateTimeParseException e) {
+            log.error("Error parsing date string: " + dateString, e);
+            // 예외 처리 코드 추가 (예: 기본값으로 대체)
+            return null;
+        }
     }
 
     //withdrawal 페이지에서 exporting 페이지로 넘어갈 때, orderCode = '0' 에서 '1'로 변경
