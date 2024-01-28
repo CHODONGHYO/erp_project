@@ -68,5 +68,43 @@ window.addEventListener('DOMContentLoaded', event => {
 
             $('.myModal.detailModal').show();
         })
+
+        $(".planList .listBtn.bg-danger").on("click", (e) => {
+            let parent$Tr = $(e.target).parents("tr");
+            let modalPlanId = $(parent$Tr).find(".planId").val();
+            let modalPlanDate = $(parent$Tr).find(".planDate").text();
+            let modalBrandName = $(parent$Tr).find(".brandName").text();
+            let modalProductName = $(parent$Tr).find(".productName").text();
+            let modalPlanNumber = $(parent$Tr).find(".planNumber").text();
+
+
+            $(".modalPlanId").val(modalPlanId);
+            $(".modalDate").text(modalPlanDate);
+            $(".modalBrand").text(modalBrandName);
+            $(".modalProduct").text(modalProductName);
+            $(".modalCount").text(modalPlanNumber);
+
+
+            $('.myModal.deleteModal').show();
+        })
+
+        $(".planList .listBtn.modify").on("click", (e) => {
+                    let parent$Tr = $(e.target).parents("tr");
+                    let modalPlanId = $(parent$Tr).find(".planId").val();
+                    let modalPlanDate = $(parent$Tr).find(".planDate").text();
+                    let modalBrandName = $(parent$Tr).find(".brandName").text();
+                    let modalProductName = $(parent$Tr).find(".productName").text();
+                    let modalPlanNumber = $(parent$Tr).find(".planNumber").text();
+
+
+                    $(".modalPlanId").val(modalPlanId);
+                    $(".modalDate").text(modalPlanDate);
+                    $(".modalBrand").text(modalBrandName);
+                    $(".modalProduct").text(modalProductName);
+                    $("#modifyPlanNum").val(modalPlanNumber);
+
+
+                    $('.myModal.modifyModal').show();
+                })
     }
 });

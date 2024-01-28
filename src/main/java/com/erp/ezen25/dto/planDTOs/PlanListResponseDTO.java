@@ -13,7 +13,6 @@ public class PlanListResponseDTO {
     private final String brandName;
     private final String productName;
     private final Long planNumber;
-    private final String planStatus;
 
     public PlanListResponseDTO(Plan plan) {
         this.planId=plan.getPlanId();
@@ -21,7 +20,6 @@ public class PlanListResponseDTO {
         this.brandName=plan.getBrand().getBrandName();
         this.productName=plan.getProductInfo().getProductName();
         this.planNumber=plan.getPlanNumber();
-        this.planStatus=plan.getPlanStatus();
     }
 
 }
