@@ -44,4 +44,21 @@ public class PlanController {
         planService.addPlan(planList, planDate);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/planDelete")
+    @ResponseBody
+    public ResponseEntity<Void> planDelete(@RequestParam("planId") Long planId) {
+        planService.planDelete(planId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/planModify")
+    @ResponseBody
+    public ResponseEntity<Void> planModify(@RequestParam("planNum") Long planNum, @RequestParam("planId") Long planId) {
+        System.out.println(planNum);
+        System.out.println(planId);
+
+        planService.planModify(planNum, planId);
+        return ResponseEntity.ok().build();
+    }
 }

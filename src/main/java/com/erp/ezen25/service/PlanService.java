@@ -1,10 +1,7 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.BrandDTO;
-import com.erp.ezen25.dto.planDTOs.PbListResponseDTO;
-import com.erp.ezen25.dto.planDTOs.PlanAddOrderListResponseDTO;
-import com.erp.ezen25.dto.planDTOs.PlanAddRequestDTO;
-import com.erp.ezen25.dto.planDTOs.PlanListResponseDTO;
+import com.erp.ezen25.dto.planDTOs.*;
 import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.entity.Plan;
 import com.erp.ezen25.entity.Product_Info;
@@ -77,5 +74,15 @@ public class PlanService {
         return orderRepository.findOrderAndStockList().stream()
                 .map(PlanAddOrderListResponseDTO::new)
                 .toList();
+    }
+
+    public void planDelete(Long planId) {
+        planRepository.deleteById(planId);
+    }
+
+    public void planModify(Long planNum, Long planId) {
+        PlanModifyRequestDTO pModi = planRepository.findById(planId).map(PlanModifyRequestDTO::new).get();
+        pModi.setPlanNumber(planNum);
+        planRepository.save(pModi.toEntity());
     }
 }
