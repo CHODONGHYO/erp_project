@@ -23,4 +23,5 @@ public class ExportDTO {
     private String orderStatus; //발주상태 0: 발주요청 1:불출 2: 출고처리완료
     private String exportDate;
     private String orderCode;
+
 }

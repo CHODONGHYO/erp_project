@@ -18,9 +18,9 @@ public interface StockRepository extends JpaRepository<Product_Stock, Long> {
 
     @Query("SELECT new com.erp.ezen25.dto.ExportDTO(e.exportId, pi.productId, pi.image, pi.productName, pi.mCategory, pi.sCategory, o.orderNum, ps.productNum, pi.sellPrice, e.exportNum, o.orderStatus, e.exportDate, e.orderCode) " +
             "FROM Export e " +
-            "JOIN e.productId pi " +
+            "JOIN Product_Info pi ON e.productId = pi " +
             "JOIN Product_Stock ps ON pi.productId = ps.product.productId " +
-            "JOIN Order o ON e.orderCode = o.orderCode " +
+            "JOIN Order o ON e.orderCode = o.orderCode AND pi.productId = o.product.productId " +
             "WHERE e.orderCode = :orderCode AND pi.productId IN :productIds")
     List<ExportDTO> getListForExportByOrderCodeAndProductIds(@Param("orderCode") String orderCode, @Param("productIds") List<Long> productIds);
 
