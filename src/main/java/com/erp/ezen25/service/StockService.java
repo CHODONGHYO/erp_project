@@ -14,6 +14,7 @@ public interface StockService {
     List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode, List<Long> productIds);
 
     void updateOrderStatus(String orderCode, List<Long> productIds);
+    void updateOrderStatus2(String orderCode);
 
     default Product_Stock dtoToEntity(StockDTO dto) {
         Product_Stock entity = Product_Stock.builder()

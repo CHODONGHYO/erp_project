@@ -10,7 +10,7 @@
         <div class="container-fluid px-4">
             <h1 class="mt-4">재고관리</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a th:href="@{/ezen25/stock/exporting}">출고처리</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/ezen25/stock/exporting}">출고리스트</a></li>
                 <li class="breadcrumb-item active">재고관리</li>
             </ol>
             <div class="card mb-4">
@@ -60,40 +60,9 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="col-md-12 text-end">
-                        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exportConfirmModal">완료</button>
-                    </div>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="exportConfirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">출고처리 확인</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    정말 출고처리하시겠습니까?
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                                    <button type="button" class="btn btn-primary" th:onclick="'javascript:confirmExport(' + ${orderCode + ')'" data-bs-dismiss="modal">확인</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
     </main>
-    <script th:inline="javascript">
-        function confirmExport(orderCode) {
-            $.post("/ezen25/stock/exporting", { orderCode: orderCode }, function (data) {
-                window.location.href = "/ezen25/stock/exportList";
-            });
-        }
-    </script>
 </th:block>
 </html>
-

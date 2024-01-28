@@ -63,9 +63,10 @@ public class StockController {
         return "ezen25/stock/exporting";
     }
 
-    // 출고처리 페이지에서 확인 버튼 클릭 시 처리 (alert창 추가)
+    // 출고처리 페이지에서 확인 버튼 클릭 시 처리
     @PostMapping("/exporting")
-    public String exportPOST() {
+    public String exportPOST(@RequestParam(value = "orderCode") String orderCode) {
+        stockService.updateOrderStatus2(orderCode);
         return "ezen25/stock/exportList";
     }
 
