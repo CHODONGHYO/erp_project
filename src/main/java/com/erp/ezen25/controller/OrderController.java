@@ -1,20 +1,25 @@
 package com.erp.ezen25.controller;
 
-import com.erp.ezen25.dto.ExportDTO;
-import com.erp.ezen25.dto.OrderDTO;
-import com.erp.ezen25.dto.PageRequestDTO;
+import com.erp.ezen25.dto.*;
+import com.erp.ezen25.dto.planDTOs.PlanListResponseDTO;
+import com.erp.ezen25.dto.productDTOs.ProductListResponseDTO;
+import com.erp.ezen25.dto.productDTOs.ProductMCateListResponseDTO;
+import com.erp.ezen25.dto.productDTOs.ProductSCateListResponseDTO;
 import com.erp.ezen25.entity.Member;
+import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.repository.MemberRepository;
-import com.erp.ezen25.service.ExportService;
-import com.erp.ezen25.service.OrderService;
+import com.erp.ezen25.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -26,18 +31,157 @@ import java.util.Optional;
 @RequiredArgsConstructor
 // 발주 관련 Controller
 public class OrderController {
-
+    @Autowired
     private final OrderService orderService;
-
+    @Autowired
     private final ExportService exportService;
-    private MemberRepository memberRepository;
 
+    @Autowired
+    private final PlanService planService;
+    @Autowired
+    private final ProductService productService;
+    @Autowired
+    private final MemberService memberService;
     @GetMapping("/list")
     public String orderList(Model model) {
         log.info("발주요청목록 페이지로 이동........");
         List<OrderDTO> orderList = orderService.getList();
         model.addAttribute("orderList", orderList);
         return "ezen25/order/orderList";
+    }
+    @GetMapping("/plancheck")
+    public String planList(Model model){
+        log.info("계획확인");
+        List<PlanListResponseDTO> planlist = planService.getPlanList();
+
+        model.addAttribute("planist", planlist);
+        return "ezen25/order/planlist";
+    }
+
+    @GetMapping({"/rd","/print"})
+    public String getOrderDetails(@RequestParam("orderId") Long orderId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model) {
+        OrderDTO orderdto = orderService.read(orderId);
+        model.addAttribute("orderDTO", orderdto);
+        return "ezen25/order/orderDetails";
+    }
+    @GetMapping("/mod")
+    public String orderMod(@RequestParam("orderId") Long orderId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model){
+        OrderDTO orderdto = orderService.read(orderId);
+        model.addAttribute("orderDTO", orderdto);
+        return "ezen25/order/orderModify";
+    }
+    @PostMapping("/mod")
+    public String orderMod(@ModelAttribute("orderDTO") OrderDTO orderDTO,
+                               @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO,
+                               RedirectAttributes redirectAttributes) {
+
+
+        orderService.modify(orderDTO);
+
+        redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
+        redirectAttributes.addAttribute("type", pageRequestDTO.getType());
+        redirectAttributes.addAttribute("keyword", pageRequestDTO.getKeyword());
+        redirectAttributes.addAttribute("orderId", orderDTO.getOrderId());
+
+        return "redirect:/ezen25/order/search";
+    }
+    @GetMapping("/search")
+    public String orderSearch(HttpSession session , Model model, @RequestParam(name = "memberId", required = false) Long memberId,@ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO) {
+
+//        List<OrderDTO> memberorderList = orderService.getListByMemberId(memberId);
+//        log.info("리스트:"+memberorderList);
+//        model.addAttribute("orderList", memberorderList);
+        List<OrderDTO> orderList = orderService.getList();
+        model.addAttribute("orderList", orderList);
+        return "ezen25/order/orderSearch";
+
+    }
+    /* @GetMapping("/write")
+     public String orderWrite(HttpSession session, @RequestParam(value = "userId", required = false) String userId, Model model) {
+         log.info("발주서 입력 페이지로 이동..");
+         Optional<Member> member = memberRepository.findByUserId(userId);
+         if (member.isPresent()) {
+             model.addAttribute("member", member.get());
+         } else {
+             model.addAttribute("member", new Member());
+         }
+         List<Object[]> polist = orderService.joinOrderAndProduct();
+         List<String> mCateList = orderService.getMCategoryList();
+
+         model.addAttribute("mcategories",  mCateList);
+         model.addAttribute("member", member);
+         log.info("대분류: "+mCateList);
+         log.info("멤버:" + member);
+         return "/ezen25/order/orderRegister";
+     }*/
+    @GetMapping("/register")
+    public String register(Model model, HttpSession session) {
+        log.info("GET 형식 Register");
+
+        // 세션에 'member' 속성이 있다고 가정
+        Member loggedMember = (Member) session.getAttribute("member");
+
+        if (loggedMember != null) {
+            // 세션에서 memberId 가져와 모델에 추가
+            model.addAttribute("memberId", loggedMember.getMemberId());
+            model.addAttribute("memberName", loggedMember.getName());
+        }
+        List<String> mCateList = orderService.getMCategoryList();
+        List<MemberDTO> mList = memberService.getAllMembers();
+
+        LocalDateTime LDTCT = LocalDateTime.now();
+        LocalDateTime LDTCT3 = LDTCT.plusDays(3);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String currentTime = LDTCT.format(formatter);
+        String currentTimeplus3 = LDTCT3.format(formatter);
+        model.addAttribute("mcategories", mCateList);
+        model.addAttribute("mList", mList);
+        model.addAttribute("Now", currentTime);
+        model.addAttribute("Now3", currentTimeplus3);
+
+        return "ezen25/order/orderRegister";
+    }
+
+    @PostMapping("/register")
+    public String orderRegister(OrderDTO orderDTO) {
+        log.info("POST 형식");
+        orderService.register(orderDTO);
+
+
+        return "redirect:/ezen25/order/search";
+
+    }
+    @GetMapping("/getSubcategories")
+    @ResponseBody
+    public List<String> getSubcategories(@RequestParam("upperCategory") String upperCategory) {
+        List<String> subcategories = orderService.getSCategoryList(upperCategory);
+        return subcategories;
+    }
+
+    @GetMapping("/getproducts")
+    @ResponseBody
+    public List<String> getProducts(@RequestParam("subcategory") String subcategory) {
+        return orderService.getProductList(subcategory);
+    }
+
+    @GetMapping("/getproduct")
+    @ResponseBody
+    public List<String> getproduct(@RequestParam String subcategory) {
+        log.info("갱신완료");
+
+        List<String> products = orderService.getProductList(subcategory);
+        // 가져온 소분류 리스트 반환
+        log.info("리스트:"+products);
+        return products;
+    }
+
+    @PostMapping("/del")
+    public String orderRm(@RequestParam("orderId") Long orderId) {
+        log.info("제거 : " + orderId);
+
+        exportService.remove(orderId);
+
+        return "redirect:/ezen25/order/search";
     }
 
     // export 관련 Controller
@@ -116,95 +260,6 @@ public class OrderController {
 
         return "redirect:/ezen25/order/export/read";
     }
-@GetMapping("/{orderId}")
-    public String getOrderDetails(@PathVariable Long orderId, Model model) {
-        OrderDTO orderDTO = orderService.findByOrderId(orderId);
-        // orderDTO가 null이 아닌지 확인하여 모델에 추가
-        if (orderDTO != null) {
-            model.addAttribute("order", orderDTO);
-        } else {
-            // orderDTO가 null인 경우 처리 (예: 에러 메시지 표시)
-            model.addAttribute("error", "주문을 찾을 수 없습니다");
-        }
-        // Model에 order 정보를 추가하여 뷰에 전달
-        model.addAttribute("order", orderDTO);
-        log.info(orderDTO);
-        // 상세 정보를 보여줄 뷰 페이지로 이동
-        return "ezen25/order/orderDetails";
-    }
 
-    @GetMapping("/search")
-    public String orderSearch(HttpSession session , Model model, @RequestParam(name = "memberId", required = false) Long memberId) {
 
-        List<OrderDTO> memberorderList = orderService.getListByMemberId(memberId);
-        log.info("리스트:"+memberorderList);
-        model.addAttribute("orderList", memberorderList);
-        return "ezen25/order/orderSearch";
-
-    }
-
-    @GetMapping("/write")
-    public String orderWrite(HttpSession session, @RequestParam(value = "userId", required = false) String userId, Model model) {
-        log.info("발주서 입력 페이지로 이동..");
-        Optional<Member> member = memberRepository.findByUserId(userId);
-        if (member.isPresent()) {
-            model.addAttribute("member", member.get());
-        } else {
-            model.addAttribute("member", new Member());
-        }
-        List<Object[]> polist = orderService.joinOrderAndProduct();
-        List<String> mCateList = orderService.getMCategoryList();
-
-        model.addAttribute("mcategories",  mCateList);
-        model.addAttribute("member", member);
-        log.info("대분류: "+mCateList);
-        log.info("멤버:" + member);
-        return "ezen25/order/orderWrite";
-    }
-
-    @GetMapping("/updatesubcategory")
-    @ResponseBody
-    public List<String> updateSubCategory(@RequestParam String uppercateno) {
-        log.info("갱신완료");
-
-        // uppercateno를 사용하여 소분류 리스트를 가져오는 로직
-        List<String> subCategories = orderService.getSCategoryList(uppercateno);
-        // 가져온 소분류 리스트 반환
-        return subCategories;
-    }
-    @GetMapping("/getproduct")
-    @ResponseBody
-    public List<String> getproduct(@RequestParam String subcategory) {
-        log.info("갱신완료");
-
-        List<String> products = orderService.getProductList(subcategory);
-        // 가져온 소분류 리스트 반환
-        log.info("리스트:"+products);
-        return products;
-    }
-
-    /*@RequestMapping(value = "/{orderId}/delete", method = RequestMethod.POST)
-    public String deleteOrder(@PathVariable Long orderId){
-        log.info("삭제 컨트롤러 진입");
-        orderService.remove(orderId);
-        return "redirect:ezen25/order/search";
-    }*/
-    /*@PostMapping("/deleteSelected")
-    @ResponseBody
-    public String deleteSelectedOrders(@RequestBody List<Long> orderIds) {
-        try {
-            orderService.deleteByIds(orderIds);
-            // 삭제가 성공하면 "success" 문자열 반환
-            return "success";
-        } catch (Exception e) {
-            // 예외 발생 시 오류 메시지를 반환하거나 적절한 오류 처리를 수행할 수 있습니다.
-            e.printStackTrace();
-            return "error";
-        }
-    }*/
-    @GetMapping("/delete/{orderId}")
-    public String deleteById(@PathVariable Long orderId){
-        orderService.deleteById(orderId);
-        return "redirect:/order/search";
-    }
 }

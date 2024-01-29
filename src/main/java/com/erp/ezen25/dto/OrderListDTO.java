@@ -11,7 +11,7 @@ public class OrderListDTO {
     private Long orderId;
     private String name;
     private String orderCode;
-    private LocalDateTime orderDate;
+    private String orderDate;
     private String orderStatus;
 
 }

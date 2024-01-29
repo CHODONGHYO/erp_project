@@ -1,7 +1,7 @@
 package com.erp.ezen25.service;
 
-import com.erp.ezen25.dto.OrderDTO;
-import com.erp.ezen25.dto.WithdrawalDTO;
+import com.erp.ezen25.dto.*;
+import com.erp.ezen25.entity.Export;
 import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.entity.Product_Info;
@@ -11,9 +11,27 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface OrderService {
+
+    Long register(OrderDTO orderDTO);
+    PageResultDTO<OrderDTO, Order> getList(PageRequestDTO pageRequestDTO);
+    OrderDTO read(Long orderId);
+
+
+    void remove(Long orderId);
+
     List<OrderDTO> getList();
+    void modify(OrderDTO orderDTO);
     List<WithdrawalDTO> getWithdrawalList(String orderCode);
     String getNameByOrderCode(String orderCode);
+
+    List<OrderDTO> getListByMemberId(Long memberId);
+
+    List<String> getMCategoryList();
+    // 서브 카테고리 가져오기
+    List<String> getSCategoryList(String upperCategory);
+
+    List<String> getProductList(String subcategory);
+
 
     default Order dtoToEntity(OrderDTO dto) {
         Order entity = Order.builder()
@@ -23,7 +41,6 @@ public interface OrderService {
                 .product(new Product_Info().setProductId(dto.getProductId()))
                 .orderNum(dto.getOrderNum())
                 .orderDescription(dto.getOrderDescription())
-                .orderOutDate(dto.getOrderOutDate())
                 .orderCode(dto.getOrderCode())
                 .build();
         return entity;
@@ -38,7 +55,6 @@ public interface OrderService {
                 .productId(entity.getProduct().getProductId())
                 .orderNum(entity.getOrderNum())
                 .orderDescription(entity.getOrderDescription())
-                .orderOutDate(entity.getOrderOutDate())
                 .orderCode(entity.getOrderCode())
                 .orderStatus(entity.getOrderStatus())
                 .build();

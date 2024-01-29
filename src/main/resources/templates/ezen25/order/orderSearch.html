@@ -10,102 +10,80 @@
         <div class="container-fluid px-4">
             <h1 class="mt-4">발주관리</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item"><a th:href="@{/order/search}">발주서 조회</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/ezen25/order/list}">발주 리스트</a></li>
                 <li class="breadcrumb-item active">발주관리</li>
             </ol>
             <div class="card mb-4">
                 <div class="card-body">
-                    DataTables is a third-party plugin that is used to generate the demo table below. For more information
+                    DataTables is a third party plugin that is used to generate the demo table below. For more information
                     about DataTables, please visit the
-                    <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>.
+                    <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                    .
                 </div>
             </div>
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                    발주서 리스트
+                    발주 요청리스트
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple">
-
+                        <thead>
                         <tr>
-                            <th><label><input type="checkbox" id="selectAll">모두 선택</label></th>
                             <th>No</th>
                             <th>지점명</th>
-                            <th>발주서 코드</th>
                             <th>발주일자</th>
+                            <th>상태</th>
                             <th>조회</th>
                         </tr>
-
+                        </thead>
+                        <tbody>
                         <tr th:each="dto, stat : ${orderList}"
                             th:if="${stat.index == 0 or dto.orderCode != orderList[stat.index - 1].orderCode}">
-                            <td><input type="checkbox" class="select-box" data-order-id="${dto.orderId}"></td>
-                            <td th:text="${stat.count}"></td>
+                            <td th:text="${stat.count}"><input type="text"  th:value="${dto.orderId}"></td>
                             <td th:text="${dto.name}"></td>
-                            <td th:text="${dto.orderCode}"></td>
-                            <td th:text="${#temporals.format(dto.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                            <td>
-                                <a th:href="@{/order/{orderId}(orderId=${dto.orderId})}">조회</a>
-                                <a th:href="@{|/order/delete/${dto.orderId}|}">삭제</a>
-                            </td>
 
+                            <td th:text="${dto.orderDate}"></td>
+                            <td>
+                                <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary withdrawalBtn"
+                                        data-toggle="modal" data-target="#withdrawalModal" th:attr="data-order-code=${dto.orderCode}">
+                                   발주요청
+                                </button>
+                                <button th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" onclick="#">진행중</button>
+                                <button th:if="${dto.orderStatus == '2'}" class="btn btn-danger" onclick="#">완료</button>
+                            </td>
+                            <td>
+                                <a th:href="@{/ezen25/order/rd(orderId=${dto.orderId})}"><button class="btn btn-primary addBtn" type="button">조회</button></a>
+<!--                                <button class="btn btn-danger removeBtn" type="button">삭제</button>-->
+
+<!--                                <a th:href="@{/ezen25/order/rd(orderId=${dto.orderId})}"><button class="btn btn-primary addBtn" type="button">조회</button></a>-->
+
+                            </td>
                         </tr>
                         <input type="hidden" name="orderCode" th:value="${orderCode}">
+                        </tbody>
                     </table>
-                    <button id="deleteSelected">선택 삭제</button>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Modal -->
+    <div class="modal fade" id="withdrawalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">재고불출</h3>
+                </div>
+                <div class="modal-body">
+                    <th:block th:replace="~{/ezen25/stock/withdrawal :: withdrawal}"></th:block>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        $(document).ready(function () {
-            // "모두 선택" 체크박스가 변경될 때 발생하는 이벤트 처리
-            $("#selectAll").change(function () {
-                var checked = $(this).prop("checked");
-                // 모든 행의 체크박스 상태 변경
-                $("#datatablesSimple .select-box").prop("checked", checked);
-            });
+    <script th:inline="javascript">
 
-            // 행의 체크박스가 변경될 때 발생하는 이벤트 처리
-            $("#datatablesSimple .select-box").change(function () {
-                // 모든 체크박스의 상태를 가져와서
-                var allChecked = $("#datatablesSimple .select-box").length === $("#datatablesSimple .select-box:checked").length;
-                // "모두 선택" 체크박스의 상태 변경
-                $("#selectAll").prop("checked", allChecked);
-            });
-
-            $("#deleteSelected").click(function () {
-                var selectedOrderIds = [];
-
-                // 선택된 주문 ID 수집
-                $("#datatablesSimple .select-box:checked").each(function () {
-                    selectedOrderIds.push($(this).data("order-id"));
-                });
-
-                // AJAX를 사용하여 컨트롤러로 삭제 요청
-                $.ajax({
-                    type: 'POST',
-                    url: '/order/deleteSelected',
-                    contentType: 'application/json',
-                    data: JSON.stringify(selectedOrderIds),
-                    success: function (response) {
-                        if (response === "success") {
-                            // 페이지 다시 로드 또는 필요에 따라 테이블 업데이트
-                            location.reload();
-                        } else {
-                            alert('선택한 주문 삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
-                        }
-                    },
-                    error: function () {
-                        alert('선택한 주문 삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
-                    }
-                });
-            });
-        });
     </script>
-
-
 </th:block>
 </html>

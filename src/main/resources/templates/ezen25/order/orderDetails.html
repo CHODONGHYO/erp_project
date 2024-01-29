@@ -1,43 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{/layout/layout}">
+      xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <th:block layout:fragment="content">
+    <!-- 여기에 생성할 페이지 코드 작성 -->
     <main>
-        <h2>발주서 상세</h2>
-        <table>
-            <tr>
-                <td>발주일자</td>
-                <td th:text="${order.orderDate}"></td>
-                <td>납기일자</td>
-                <td th:text="${order.orderOutDate}"></td>
-            </tr>
-            <tr>
-                <td>발신</td>
-                <td th:text="${order.memberId}"></td>
-            </tr>
-            <tr>
-                <th>번호</th>
-                <th>상품번호</th>
-                <th>수량</th>
-            </tr>
-            <tr th:each="item, iterationStatus : ${order}">
-                <td th:text="${iterationStatus.index + 1}"></td>
-                <td th:text="${item.productId}"></td>
-                <td th:text="${item.orderNum}"></td>
-            </tr>
-            <tr>
-                <td>특이사항</td>
-                <td th:text="${order.orderDescription}"></td>
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h1 class="mt-4">발주 상세보기</h1>
+                    </div>
+                </div>
+            </div>
+            <input name="orderId" th:value="${orderDTO.orderId}" type="hidden">
 
-            </tr>
-            <tr>
-                <td>납기일자</td>
-                <td th:text="${order.orderOutDate}"></td>
-            </tr>
-        </table>
-        <button type="button" th:onclick="|location.href='@{/order/search}'|">목록</button>
+            <div>
+                <div class="col-md-12">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <table class="table_for_details" width="100%">
+                                <tr class="tr_for_details">
+                                    <th class="td_for_details">발주 코드</th>
+                                    <td class="td_for_details">[[${orderDTO.orderCode}]]</td>
+                                </tr>
+                                <tr class="tr_for_details" style="font-align:left;">
+                                    <th class="td_for_details">품목 코드</th>
+                                    <td class="td_for_details">[[${orderDTO.productId}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <th class="td_for_details">개수</th>
+                                    <td class="td_for_details">[[${orderDTO.orderNum}]]개</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <th class="td_for_details">지점명</th>
+                                    <td class="td_for_details">[[${orderDTO.memberId}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <th class="td_for_details">날짜</th>
+                                    <td class="td_for_details">[[${orderDTO.orderDate}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <th class="td_for_details">상태</th>
+                                    <td class="td_for_details">[[${orderDTO.orderStatus}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <th class="td_for_details">특이사항</th>
+                                    <td class="td_for_details">[[${orderDTO.orderDescription}]]</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="float:right;">
+                <a th:href="@{/ezen25/order/mod(orderId = ${orderDTO.orderId}, page = ${pageRequestDTO.page},
+         type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
+                    <button class="btn btn-primary" type="button">Modify</button>
+                </a>
+                <a th:href="@{/ezen25/order/search(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
+         keyword = ${pageRequestDTO.keyword})}">
+                    <button class="btn btn-info" type="button">List</button>
+                </a>
+                <a th:href="@{/ezen25/order/print(orderId = ${orderDTO.orderId})}">
+                    <button class="btn btn-success">Print</button>
+                </a>
+            </div>
+        </div>
     </main>
 </th:block>
 </html>
