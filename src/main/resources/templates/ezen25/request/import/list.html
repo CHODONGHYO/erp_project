@@ -109,10 +109,12 @@
                                             <td>[[${importDTO.importDate}]]</td>
                                             <td>[[${importDTO.requestCode}]]</td>
                                             <td>[[${importDTO.importStatus}]]</td>
-                                            <td>
-                                                <button class="removeBtn">
-                                                    출하
-                                                </button>
+                                            <td >
+                                                <a th:if="${importDTO.importStatus} != '완료'">
+                                                    <button class="removeBtn">
+                                                        출하
+                                                    </button>
+                                                </a>
                                             </td>
                                         </tr>
                                         </tbody>
