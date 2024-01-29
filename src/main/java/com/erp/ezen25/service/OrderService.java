@@ -25,6 +25,7 @@ public interface OrderService {
     String getNameByOrderCode(String orderCode);
 
     List<OrderDTO> getListByMemberId(Long memberId);
+    List<OrderDTO> getmList(String orderCode);
 
     List<String> getMCategoryList();
     // 서브 카테고리 가져오기

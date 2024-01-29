@@ -74,6 +74,15 @@ public class OrderServiceImpl implements OrderService {
                 .map(this::entityToDto)
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<OrderDTO> getmList(String orderCode) {
+
+        List<Order> result = repository.getListByOrderCode(orderCode);
+
+        return result.stream()
+                .map(this::entityToDto)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public List<OrderDTO> getListByMemberId(Long memberId) {

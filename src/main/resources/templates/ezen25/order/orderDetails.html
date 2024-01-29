@@ -67,7 +67,7 @@
                     <button class="btn btn-primary" type="button">Modify</button>
                 </a>
                 <a th:href="@{/ezen25/order/search(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
-         keyword = ${pageRequestDTO.keyword})}">
+         keyword = ${pageRequestDTO.keyword},orderCode=${orderDTO.orderCode})}">
                     <button class="btn btn-info" type="button">List</button>
                 </a>
                 <a th:href="@{/ezen25/order/print(orderId = ${orderDTO.orderId})}">

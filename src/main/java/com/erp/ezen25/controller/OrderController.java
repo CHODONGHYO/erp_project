@@ -81,7 +81,7 @@ public class OrderController {
                                @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO,
                                RedirectAttributes redirectAttributes) {
 
-
+        log.info("진입");
         orderService.modify(orderDTO);
 
         redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
@@ -89,21 +89,21 @@ public class OrderController {
         redirectAttributes.addAttribute("keyword", pageRequestDTO.getKeyword());
         redirectAttributes.addAttribute("orderId", orderDTO.getOrderId());
 
-        return "redirect:/ezen25/order/search";
+        return "redirect:/ezen25/order/rd";
     }
-    @GetMapping("/search")
+    /*@GetMapping("/search")
     public String orderSearch(HttpSession session , Model model, @RequestParam(name = "memberId", required = false) Long memberId,@ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO) {
 
 //        List<OrderDTO> memberorderList = orderService.getListByMemberId(memberId);
 //        log.info("리스트:"+memberorderList);
 //        model.addAttribute("orderList", memberorderList);
-        List<OrderDTO> orderList = orderService.getListByMemberId(memberId);
+        List<OrderDTO> orderList = orderService.getList();
         model.addAttribute("orderList", orderList);
         return "ezen25/order/orderSearch";
 
-    }
+    }*/
     @GetMapping("/search2")
-    public String orderSearchByCode(HttpSession session , Model model, @RequestParam(name = "memberId", required = false) Long memberId,@ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO) {
+    public String orderSearchByCode( Model model,@ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO) {
 
 //        List<OrderDTO> memberorderList = orderService.getListByMemberId(memberId);
 //        log.info("리스트:"+memberorderList);
@@ -132,19 +132,12 @@ public class OrderController {
          return "/ezen25/order/orderRegister";
      }*/
     @GetMapping("/register")
-    public String register(Model model, HttpSession session) {
+    public String register(Model model) {
         log.info("GET 형식 Register");
 
-        // 세션에 'member' 속성이 있다고 가정
-        Member loggedMember = (Member) session.getAttribute("member");
 
-        if (loggedMember != null) {
-            // 세션에서 memberId 가져와 모델에 추가
-            model.addAttribute("memberId", loggedMember.getMemberId());
-            model.addAttribute("memberName", loggedMember.getName());
-        }
         List<String> mCateList = orderService.getMCategoryList();
-        List<MemberDTO> mList = memberService.getAllMembers();
+
 
         LocalDateTime LDTCT = LocalDateTime.now();
         LocalDateTime LDTCT3 = LDTCT.plusDays(3);
@@ -152,7 +145,7 @@ public class OrderController {
         String currentTime = LDTCT.format(formatter);
         String currentTimeplus3 = LDTCT3.format(formatter);
         model.addAttribute("mcategories", mCateList);
-        model.addAttribute("mList", mList);
+
         model.addAttribute("Now", currentTime);
         model.addAttribute("Now3", currentTimeplus3);
 
@@ -193,12 +186,20 @@ public class OrderController {
     }
 
     @PostMapping("/del")
-    public String orderRm(@RequestParam("orderId") Long orderId) {
+    public String orderRm(@RequestParam(value="orderId",required = false) Long orderId) {
         log.info("제거 : " + orderId);
 
         orderService.remove(orderId);
 
         return "redirect:/ezen25/order/search";
+    }
+    @GetMapping("search")
+    public String listbymember(Model model, HttpSession session,@RequestParam(value="orderCode",required = false) String orderCode){
+        log.info("orderCode는 :" + orderCode);
+        List<OrderDTO> orderList = orderService.getmList(orderCode);
+
+        model.addAttribute("orderList", orderList);
+        return "ezen25/order/orderSearch";
     }
 
     // export 관련 Controller

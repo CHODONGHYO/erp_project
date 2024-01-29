@@ -24,7 +24,9 @@
         @Query(value = "select o.order_id, o.member_id, o.order_date, o.product_id, o.order_num, o.order_description, o.order_status, o.order_code, m.name " +
                 "from ordering o, member m where o.member_id = m.member_id and o.member_id = :memberId", nativeQuery = true)
         List<Order> getListByMemberId(@Param("memberId") Long memberId);
-
+        @Query(value = "select o.order_id, o.member_id, o.order_date, o.product_id, o.order_num, o.order_description, o.order_status, o.order_code, m.name " +
+                "from ordering o, member m where o.member_id = m.member_id and o.order_code = :orderCode ", nativeQuery = true)
+        List<Order> getListByOrderCode(@Param("orderCode") String orderCode);
 
         @Query(value = "SELECT p.product_id, p.product_name, p.product_description, p.brand_id, p.m_category, p.s_category, p.original_price, p.sell_price, p.image, " +
                 "o.order_id, o.member_id, o.order_date, o.order_num, o.order_description, o.order_out_date, o.order_status, o.order_code " +

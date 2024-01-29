@@ -43,14 +43,13 @@
                             <td th:text="${stat.count}"></td>
                             <td th:text="${dto.name}"></td>
                             <td th:text="${dto.orderDate}"></td>
+
                             <td>
-                                <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary withdrawalBtn"
-                                        data-toggle="modal" data-target="#withdrawalModal" th:attr="data-order-code=${dto.orderCode}">
-                                   발주요청
-                                </button>
-                                <button th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" onclick="#">진행중</button>
-                                <button th:if="${dto.orderStatus == '2'}" class="btn btn-danger" onclick="#">완료</button>
+                                <span th:if="${dto.orderStatus == '0'}">발주요청</span>
+                                <span th:if="${dto.orderStatus == '1'}">진행중</span>
+                                <span th:if="${dto.orderStatus == '2'}">완료</span>
                             </td>
+
                             <td>
                                 <a th:href="@{/ezen25/order/rd(orderId=${dto.orderId})}"><button class="btn btn-primary addBtn" type="button">조회</button></a>
 <!--                                <button class="btn btn-danger removeBtn" type="button">삭제</button>-->

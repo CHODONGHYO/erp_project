@@ -12,7 +12,7 @@
             <h1 class="mt-4">발주관리</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item"><a th:href="@{/ezen25/order/list}">발주 리스트</a></li>
-                <li class="breadcrumb-item active">발주관리</li>
+                <li class="breadcrumb-item active">발주품목조회</li>
             </ol>
             <div class="card mb-4">
                 <div class="card-body">
@@ -43,11 +43,7 @@
                         <tr th:each="dto, stat : ${orderList}"
                             th:if="${stat.index == 0 or dto.orderCode != orderList[stat.index - 1].orderCode}">
                             <td th:text="${stat.count}"></td>
-                            <td><button th:if="${dto.orderStatus == '0'}" class="btn btn-primary withdrawalBtn"
-                                                                   data-toggle="modal" data-target="#withdrawalModal" th:attr="data-order-code=${dto.orderCode}"
-                            th:text="${dto.orderCode}">
-
-                            </button></td>
+                            <td><a th:href="@{/ezen25/order/search(orderCode=${dto.orderCode})}" th:text="${dto.orderCode}"></a></td>
                             <td th:text="${dto.name}"></td>
                             <td th:text="${dto.orderDate}"></td>
                             <td>

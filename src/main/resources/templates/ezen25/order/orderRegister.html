@@ -63,11 +63,11 @@
                                     <tr class="tr_for_details">
                                         <td class="td_for_details">지점명</td>
                                         <td class="td_for_details">
-                                            <input class="form-control" name="memberId" type="text" readonly="readonly" th:value="${memberId}" th:text="${memberName}" />
 
-                                            <!--                                            <select class="form-control" name="memberId" th:value="${memberId}">-->
-<!--                                                <option th:each="member : ${mList}" th:value="${member.memberId}" th:text="${member.name}"></option>-->
-<!--                                            </select>-->
+
+                                              <select class="form-control" name="memberId" th:value="${memberId}">-->
+                                             <option th:each="member : ${mList}" th:value="${member.memberId}" th:text="${member.name}"></option>
+                                            </select>
                                         </td>
                                         <td class="td_for_details">발주일자</td>
                                         <td class="td_for_details">
