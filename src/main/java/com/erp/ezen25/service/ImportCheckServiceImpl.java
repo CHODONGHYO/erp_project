@@ -3,10 +3,8 @@ package com.erp.ezen25.service;
 import com.erp.ezen25.dto.ImportCheckDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
-import com.erp.ezen25.entity.Import;
-import com.erp.ezen25.entity.ImportCheck;
-import com.erp.ezen25.entity.QImportCheck;
-import com.erp.ezen25.entity.Request;
+import com.erp.ezen25.entity.*;
+import com.erp.ezen25.repository.ExportRepository;
 import com.erp.ezen25.repository.ImportCheckRepository;
 import com.erp.ezen25.repository.ImportRepository;
 import com.erp.ezen25.repository.RequestRepository;
@@ -29,6 +27,7 @@ public class ImportCheckServiceImpl implements ImportCheckService{
     private final ImportCheckRepository importCheckRepository;
     private final RequestRepository requestRepository;
     private final ImportRepository importRepository;
+    private final ExportRepository exportRepository;
 
     @Override
     public Long register(ImportCheckDTO importCheckDTO) {
@@ -93,6 +92,14 @@ public class ImportCheckServiceImpl implements ImportCheckService{
                     r.changeRequestStatus("완료");
                     requestRepository.save(r);
                 }
+
+                Export export = Export.builder()
+                        .productId(importCheck.getImportId().getProduct())
+                        .exportNum(importCheck.getImportId().getImportNum())
+                        .exportDate(importCheck.getImportId().getImportDate())
+                        .orderCode(importCheck.getImportId().getRequestCode())
+                        .build();
+                exportRepository.save(export);
             }
         }
     }
@@ -110,6 +117,15 @@ public class ImportCheckServiceImpl implements ImportCheckService{
                 importEntity.changeImportStatus(((requestNum/(float)num)*100)  + "% 완료");
                 importEntity.changeImportNum(num - requestNum);
                 importRepository.save(importEntity);
+
+                Export export = Export.builder()
+                        .productId(importCheck.getImportId().getProduct())
+                        .orderCode(importCheck.getImportId().getRequestCode())
+                        .exportNum(requestNum)
+                        .exportDate(importCheck.getImportId().getImportDate())
+                        .build();
+
+                exportRepository.save(export);
             }
         }
     }
@@ -141,8 +157,22 @@ public class ImportCheckServiceImpl implements ImportCheckService{
         BooleanBuilder sBuilder = new BooleanBuilder();
 
         if (type.contains("n")) {
-            sBuilder.or(qImportCheck.importCheckStatus.contains(keyword));
+            sBuilder.or(qImportCheck.importId.importId.stringValue().contains(keyword));
         }
+
+        if (type.contains("r")) {
+            sBuilder.or(qImportCheck.importId.requestCode.contains(keyword));
+        }
+
+        if (type.contains("p")) {
+            sBuilder.or(qImportCheck.importId.product.productId.stringValue().contains(keyword));
+        }
+
+        if (type.contains("d")) {
+            sBuilder.or(qImportCheck.importId.importDate.contains(keyword));
+        }
+
+
 
         builder.and(sBuilder);
 

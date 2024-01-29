@@ -1,12 +1,19 @@
 package com.erp.ezen25.service;
 
+import com.erp.ezen25.dto.PageRequestDTO;
+import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.dto.productDTOs.*;
 import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.entity.Product_Info;
+import com.erp.ezen25.entity.QProduct_Info;
 import com.erp.ezen25.repository.BrandRepository;
 import com.erp.ezen25.repository.ProductRepository;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +25,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 
 @RequiredArgsConstructor
 @Service
@@ -116,5 +124,87 @@ public class ProductService {
 
         Product_Info pInfo = updateRequest.toEntity();
         productRepository.save(pInfo);
+    }
+
+    public String getProductName(Long productId) {
+        // Implement logic to retrieve the product name from Product_Info entity
+        // You can use your repository or any other method to fetch data
+        Product_Info productInfo = productRepository.findByProductId(productId);
+
+        // Check if the productInfo is not null before accessing the productName
+        return (productInfo != null) ? productInfo.getProductName() : "Unknown Product";
+    }
+
+    public PageResultDTO<ProductDTO, Product_Info> getList(PageRequestDTO pageRequestDTO) {
+
+        Pageable pageable = pageRequestDTO.getPageable(Sort.by("productId").descending());
+
+        BooleanBuilder booleanBuilder = getSearch(pageRequestDTO);
+
+        Page<Product_Info> result = productRepository.findAll(booleanBuilder, pageable);
+
+        Function<Product_Info, ProductDTO> fn = (this::entityToDTO);
+
+        return new PageResultDTO<>(result, fn);
+    }
+
+    private BooleanBuilder getSearch(PageRequestDTO pageRequestDTO) {
+        String type = pageRequestDTO.getType();
+        BooleanBuilder builder = new BooleanBuilder();
+        QProduct_Info qProductInfo = QProduct_Info.product_Info;
+
+        String keyword = pageRequestDTO.getKeyword();
+        BooleanExpression expression = qProductInfo.productId.gt(0L);
+        builder.and(expression);
+
+        if(type == null || type.trim().isEmpty()) {
+            return builder;
+        }
+
+        BooleanBuilder sBuilder = new BooleanBuilder();
+
+        if (type.contains("pn")) {
+            sBuilder.or(qProductInfo.productName.contains(keyword));
+        }
+
+        if (type.contains("pc")) {
+            sBuilder.or(qProductInfo.productId.stringValue().contains(keyword));
+        }
+
+        if (type.contains("mc")) {
+            sBuilder.or(qProductInfo.mCategory.contains(keyword));
+        }
+
+        if (type.contains("sc")) {
+            sBuilder.or(qProductInfo.sCategory.contains(keyword));
+        }
+
+        if (type.contains("bn")) {
+            sBuilder.or(qProductInfo.brand.brandName.contains(keyword));
+        }
+
+        if (type.contains("bc")) {
+            sBuilder.or(qProductInfo.brand.brandId.stringValue().contains(keyword));
+        }
+
+        builder.and(sBuilder);
+
+        return builder;
+    }
+
+    ProductDTO entityToDTO(Product_Info productInfo) {
+        ProductDTO dto = ProductDTO.builder()
+                .productId(productInfo.getProductId())
+                .productName(productInfo.getProductName())
+                .image(productInfo.getImage())
+                .mCategory(productInfo.getMCategory())
+                .sCategory(productInfo.getSCategory())
+                .brandId(productInfo.getBrand().getBrandId())
+                .productDescription(productInfo.getProductDescription())
+                .originalPrice(productInfo.getOriginalPrice())
+                .sellPrice(productInfo.getSellPrice())
+                .build();
+
+        return dto;
     }
 }

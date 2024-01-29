@@ -1,6 +1,7 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.*;
+import com.erp.ezen25.entity.Export;
 import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.Product_Stock;
 import com.erp.ezen25.repository.StockRepository;
@@ -12,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,24 +41,32 @@ public class StockServiceImpl implements StockService {
         Hibernate.initialize(Stock.getProduct());
         Product_Info product = Stock.getProduct();
 
-        StockDTO dto = StockDTO.builder()
-                .pNumId(Stock.getPNumId())
-                .productId(product.getProductId())
-                .productNum(Stock.getProductNum())
-                .memberId(Stock.getMember().getMemberId())
-                .totalPrice(Stock.getTotalPrice())
-                .productName(product.getProductName())
-                .mCategory(product.getMCategory())
-                .sCategory(product.getSCategory())
-                .originalPrice(String.valueOf(product.getOriginalPrice()))
-                .sellPrice(String.valueOf(product.getSellPrice()))
-                .image(product.getImage())
-                .importDate(LocalDateTime.parse(objects[1].toString()))
-                .build();
+        String dateString = objects[1].toString();
+        try {
+            LocalDateTime importDate = LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        dto.setProduct(product);
+            StockDTO dto = StockDTO.builder()
+                    .pNumId(Stock.getPNumId())
+                    .productId(product.getProductId())
+                    .productNum(Stock.getProductNum())
+                    .memberId(Stock.getMember().getMemberId())
+                    .totalPrice(Stock.getTotalPrice())
+                    .productName(product.getProductName())
+                    .mCategory(product.getMCategory())
+                    .sCategory(product.getSCategory())
+                    .originalPrice(String.valueOf(product.getOriginalPrice()))
+                    .sellPrice(String.valueOf(product.getSellPrice()))
+                    .image(product.getImage())
+                    .importDate(importDate)
+                    .build();
 
-        return dto;
+            dto.setProduct(product);
+
+            return dto;
+        } catch (DateTimeParseException e) {
+            log.error("Error parsing date string: " + dateString, e);
+            return null;
+        }
     }
 
     //withdrawal 페이지에서 exporting 페이지로 넘어갈 때, orderCode = '0' 에서 '1'로 변경
@@ -62,6 +74,12 @@ public class StockServiceImpl implements StockService {
     @Transactional
     public void updateOrderStatus(String orderCode, List<Long> productIds) {
         stockRepository.updateOrderStatus(orderCode, productIds);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode, List<Long> productIds) {
+        return stockRepository.getListForExportByOrderCodeAndProductIds(orderCode, productIds);
     }
 
 }

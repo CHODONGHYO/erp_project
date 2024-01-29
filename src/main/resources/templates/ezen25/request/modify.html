@@ -96,6 +96,10 @@
 
             $(".removeBtn").click(function(){
 
+                if(!confirm("삭제하겠습니까?")) {
+                    return ;
+                }
+
                 actionForm
                     .attr("action", "/ezen25/request/remove")
                     .attr("method", "post");

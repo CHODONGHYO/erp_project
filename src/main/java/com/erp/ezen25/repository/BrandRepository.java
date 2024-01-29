@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface BrandRepository extends JpaRepository<Brand, Long>, QuerydslPredicateExecutor<Brand> {
     List<Brand> findAllByOrderByBrandNameAsc ();
+
+    Brand findBrandByBrandId(Long brandId);
 }

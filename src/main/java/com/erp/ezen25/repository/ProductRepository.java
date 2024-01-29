@@ -1,14 +1,15 @@
 package com.erp.ezen25.repository;
 
-import com.erp.ezen25.queryMapping.MCategoryListMapping;
 import com.erp.ezen25.entity.Product_Info;
+import com.erp.ezen25.queryMapping.MCategoryListMapping;
 import com.erp.ezen25.queryMapping.SCategoryListMapping;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<Product_Info, Long> {
+public interface ProductRepository extends JpaRepository<Product_Info, Long>, QuerydslPredicateExecutor<Product_Info> {
 
     @Query(value = "select m_category as m_category from product_info group by m_category", nativeQuery = true)
     List<MCategoryListMapping> productInfoGroupByMCategory ();
@@ -16,4 +17,6 @@ public interface ProductRepository extends JpaRepository<Product_Info, Long> {
     List<SCategoryListMapping> productInfoGroupBySCategory ();
 
     List<Product_Info> findAllByOrderByProductNameAsc ();
+
+    Product_Info findByProductId(Long productId);
 }

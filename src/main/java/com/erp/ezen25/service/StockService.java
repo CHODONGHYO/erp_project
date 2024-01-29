@@ -11,9 +11,9 @@ public interface StockService {
 
     List<StockDTO> getListWithProduct();
 
-/*
+
     List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode, List<Long> productIds);
-*/
+
 
     void updateOrderStatus(String orderCode, List<Long> productIds);
 

@@ -9,6 +9,7 @@ import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.QImport;
 import com.erp.ezen25.repository.ImportCheckRepository;
 import com.erp.ezen25.repository.ImportRepository;
+import com.erp.ezen25.repository.ProductRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class ImportServiceImpl implements ImportService {
 
     private final ImportRepository importRepository;
     private final ImportCheckRepository importCheckRepository;
+    private final ProductRepository productRepository;
 
     @Override
     public Long register(ImportDTO importDTO) {
@@ -85,6 +87,36 @@ public class ImportServiceImpl implements ImportService {
             importRepository.save(i);
         }
     }
+    @Override
+    public String showProductInfo(Long productId) {
+        Product_Info productInfo = productRepository.findByProductId(productId);
+        return productInfo.getProductName();
+    }
+
+    @Override
+    public String findRequestCodeByImportId(Long importId) {
+        Import importE = importRepository.findImportByImportId(importId);
+
+        return importE.getRequestCode();
+    }
+    @Override
+    public Long findProductIdByImportId(Long importId) {
+        Import importE = importRepository.findImportByImportId(importId);
+        return importE.getProduct().getProductId();
+    }
+
+    @Override
+    public Long findImportNumByImportId(Long importId) {
+        Import importE = importRepository.findImportByImportId(importId);
+        return importE.getImportNum();
+    }
+
+    @Override
+    public String findImportDateByImportId(Long importId) {
+        Import importE = importRepository.findImportByImportId(importId);
+        return importE.getImportDate();
+    }
+
 
     private BooleanBuilder getSearch(PageRequestDTO pageRequestDTO) {
         String type = pageRequestDTO.getType();
@@ -101,12 +133,26 @@ public class ImportServiceImpl implements ImportService {
 
         BooleanBuilder sBuilder = new BooleanBuilder();
 
-        if (type.contains("s")) {
+        if(type.contains("p")) {
+            sBuilder.or(qImport.product.productId.stringValue().contains(keyword));
+        }
+
+        if(type.contains("r")) {
+            sBuilder.or(qImport.requestCode.contains(keyword));
+        }
+
+        if(type.contains("s")) {
             sBuilder.or(qImport.importStatus.contains(keyword));
+        }
+
+        if(type.contains("d")) {
+            sBuilder.or(qImport.importDate.contains(keyword));
         }
 
         builder.and(sBuilder);
 
         return builder;
     }
+
+
 }

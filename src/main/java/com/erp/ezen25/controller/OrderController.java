@@ -1,5 +1,12 @@
 package com.erp.ezen25.controller;
 
+import com.erp.ezen25.dto.ExportDTO;
+import com.erp.ezen25.dto.OrderDTO;
+import com.erp.ezen25.dto.PageRequestDTO;
+import com.erp.ezen25.service.ExportService;
+import com.erp.ezen25.service.ImportService;
+import com.erp.ezen25.service.OrderService;
+import com.erp.ezen25.service.ProductService;
 import com.erp.ezen25.dto.*;
 import com.erp.ezen25.dto.planDTOs.PlanListResponseDTO;
 import com.erp.ezen25.dto.productDTOs.ProductListResponseDTO;
@@ -32,31 +39,21 @@ import java.util.Optional;
 @RequiredArgsConstructor
 // 발주 관련 Controller
 public class OrderController {
-    @Autowired
+
     private final OrderService orderService;
-    @Autowired
+
     private final ExportService exportService;
 
-    @Autowired
-    private final PlanService planService;
-    @Autowired
-    private final ProductService productService;
-    @Autowired
+    private final ImportService importService;
     private final MemberService memberService;
+    private final ProductService productService;
+
     @GetMapping("/list")
     public String orderList(Model model) {
         log.info("발주요청목록 페이지로 이동........");
         List<OrderDTO> orderList = orderService.getList();
         model.addAttribute("orderList", orderList);
         return "ezen25/order/orderList";
-    }
-    @GetMapping("/plancheck")
-    public String planList(Model model){
-        log.info("계획확인");
-        List<PlanListResponseDTO> planlist = planService.getPlanList();
-
-        model.addAttribute("planist", planlist);
-        return "ezen25/order/planlist";
     }
 
     @GetMapping("/rd")
@@ -297,6 +294,4 @@ public class OrderController {
 
         return "redirect:/ezen25/order/export/read";
     }
-
-
 }

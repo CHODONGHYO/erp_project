@@ -10,7 +10,7 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h2>협력업체 등록</h2>
+                        <h2>요청 등록</h2>
                     </div>
                 </div>
             </div>
@@ -23,40 +23,45 @@
                                 <table class="table_for_details" width="100%">
                                     <tr class="tr_for_details">
                                         <td class="td_for_details">요청서 코드</td>
-                                        <td class="td_for_details" colspan="3">
+                                        <td class="td_for_details">
                                             <input class="form-control" name="requestCode" type="text">
+
+                                        </td>
+                                        <td class="td_for_details">브랜드</td>
+                                        <td class="td_for_details" style="display: flex;">
+                                            <input class="form-control" name="brandId" type="text" readonly>
+                                            <span class="form-control" type="text" id="brandName"></span>
                                         </td>
                                     </tr>
-                                    <tr class="tr_for_details">
+                                    <tr class="tr_for_details" style="width:100%;">
                                         <td class="td_for_details">품목 코드</td>
-                                        <td class="td_for_details">
-                                            <input class="form-control" name="productId" type="text">
+                                        <td class="td_for_details" style="display: flex;">
+                                            <input class="form-control" name="productId" type="text" readonly>
+                                            <span class="form-control" type="text" id="productName"></span>
                                         </td>
+
+
                                         <td class="td_for_details">개수</td>
                                         <td class="td_for_details">
-                                            <input class="form-control" name="requestNum" type="text">
+                                            <input class="form-control" name="requestNum" type="number" value="0">
                                         </td>
                                     </tr>
                                     <tr class="tr_for_details">
-                                        <td class="td_for_details">브랜드</td>
-                                        <td class="td_for_details">
-                                            <input class="form-control" name="brandId" type="text">
-                                        </td>
                                         <td class="td_for_details">요청일자</td>
                                         <td class="td_for_details">
                                             <input class="form-control" id="requestDate" name="requestDate" type="date" th:value="${Now}" onchange="updateRequestOutDate()">
                                         </td>
-                                        </td>
-                                    </tr>
-                                    <tr class="tr_for_details">
                                         <td class="td_for_details">완료예정</td>
                                         <td class="td_for_details">
                                             <input class="form-control" id="requestOutDate" name="requestOutDate" type="date" th:value="${Now3}">
                                         </td>
-                                        <td class="td_for_details">상태</td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+
+                                        <!--<td class="td_for_details">상태</td>
                                         <td class="td_for_details">
                                             <input class="form-control" name="requestStatus" type="text">
-                                        </td>
+                                        </td>-->
                                     </tr>
                                     <tr class="tr_for_details">
                                         <td class="td_for_details" colspan="1">비고</td>
@@ -80,11 +85,29 @@
                                         // requestOutDate 필드 업데이트
                                         requestOutDateField.value = formattedRequestOutDate;
                                     }
+
+                                    $(document).ready(function () {
+                                        // Function to open plist.html in a new window
+                                        function openPlistWindow() {
+                                            window.open('/ezen25/request/plist', 'plistWindow', 'width=800,height=600');
+                                        }
+
+                                        // Attach click event to the "품목 코드" input to open the plist.html window
+                                        $('input[name="productId"]').on('click', function () {
+                                            openPlistWindow();
+                                        });
+
+                                        // Function to handle selection in plist.html and update the value in the original window
+                                        window.updateProductId = function (selectedProductId) {
+                                            // Use the opener to access the parent window
+                                            opener.$('input[name="productId"]').val(selectedProductId);
+                                        };
+                                    });
                                 </script>
                             </div>
                         </div>
                         <div style="float:right;">
-                            <a th:href="@{/ezen25/request/list?page=1}">
+                            <a href="/ezen25/request/list">
                                 <button class="btn btn-primary">목록으로</button>
                             </a>
                             <button class="btn btn-primary" type="submit">등록하기</button>
