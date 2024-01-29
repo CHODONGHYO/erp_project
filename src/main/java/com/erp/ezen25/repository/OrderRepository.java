@@ -21,8 +21,8 @@
         Optional<Order> findByOrderId(@Param("orderId") Long orderId);
 
 
-        @Query(value = "select o.order_id,o.member_id,o.order_date,o.product_id,o.order_num,o.order_description,o.order_out_date,o.order_status,o.order_code " +
-                "from ordering o , member m where o.member_id=m.member_id and m.member_id= :memberId",nativeQuery = true)
+        @Query(value = "select o.order_id, o.member_id, o.order_date, o.product_id, o.order_num, o.order_description, o.order_status, o.order_code, m.name " +
+                "from ordering o, member m where o.member_id = m.member_id and o.member_id = :memberId", nativeQuery = true)
         List<Order> getListByMemberId(@Param("memberId") Long memberId);
 
 

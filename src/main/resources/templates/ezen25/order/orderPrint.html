@@ -14,11 +14,11 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h1 class="mt-4">요청사항</h1>
+                        <h1 class="mt-4">발주사항</h1>
                     </div>
                 </div>
             </div>
-            <input name="orderId" th:value="${orderdto.orderId}" type="hidden">
+            <input name="orderId" th:value="${orderDTO.orderId}" type="hidden">
 
             <div>
                 <div class="col-md-12">
@@ -27,25 +27,25 @@
                             <table class="table_for_details" width="100%">
                                 <tr class="tr_for_details">
                                     <td class="td_for_details">품목 코드</td>
-                                    <td class="td_for_details">[[${orderdto.orderCode}]]</td>
+                                    <td class="td_for_details">[[${orderDTO.orderCode}]]</td>
                                     <td class="td_for_details">개수</td>
-                                    <td class="td_for_details">[[${orderdto.orderNum}]]개</td>
+                                    <td class="td_for_details">[[${orderDTO.orderNum}]]개</td>
                                 </tr>
                                 <tr class="tr_for_details">
                                     <td class="td_for_details">지점명</td>
-                                    <td class="td_for_details">[[${orderdto.memberId}]]</td>
-                                    <td class="td_for_details">요청일자</td>
-                                    <td class="td_for_details">[[${orderdto.orderDate}]]</td>
+                                    <td class="td_for_details">[[${orderDTO.memberId}]]</td>
+                                    <td class="td_for_details">발주일자</td>
+                                    <td class="td_for_details">[[${orderDTO.orderDate}]]</td>
                                 </tr>
                                 <tr class="tr_for_details">
                                     <td class="td_for_details">상태</td>
-                                    <td class="td_for_details">[[${orderdto.orderStatus}]]</td>
+                                    <td class="td_for_details">[[${orderDTO.orderStatus}]]</td>
                                 </tr>
                                 <tr class="tr_for_details">
                                     <td class="td_for_details" colspan="1">특이사항</td>
                                     <td class="td_for_details" colspan="5">
                                         <textarea class="form-control" name="orderDescription" readonly style="height: 225px;
-                                        ">[[${orderdto.orderDescription}]]</textarea>
+                                        ">[[${orderDTO.orderDescription}]]</textarea>
                                     </td>
                                 </tr>
                             </table>
@@ -53,7 +53,7 @@
                     </div>
                 </div>
                 <div style="float:right;">
-                    <a th:href="@{/ezen25/order/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
+                    <a th:href="@{/ezen25/order/search(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
          keyword = ${pageRequestDTO.keyword})}">
                         <button class="btn btn-info">List</button>
                     </a>

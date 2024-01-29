@@ -58,11 +58,17 @@ public class OrderController {
         return "ezen25/order/planlist";
     }
 
-    @GetMapping({"/rd","/print"})
+    @GetMapping("/rd")
     public String getOrderDetails(@RequestParam("orderId") Long orderId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model) {
         OrderDTO orderdto = orderService.read(orderId);
         model.addAttribute("orderDTO", orderdto);
         return "ezen25/order/orderDetails";
+    }
+    @GetMapping("/print")
+    public String orderprint(@RequestParam("orderId") Long orderId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model){
+        OrderDTO orderdto = orderService.read(orderId);
+        model.addAttribute("orderDTO", orderdto);
+        return "ezen25/order/orderPrint";
     }
     @GetMapping("/mod")
     public String orderMod(@RequestParam("orderId") Long orderId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model){
@@ -91,9 +97,20 @@ public class OrderController {
 //        List<OrderDTO> memberorderList = orderService.getListByMemberId(memberId);
 //        log.info("리스트:"+memberorderList);
 //        model.addAttribute("orderList", memberorderList);
-        List<OrderDTO> orderList = orderService.getList();
+        List<OrderDTO> orderList = orderService.getListByMemberId(memberId);
         model.addAttribute("orderList", orderList);
         return "ezen25/order/orderSearch";
+
+    }
+    @GetMapping("/search2")
+    public String orderSearchByCode(HttpSession session , Model model, @RequestParam(name = "memberId", required = false) Long memberId,@ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO) {
+
+//        List<OrderDTO> memberorderList = orderService.getListByMemberId(memberId);
+//        log.info("리스트:"+memberorderList);
+//        model.addAttribute("orderList", memberorderList);
+        List<OrderDTO> orderList = orderService.getList();
+        model.addAttribute("orderList", orderList);
+        return "ezen25/order/orderSearch2";
 
     }
     /* @GetMapping("/write")
@@ -179,7 +196,7 @@ public class OrderController {
     public String orderRm(@RequestParam("orderId") Long orderId) {
         log.info("제거 : " + orderId);
 
-        exportService.remove(orderId);
+        orderService.remove(orderId);
 
         return "redirect:/ezen25/order/search";
     }

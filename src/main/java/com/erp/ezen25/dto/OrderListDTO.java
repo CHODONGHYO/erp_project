@@ -9,9 +9,13 @@ import java.time.LocalDateTime;
 public class OrderListDTO {
 
     private Long orderId;
+    private Long memberId;
     private String name;
-    private String orderCode;
     private String orderDate;
+    private Long productId;
+    private Long orderNum;
+    private String orderDescription;
     private String orderStatus;
+    private String orderCode;
 
 }

@@ -36,7 +36,10 @@
                                 </tr>
                                 <tr class="tr_for_details">
                                     <th class="td_for_details">지점명</th>
-                                    <td class="td_for_details">[[${orderDTO.memberId}]]</td>
+                                    <td class="td_for_details">
+                                        <span th:text="${orderDTO.Name}"></span>
+                                        <input type="hidden" th:value="${orderDTO.orderId}" readonly/>
+                                    </td>
                                 </tr>
                                 <tr class="tr_for_details">
                                     <th class="td_for_details">날짜</th>
@@ -44,7 +47,11 @@
                                 </tr>
                                 <tr class="tr_for_details">
                                     <th class="td_for_details">상태</th>
-                                    <td class="td_for_details">[[${orderDTO.orderStatus}]]</td>
+                                    <td class="td_for_details" th:if="${orderDTO.orderStatus == '0'}">발주요청</td>
+                                    <td class="td_for_details" th:if="${orderDTO.orderStatus == '1'}">진행중</td>
+                                    <td class="td_for_details" th:if="${orderDTO.orderStatus == '2'}">완료</td>
+
+
                                 </tr>
                                 <tr class="tr_for_details">
                                     <th class="td_for_details">특이사항</th>
@@ -56,8 +63,7 @@
                 </div>
             </div>
             <div style="float:right;">
-                <a th:href="@{/ezen25/order/mod(orderId = ${orderDTO.orderId}, page = ${pageRequestDTO.page},
-         type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
+                <a th:href="@{/ezen25/order/mod(orderId=${orderDTO.orderId}, page=${pageRequestDTO.page}, type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
                     <button class="btn btn-primary" type="button">Modify</button>
                 </a>
                 <a th:href="@{/ezen25/order/search(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},

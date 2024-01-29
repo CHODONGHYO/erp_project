@@ -4,6 +4,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{/layout/layout}">
 
+
 <th:block layout:fragment="content">
 
     <main>
@@ -31,32 +32,28 @@
                         <thead>
                         <tr>
                             <th>No</th>
+                            <th>발주코드</th>
                             <th>지점명</th>
                             <th>발주일자</th>
                             <th>상태</th>
-                            <th>조회</th>
+
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="dto, stat : ${orderList}"
-                            th:if="${stat.index == 0 or dto.orderId != orderList[stat.index - 1].orderId}">
+                            th:if="${stat.index == 0 or dto.orderCode != orderList[stat.index - 1].orderCode}">
                             <td th:text="${stat.count}"></td>
+                            <td><button th:if="${dto.orderStatus == '0'}" class="btn btn-primary withdrawalBtn"
+                                                                   data-toggle="modal" data-target="#withdrawalModal" th:attr="data-order-code=${dto.orderCode}"
+                            th:text="${dto.orderCode}">
+
+                            </button></td>
                             <td th:text="${dto.name}"></td>
                             <td th:text="${dto.orderDate}"></td>
                             <td>
-                                <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary withdrawalBtn"
-                                        data-toggle="modal" data-target="#withdrawalModal" th:attr="data-order-code=${dto.orderCode}">
-                                   발주요청
-                                </button>
-                                <button th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" onclick="#">진행중</button>
-                                <button th:if="${dto.orderStatus == '2'}" class="btn btn-danger" onclick="#">완료</button>
-                            </td>
-                            <td>
-                                <a th:href="@{/ezen25/order/rd(orderId=${dto.orderId})}"><button class="btn btn-primary addBtn" type="button">조회</button></a>
-<!--                                <button class="btn btn-danger removeBtn" type="button">삭제</button>-->
-
-<!--                                <a th:href="@{/ezen25/order/rd(orderId=${dto.orderId})}"><button class="btn btn-primary addBtn" type="button">조회</button></a>-->
-
+                                <span th:if="${dto.orderStatus == '0'}">발주요청</span>
+                                <span th:if="${dto.orderStatus == '1'}">진행중</span>
+                                <span th:if="${dto.orderStatus == '2'}">완료</span>
                             </td>
                         </tr>
                         <input type="hidden" name="orderCode" th:value="${orderCode}">
@@ -82,7 +79,36 @@
     </div>
 
     <script th:inline="javascript">
+        $(document).ready(function() {
 
+                function updateRowIndices() {
+                    $('#datatablesSimple tbody tr').each(function(index) {
+                        $(this).find('td:first').text(index + 1);
+                    });
+                }
+
+                updateRowIndices();
+
+                $('.withdrawalBtn').click(function() {
+                    var orderCode = $(this).data('order-code');
+
+                    $.ajax({
+                        type: "GET",
+                        url: "/ezen25/stock/withdrawal",
+                        data: {
+                            orderCode : orderCode,
+                        },
+                        success: function(response) {
+                            $('#withdrawalModal .modal-body').html(response);
+                            $('#withdrawalModal').modal('show');
+                        },
+                        error: function(error) {
+                            alert("오류가 발생했습니다.");
+                        }
+                    });
+                });
+
+            });
     </script>
 </th:block>
 </html>
