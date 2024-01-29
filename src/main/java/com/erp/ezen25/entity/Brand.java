@@ -45,4 +45,9 @@ public class Brand {
     public void changeBrandDescription(String brandDescription) {
         this.brandDescription = brandDescription;
     }
+
+    public Brand setBrandId(long brandId) {
+        this.brandId = brandId;
+        return this;
+    }
 }

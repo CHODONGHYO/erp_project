@@ -40,6 +40,12 @@ public class RequestController {
 
         model.addAttribute("requestResult", requestService.getList(pageRequestDTO));
     }
+    @GetMapping("/plist")
+    public void getProductList (PageRequestDTO pageRequestDTO, Model model) {
+
+        model.addAttribute("pList", productService.getList(pageRequestDTO));
+        System.out.println("상품리스트  도착");
+    }
 
     @GetMapping("/register")
     public void requestRegister(Model model) {
@@ -58,6 +64,13 @@ public class RequestController {
         model.addAttribute("Now3", currentTimeplus3);
 
 
+    }
+
+    @GetMapping("/getBrandName")
+    @ResponseBody
+    public void getBrandName(@RequestParam Long brandId, Model model) {
+        String brandName = brandService.findBrandName(brandId);
+        model.addAttribute("brandName", brandName);
     }
 
     @PostMapping("/register")
@@ -214,6 +227,7 @@ public class RequestController {
 
         model.addAttribute("Now", currentTime);
         model.addAttribute("Now3", currentTimeplus3);
+
 
     }
 
