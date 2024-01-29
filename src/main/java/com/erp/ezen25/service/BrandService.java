@@ -5,8 +5,6 @@ import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.entity.Brand;
 
-import java.util.List;
-
 public interface BrandService {
     Long register(BrandDTO brandDTO);
     PageResultDTO<BrandDTO, Brand> getList(PageRequestDTO pageRequestDTO);
@@ -16,6 +14,8 @@ public interface BrandService {
     void remove(Long brandId);
 
     void modify(BrandDTO brandDTO);
+
+    String findBrandName(Long brandId);
 
     default Brand dtoToEntity(BrandDTO brandDTO) {
         Brand brand = Brand.builder()
