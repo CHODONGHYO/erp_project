@@ -237,7 +237,18 @@ img {
 .planList .modifyModal .numBtns:hover {
     background-color: var(--bs-gray-500);
 }
-
+.planList .leftHeader {
+    align-items: center;
+}
+.planList .leftHeader input {
+    margin-left: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 50%;
+}
+.planList .leftHeader .shrink{
+    flex-shrink:0;
+}
 /* 계획 등록 */
 .planAdd .prodBtn {
     margin: 0 !important;

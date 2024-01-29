@@ -15,12 +15,18 @@
 
             <div class="card mb-4">
                 <div class="card-header">
-                    <div>
-                        <i class="fas fa-table me-1"></i>
-                        조달계획 목록
+                    <div class="flex leftHeader">
+                        <i class="fas fa-table me-1 shrink"></i>
+                        <span class="shrink">조달계획 목록</span>
+                        <input type="date" class="form-control shrink">
                     </div>
-                    <div class="card bg-primary text-white mb-2 prodBtn">
-                        <a href="planAdd" class="card-body resetLink">계획등록</a>
+                    <div class="flex" style="flex-shrink: 2;">
+                        <div class="card bg-primary text-white mb-2 prodBtn" id="datepicker">
+                            <a href="planAdd" class="card-body resetLink">날짜조회</a>
+                        </div>
+                        <div class="card bg-primary text-white mb-2 prodBtn">
+                            <a href="planAdd" class="card-body resetLink">계획등록</a>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -46,17 +52,17 @@
                         </tr>
                         </tfoot>
                         <tbody>
-                        <tr th:each="plan, planStat: ${pList}">
-                            <td>
-                                <input type="hidden" class="planId" th:value="${plan.planId}">
-                                <div class="cellStyle planDate" th:text="${#temporals.format(plan.completeDate,'yyyy-MM-dd')}"></div>
-                            </td>
-                            <td><div class="cellStyle brandName" th:text="${plan.brandName}"></div></td>
-                            <td><div class="cellStyle productName" th:text="${plan.productName}"></div></td>
-                            <td><div class="cellStyle planNumber" th:text="${plan.planNumber}"></div></td>
-                            <td><div class="cellStyle"><div class="card bg-primary text-white mb-2 listBtn resetLink modify">수량수정</div></div></td>
-                            <td><div class="cellStyle"><div class="card bg-danger text-white mb-2 listBtn">삭제</div></div></td>
-                        </tr>
+                            <tr th:each="plan, planStat: ${pList}">
+                                <td>
+                                    <input type="hidden" class="planId" th:value="${plan.planId}">
+                                    <div class="cellStyle planDate" th:text="${#temporals.format(plan.completeDate,'yyyy-MM-dd')}"></div>
+                                </td>
+                                <td><div class="cellStyle brandName" th:text="${plan.brandName}"></div></td>
+                                <td><div class="cellStyle productName" th:text="${plan.productName}"></div></td>
+                                <td><div class="cellStyle planNumber" th:text="${plan.planNumber}"></div></td>
+                                <td><div class="cellStyle"><div class="card bg-primary text-white mb-2 listBtn resetLink modify">수량수정</div></div></td>
+                                <td><div class="cellStyle"><div class="card bg-danger text-white mb-2 listBtn">삭제</div></div></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
