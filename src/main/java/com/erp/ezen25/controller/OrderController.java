@@ -12,6 +12,7 @@ import com.erp.ezen25.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -102,7 +103,7 @@ public class OrderController {
         return "ezen25/order/orderSearch";
 
     }*/
-    @GetMapping("/search2")
+    @GetMapping("/search")
     public String orderSearchByCode( Model model,@ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO) {
 
 //        List<OrderDTO> memberorderList = orderService.getListByMemberId(memberId);
@@ -110,34 +111,28 @@ public class OrderController {
 //        model.addAttribute("orderList", memberorderList);
         List<OrderDTO> orderList = orderService.getList();
         model.addAttribute("orderList", orderList);
-        return "ezen25/order/orderSearch2";
+        return "ezen25/order/orderHistory";
 
     }
-    /* @GetMapping("/write")
-     public String orderWrite(HttpSession session, @RequestParam(value = "userId", required = false) String userId, Model model) {
-         log.info("발주서 입력 페이지로 이동..");
-         Optional<Member> member = memberRepository.findByUserId(userId);
-         if (member.isPresent()) {
-             model.addAttribute("member", member.get());
-         } else {
-             model.addAttribute("member", new Member());
-         }
-         List<Object[]> polist = orderService.joinOrderAndProduct();
-         List<String> mCateList = orderService.getMCategoryList();
+    @GetMapping("/itemlist")
+    public String listbymember(Model model, HttpSession session,@RequestParam(value="orderCode",required = false) String orderCode){
+        log.info("orderCode는 :" + orderCode);
+        List<OrderDTO> orderList = orderService.getmList(orderCode);
+        OrderDTO oList = orderService.getOrderInfo(orderCode);
+        log.info("발주코드에따른 정보는:"+oList);
+        model.addAttribute("orderList", orderList);
+        model.addAttribute("olist",oList);
+        return "ezen25/order/itemList";
+    }
 
-         model.addAttribute("mcategories",  mCateList);
-         model.addAttribute("member", member);
-         log.info("대분류: "+mCateList);
-         log.info("멤버:" + member);
-         return "/ezen25/order/orderRegister";
-     }*/
     @GetMapping("/register")
-    public String register(Model model) {
+    public String register(Model model,@RequestParam(value="orderCode",required = false) String orderCode) {
         log.info("GET 형식 Register");
 
 
         List<String> mCateList = orderService.getMCategoryList();
-
+        List<MemberDTO> mList = memberService.getAllMembers();
+        List<OrderDTO> oList = orderService.getmList(orderCode);
 
         LocalDateTime LDTCT = LocalDateTime.now();
         LocalDateTime LDTCT3 = LDTCT.plusDays(3);
@@ -145,10 +140,10 @@ public class OrderController {
         String currentTime = LDTCT.format(formatter);
         String currentTimeplus3 = LDTCT3.format(formatter);
         model.addAttribute("mcategories", mCateList);
-
+        model.addAttribute("mList", mList);
         model.addAttribute("Now", currentTime);
         model.addAttribute("Now3", currentTimeplus3);
-
+        model.addAttribute("list","oList");
         return "ezen25/order/orderRegister";
     }
 
@@ -161,6 +156,37 @@ public class OrderController {
         return "redirect:/ezen25/order/search";
 
     }
+    @GetMapping("/itemregister")
+    public String addItems(Model model,@RequestParam(value="orderCode",required = false) String orderCode){
+        List<String> mCateList = orderService.getMCategoryList();
+        List<MemberDTO> mList = memberService.getAllMembers();
+
+        OrderDTO oList = orderService.getOrderInfo(orderCode);
+        log.info("발주코드에따른 정보는:"+oList);
+
+        LocalDateTime LDTCT = LocalDateTime.now();
+        LocalDateTime LDTCT3 = LDTCT.plusDays(3);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String currentTime = LDTCT.format(formatter);
+        String currentTimeplus3 = LDTCT3.format(formatter);
+        model.addAttribute("mcategories", mCateList);
+        model.addAttribute("mList", mList);
+        model.addAttribute("Now", currentTime);
+        model.addAttribute("Now3", currentTimeplus3);
+        model.addAttribute("olist",oList);
+
+        return "ezen25/order/orderItemRegister";
+    }
+    @PostMapping("itemregister")
+    public String itmRegister(OrderDTO orderDTO) {
+        log.info("POST 형식");
+        orderService.register(orderDTO);
+
+
+        return "redirect:/ezen25/order/itemList";
+
+    }
+
     @GetMapping("/getSubcategories")
     @ResponseBody
     public List<String> getSubcategories(@RequestParam("upperCategory") String upperCategory) {
@@ -193,14 +219,7 @@ public class OrderController {
 
         return "redirect:/ezen25/order/search";
     }
-    @GetMapping("search")
-    public String listbymember(Model model, HttpSession session,@RequestParam(value="orderCode",required = false) String orderCode){
-        log.info("orderCode는 :" + orderCode);
-        List<OrderDTO> orderList = orderService.getmList(orderCode);
 
-        model.addAttribute("orderList", orderList);
-        return "ezen25/order/orderSearch";
-    }
 
     // export 관련 Controller
     @GetMapping("/export")

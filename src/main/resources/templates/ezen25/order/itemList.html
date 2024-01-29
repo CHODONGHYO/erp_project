@@ -25,6 +25,12 @@
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
                     발주 요청리스트
+
+                    <a th:href="@{/ezen25/order/itemregister(orderCode=${olist.orderCode})}">
+                        <button type="button">물품 추가</button>
+                    </a>
+
+
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple">

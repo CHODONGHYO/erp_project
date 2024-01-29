@@ -26,6 +26,8 @@
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
                     발주 요청리스트
+
+                </div>
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple">
@@ -43,7 +45,7 @@
                         <tr th:each="dto, stat : ${orderList}"
                             th:if="${stat.index == 0 or dto.orderCode != orderList[stat.index - 1].orderCode}">
                             <td th:text="${stat.count}"></td>
-                            <td><a th:href="@{/ezen25/order/search(orderCode=${dto.orderCode})}" th:text="${dto.orderCode}"></a></td>
+                            <td><a th:href="@{/ezen25/order/itemlist(orderCode=${dto.orderCode})}" th:text="${dto.orderCode}"></a></td>
                             <td th:text="${dto.name}"></td>
                             <td th:text="${dto.orderDate}"></td>
                             <td>
