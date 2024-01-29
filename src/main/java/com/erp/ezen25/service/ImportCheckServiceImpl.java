@@ -117,6 +117,15 @@ public class ImportCheckServiceImpl implements ImportCheckService{
                 importEntity.changeImportStatus(((requestNum/(float)num)*100)  + "% 완료");
                 importEntity.changeImportNum(num - requestNum);
                 importRepository.save(importEntity);
+
+                Export export = Export.builder()
+                        .productId(importCheck.getImportId().getProduct())
+                        .orderCode(importCheck.getImportId().getRequestCode())
+                        .exportNum(requestNum)
+                        .exportDate(importCheck.getImportId().getImportDate())
+                        .build();
+
+                exportRepository.save(export);
             }
         }
     }
