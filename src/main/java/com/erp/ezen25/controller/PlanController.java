@@ -29,6 +29,12 @@ public class PlanController {
 
         model.addAttribute("pList", pList);
     }
+    @GetMapping(value = {"/planList{date1}~{date2}"})
+    public String planListByDate(@PathVariable(value = "date1", required = false) LocalDate date1,@PathVariable(value = "date2",required = false) LocalDate date2,Model model) {
+        List<PlanListResponseDTO> pList = planService.getPlanListByDate(date1, date2);
+        model.addAttribute("pList", pList);
+        return "/ezen25/plan/planList";
+    }
 
     @GetMapping("/planAdd")
     public void planAddForm(Model model) {

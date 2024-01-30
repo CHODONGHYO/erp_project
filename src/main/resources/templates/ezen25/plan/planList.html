@@ -9,27 +9,34 @@
         <div class="container-fluid px-4">
             <h1 class="mt-4">계획목록</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item">조달계획</li>
-                <li class="breadcrumb-item active">계획목록</li>
+                <li class="breadcrumb-item">메인</li>
+                <li class="breadcrumb-item active">조달계획</li>
             </ol>
-
             <div class="card mb-4">
                 <div class="card-header">
                     <div class="flex leftHeader">
-                        <i class="fas fa-table me-1 shrink"></i>
-                        <span class="shrink">조달계획 목록</span>
-                        <input type="date" class="form-control shrink">
-                    </div>
-                    <div class="flex" style="flex-shrink: 2;">
-                        <div class="card bg-primary text-white mb-2 prodBtn" id="datepicker">
-                            <a href="planAdd" class="card-body resetLink">날짜조회</a>
+                        <i class="fas fa-table me-1 "></i>
+                        <span>조달계획 목록</span>
+                        <div class="flex ">
+                            <input type="date" th:value="${date1}" class="form-control  selectDate selectDate1" style="margin-right: 10px;"> ~
+                            <input type="date" th:value="${date2}" class="form-control  selectDate selectDate2">
                         </div>
+                        <div class="card bg-teal text-white mb-2 prodBtn" style="margin-left: 10px !important;">
+                            <a href="#" class="card-body resetLink" id="dateConfirm">날짜조회</a>
+                        </div>
+                    </div>
+                    <div class="flex">
                         <div class="card bg-primary text-white mb-2 prodBtn">
                             <a href="planAdd" class="card-body resetLink">계획등록</a>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
+                    <select class="form-control blist">
+                        <option value="0">협력업체</option>
+                        <option value="1">협력업체1</option>
+                        <option value="2">협력업체2</option>
+                    </select>
                     <table id="datatablesSimple">
                         <thead>
                         <tr>
@@ -147,9 +154,19 @@
         $(".myModal .moBtn").on("click", () => {
             $(".myModal").hide();
         })
+
         $(".modifyModal .numBtns").on("click", (e) => {
             console.log(e);
-            $(".modifyModal .setNum").val(Number($(".modifyModal .setNum").val()) + Number($(e.target).text()))
+            $(".modifyModal .setNum").val(Number($(".modifyModal .setNum").val()) + Number($(e.target).text()));
+        })
+
+        let selectDate1 = $(".selectDate1").val();
+        let selectDate2 = $(".selectDate2").val();
+        $("#dateConfirm").attr("href", `planList${selectDate1}~${selectDate2}`);
+        $(".selectDate").on("change", (e) => {
+            selectDate1 = $(".selectDate1").val();
+            selectDate2 = $(".selectDate2").val();
+            $("#dateConfirm").attr("href", `planList${selectDate1}~${selectDate2}`);
         })
 
         $(".myModal.deleteModal .deleteBtn").on("click", () => {
