@@ -92,4 +92,5 @@ public class StockServiceImpl implements StockService {
     public List<ExportCompleteDTO> getCompletedExportList() {
         return stockRepository.getCompletedExportList();
     }
+
 }

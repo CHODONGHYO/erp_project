@@ -37,6 +37,7 @@ public class StockController {
         log.info("재고불출 페이지로 이동........");
         List<WithdrawalDTO> withdrawalList = orderService.getWithdrawalList(orderCode);
         String name = withdrawalList.get(0).getName();
+        log.info("withdrawalList : " + withdrawalList);
         model.addAttribute("withdrawalList", withdrawalList);
         model.addAttribute("orderCode",orderCode);
         model.addAttribute("name",name);

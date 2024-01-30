@@ -23,6 +23,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr id="noItem" style="display:none;">
+                                <td colspan="7" style="text-align: center;">모든 상품이 불출되었습니다.</td>
+                            </tr>
                             <th:block th:each="dto : ${withdrawalList}">
                                 <tr th:if="${dto.orderStatus == '0'}">
                                     <th><input type="checkbox" name="checkbox" checked></th>
@@ -97,4 +100,8 @@
             $("#withdrawalForm").submit();
         });
     });
+
+    if(document.querySelector('#withdrawalForm tr:nth-child(2)') == null) {
+        $("#noItem").show();
+    }
 </script>
