@@ -1,8 +1,8 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.*;
+import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.entity.*;
-
 import com.erp.ezen25.queryMapping.SCategoryListMapping;
 import com.erp.ezen25.repository.OrderRepository;
 import com.erp.ezen25.repository.ProductRepository;
@@ -16,11 +16,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
 
 import static com.erp.ezen25.dto.OrderDTO.*;
 
@@ -31,6 +31,14 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository repository;
 
     @Override
+    public List<WithdrawalDTO> getWithdrawalList(String orderCode) {
+        return repository.getWithdrawalDTO(orderCode);
+    }
+
+    @Override
+    public List<OrderListDTO> getOrderListDTO() {
+        return repository.getOrderListDTO();
+
     public Long register(OrderDTO orderDTO) {
         Order o = dtoToEntity(orderDTO);
         repository.save(o);
@@ -179,6 +187,7 @@ public class OrderServiceImpl implements OrderService {
         builder.and(sBuilder);
 
         return builder;
+
     }
 
 

@@ -38,22 +38,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="dto, stat : ${orderList}"
-                            th:if="${stat.index == 0 or dto.orderCode != orderList[stat.index - 1].orderCode}">
+                        <tr th:each="dto, stat : ${orderList}">
                             <td th:text="${stat.count}"></td>
                             <td th:text="${dto.name}"></td>
                             <td th:text="${dto.orderCode}"></td>
-                            <td th:text="${dto.orderDate}"></td>
-                            <td>
-                                <button th:if="${dto.orderStatus == '0'}" class="btn btn-primary withdrawalBtn"
-                                        data-toggle="modal" data-target="#withdrawalModal" th:attr="data-order-code=${dto.orderCode}">
-                                    불출하기
-                                </button>
-                                <button th:if="${dto.orderStatus == '1'}" class="btn btn-secondary" onclick="#">출고준비</button>
-                                <button th:if="${dto.orderStatus == '2'}" class="btn btn-danger" onclick="#">출고완료</button>
-                            </td>
-                        </tr>
-                        <input type="hidden" name="orderCode" th:value="${orderCode}">
+                                <td th:text="${#temporals.format(dto.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                                <td>
+                                    <button th:if="${dto.orderStatusSum == 0}" class="btn btn-primary withdrawalBtn"
+                                            data-toggle="modal" data-target="#withdrawalModal" th:attr="data-order-code=${dto.orderCode}">
+                                        불출하기
+                                    </button>
+                                    <button th:if="${dto.orderStatusCnt*2 > dto.orderStatusSum && dto.orderStatusSum > 0}" class="btn btn-secondary withdrawalBtn"
+                                            data-toggle="modal" data-target="#withdrawalModal" th:attr="data-order-code=${dto.orderCode}">
+                                        출고준비
+                                    </button>
+                                    <button th:if="${dto.orderStatusCnt*2 == dto.orderStatusSum}" class="btn btn-danger" onclick="#">출고완료</button>
+                                </td>
+                            </tr>
+                            <input type="hidden" name="orderCode" th:value="${orderCode}">
                         </tbody>
                     </table>
                 </div>

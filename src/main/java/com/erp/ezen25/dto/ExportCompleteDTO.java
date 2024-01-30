@@ -2,21 +2,19 @@ package com.erp.ezen25.dto;
 
 import lombok.*;
 
-@Builder
+import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WithdrawalDTO {
+@Builder
+public class ExportCompleteDTO {
 
     private String name;
     private String orderCode;
     private Long productId;
-    private String image;
     private String productName;
-    private String mCategory;
-    private String sCategory;
-    private Long orderNum;
-    private String orderStatus;
     private Long productNum;
+    private Long exportNum;
+    private String exportDate;
 
 }
