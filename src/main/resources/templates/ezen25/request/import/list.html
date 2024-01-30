@@ -161,7 +161,7 @@
         </script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        <script>
+        <script th:inline="javascript">
             // 출하 버튼 클릭 시 AJAX를 통해 importId를 서버로 전송하고 해당 기록 삭제
             $(".removeBtn").click(function () {
                 // 현재 버튼이 속한 행에서 importId 값을 가져오기
