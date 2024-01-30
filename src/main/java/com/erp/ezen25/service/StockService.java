@@ -11,7 +11,9 @@ public interface StockService {
 
     List<StockDTO> getListWithProduct();
 
-    List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode, List<Long> productIds);
+    List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode);
+
+    List<ExportCompleteDTO> getCompletedExportList();
 
     void updateOrderStatus(String orderCode, List<Long> productIds);
     void updateOrderStatus2(String orderCode);
@@ -27,14 +29,4 @@ public interface StockService {
         return entity;
     }
 
-    default StockDTO entityToDto(Product_Stock entity) {
-        StockDTO dto = StockDTO.builder()
-                .pNumId(entity.getPNumId())
-                .productId(entity.getProduct().getProductId())
-                .productNum(entity.getProductNum())
-                .memberId(entity.getMember().getMemberId())
-                .totalPrice(entity.getTotalPrice())
-                .build();
-        return dto;
-    }
 }

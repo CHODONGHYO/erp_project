@@ -1,17 +1,19 @@
 package com.erp.ezen25.dto;
 
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-@Getter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class OrderListDTO {
 
-    private Long orderId;
     private String name;
     private String orderCode;
     private LocalDateTime orderDate;
-    private String orderStatus;
+    private BigDecimal orderStatusSum;
+    private Long orderStatusCnt;
 
 }

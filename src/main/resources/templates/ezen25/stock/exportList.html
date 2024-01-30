@@ -24,39 +24,30 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                    출고처리
+                    출고리스트
                 </div>
                 <div class="card-body">
-                    <div class="panel-heading">
-                        <p style="text-align:center; font-size:20px;"><span style="font-weight:bold;">[[${name}]]</span>점 ([[${orderCode}]])</p>
-                    </div>
                     <table id="datatablesSimple">
                         <thead>
                         <tr>
                             <th>No</th>
-                            <th>이미지</th>
+                            <th>지점명</th>
+                            <th>발주서 코드</th>
                             <th>상품코드</th>
                             <th>상품명</th>
-                            <th>상품분류</th>
-                            <th>현재고</th>
                             <th>출고수량</th>
-                            <th>변경수량</th>
-                            <th>단가</th>
-                            <th>공급가액</th>
+                            <th>출고일자</th>
                         </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dto,stat : ${exportList}">
+                            <tr th:each="dto,stat : ${exportCompleteList}">
                                 <th>[[${stat.count}]]</th>
-                                <td>[[${dto.image}]]</td>
+                                <td>[[${dto.name}]]</td>
+                                <td>[[${dto.orderCode}]]</td>
                                 <td>[[${dto.productId}]]</td>
                                 <td>[[${dto.productName}]]</td>
-                                <td>[[${dto.mCategory}]] / [[${dto.sCategory}]]</td>
-                                <td>[[${dto.productNum}]]</td>
-                                <td>[[${dto.orderNum}]]</td>
-                                <td>[[${dto.productNum - dto.orderNum}]]</td>
-                                <td>[[${dto.sellPrice}]]</td>
-                                <td>[[${dto.sellPrice * dto.orderNum}]]</td>
+                                <td>[[${dto.exportNum}]]</td>
+                                <td>[[${dto.exportDate}]]</td>
                             </tr>
                         </tbody>
                     </table>
