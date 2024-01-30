@@ -65,7 +65,7 @@
                                         <td class="td_for_details">
 
 
-                                              <select class="form-control" name="memberId" th:value="${memberId}">-->
+                                              <select class="form-control" name="memberId" th:value="${memberId}">
                                              <option th:each="member : ${mList}" th:value="${member.memberId}" th:text="${member.name}"></option>
                                             </select>
                                         </td>
@@ -76,7 +76,7 @@
                                     </tr>
 
                                     <tr class="tr_for_details">
-                                        <td class="td_for_details" colspan="1">특이사항</td>
+                                        <td class="td_for_details" colspan="1">비고</td>
                                         <td class="td_for_details" colspan="5">
                                             <textarea class="form-control" name="orderDescription"
                                                       style="height: 225px;"></textarea>

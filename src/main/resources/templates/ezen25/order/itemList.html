@@ -38,6 +38,8 @@
                         <tr>
                             <th>No</th>
                             <th>지점명</th>
+                            <th>품목코드</th>
+                            <th>수량</th>
                             <th>발주일자</th>
                             <th>상태</th>
                             <th>조회</th>
@@ -48,6 +50,8 @@
                             th:if="${stat.index == 0 or dto.orderId != orderList[stat.index - 1].orderId}">
                             <td th:text="${stat.count}"></td>
                             <td th:text="${dto.name}"></td>
+                            <td th:text="${dto.productId}"></td>
+                            <td th:text="${dto.orderNum}"></td>
                             <td th:text="${dto.orderDate}"></td>
 
                             <td>
@@ -55,13 +59,8 @@
                                 <span th:if="${dto.orderStatus == '1'}">진행중</span>
                                 <span th:if="${dto.orderStatus == '2'}">완료</span>
                             </td>
-
                             <td>
                                 <a th:href="@{/ezen25/order/rd(orderId=${dto.orderId})}"><button class="btn btn-primary addBtn" type="button">조회</button></a>
-<!--                                <button class="btn btn-danger removeBtn" type="button">삭제</button>-->
-
-<!--                                <a th:href="@{/ezen25/order/rd(orderId=${dto.orderId})}"><button class="btn btn-primary addBtn" type="button">조회</button></a>-->
-
                             </td>
                         </tr>
                         <input type="hidden" name="orderCode" th:value="${orderCode}">
@@ -71,23 +70,5 @@
             </div>
         </div>
     </main>
-
-    <!-- Modal -->
-    <div class="modal fade" id="withdrawalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 class="modal-title">재고불출</h3>
-                </div>
-                <div class="modal-body">
-                    <th:block th:replace="~{/ezen25/stock/withdrawal :: withdrawal}"></th:block>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script th:inline="javascript">
-
-    </script>
 </th:block>
 </html>

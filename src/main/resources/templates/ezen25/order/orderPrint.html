@@ -14,7 +14,7 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h1 class="mt-4">발주사항</h1>
+                        <h1 class="mt-4">발주내역서</h1>
                     </div>
                 </div>
             </div>
@@ -25,6 +25,10 @@
                     <div class="white_shd full margin_bottom_30">
                         <div class="full graph_head">
                             <table class="table_for_details" width="100%">
+                                <tr class="tr_for_details">
+                                <td class="td_for_details" >발주코드</td>
+                                <td class="td_for_details" colspan="3">[[${orderdto.orderCode}]]</td>
+                                </tr>
                                 <tr class="tr_for_details">
                                     <td class="td_for_details">지점명</td>
                                     <td class="td_for_details">[[${orderdto.name}]]</td>
@@ -46,7 +50,7 @@
                                      </td>
                                 </tr>
                                 <tr class="tr_for_details">
-                                    <td class="td_for_details" colspan="1">특이사항</td>
+                                    <td class="td_for_details" colspan="1">비고</td>
                                     <td class="td_for_details" colspan="5">
                                         <textarea class="form-control" name="orderDescription" readonly style="height: 225px;
                                         ">[[${orderdto.orderDescription}]]</textarea>

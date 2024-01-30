@@ -6,6 +6,7 @@ import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.entity.Product_Info;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;

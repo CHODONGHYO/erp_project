@@ -21,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -91,7 +93,7 @@ public class OrderController {
         redirectAttributes.addAttribute("keyword", pageRequestDTO.getKeyword());
         redirectAttributes.addAttribute("orderId", orderDTO.getOrderId());
 
-        return "redirect:/ezen25/order/rd";
+        return "redirect:/ezen25/order/itemlist";
     }
     /*@GetMapping("/search")
     public String orderSearch(HttpSession session , Model model, @RequestParam(name = "memberId", required = false) Long memberId,@ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO) {

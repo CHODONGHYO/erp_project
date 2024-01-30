@@ -57,7 +57,7 @@
                                             <input class="form-control"
                                                    name="orderDate"
                                                    th:value="${orderDTO.orderDate}"
-                                                   type="text">
+                                                   type="text" readonly>
                                         </td>
                                     </tr>
                                     <tr class="tr_for_details">
@@ -66,16 +66,16 @@
                                             <input class="form-control"
                                                    name="orderStatus"
                                                    th:value="${orderDTO.orderStatus}"
-                                                   type="text">
+                                                   type="text" readonly>
                                         </td>
                                     </tr>
                                     <tr class="tr_for_details">
-                                        <td class="td_for_details">특이사항</td>
+                                        <td class="td_for_details">비고</td>
                                         <td class="td_for_details">
                                             <input class="form-control"
                                                    name="orderDescription"
                                                    th:value="${orderDTO.orderDescription}"
-                                                   type="text">
+                                                   type="text" readonly>
                                         </td>
                                     </tr>
                                 </table>
