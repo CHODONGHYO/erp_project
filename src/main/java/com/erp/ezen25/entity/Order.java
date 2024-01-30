@@ -30,7 +30,7 @@ public class Order {
     private Member member;
 
     @Column(nullable = false)
-    private LocalDateTime orderDate;
+    private String orderDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
@@ -50,4 +50,29 @@ public class Order {
     @Column(length = 1000, nullable = false)
     @ColumnDefault("'0'")
     private String orderCode;
+
+    public void changeProduct(Product_Info product) {
+        this.product = product;
+    }
+
+    public void changeOrderDescription(String orderDescription) {
+        this.orderDescription = orderDescription;
+    }
+
+
+    public void changeOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public void changeOrderCode(String orderCode) {
+        this.orderCode = orderCode;
+    }
+
+    public void changeOrderNum(Long orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public void changeOrderDate(String orderDate) {
+        this.orderDate = orderDate;
+    }
 }
