@@ -20,9 +20,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-
 import static com.erp.ezen25.dto.OrderDTO.*;
+
+
 
 @Service
 @Log4j2
@@ -38,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderListDTO> getOrderListDTO() {
         return repository.getOrderListDTO();
+    }
 
     public Long register(OrderDTO orderDTO) {
         Order o = dtoToEntity(orderDTO);
@@ -111,30 +112,6 @@ public class OrderServiceImpl implements OrderService {
         return result.stream()
                 .map(this::entityToDto)
                 .collect(Collectors.toList());
-    }
-
-
-    @Override
-    public List<WithdrawalDTO> getWithdrawalList(String orderCode) {
-
-        List<Order> result = repository.findByOrderCode(orderCode); /*발주요청리스트에서 보낼 orderCode*/
-
-        return result.stream()
-                .map(this::entityToDtoForWithdrawal)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public String getNameByOrderCode(String orderCode) {
-        List<Order> result = repository.findByOrderCode(orderCode);
-        System.out.println("result:" + result);
-        if (!result.isEmpty()) {
-            return result.get(0).getMember().getName();
-        } else {
-            // Handle the case where the list is empty
-            log.error("No order found for orderCode: {}", orderCode);
-            return "";
-        }
     }
 
     @Override

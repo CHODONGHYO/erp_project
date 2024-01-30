@@ -12,7 +12,7 @@ public class OrderListDTO {
 
     private String name;
     private String orderCode;
-    private LocalDateTime orderDate;
+    private String orderDate;
     private BigDecimal orderStatusSum;
     private Long orderStatusCnt;
 

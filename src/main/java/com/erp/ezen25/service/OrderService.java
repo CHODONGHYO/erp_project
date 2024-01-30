@@ -1,8 +1,6 @@
 package com.erp.ezen25.service;
 
-import com.erp.ezen25.dto.OrderDTO;
-import com.erp.ezen25.dto.OrderListDTO;
-import com.erp.ezen25.dto.WithdrawalDTO;
+import com.erp.ezen25.dto.*;
 import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.entity.Product_Info;
@@ -39,7 +37,6 @@ public interface OrderService {
 
     List<String> getProductList(String subcategory);
 
-
     default Order dtoToEntity(OrderDTO dto) {
         Order entity = Order.builder()
                 .orderId(dto.getOrderId())
@@ -52,4 +49,20 @@ public interface OrderService {
                 .build();
         return entity;
     }
+
+    default OrderDTO entityToDto(Order entity) {
+        OrderDTO dto = OrderDTO.builder()
+                .orderId(entity.getOrderId())
+                .memberId(entity.getMember().getMemberId())
+                .name(entity.getMember().getName())
+                .orderDate(entity.getOrderDate())
+                .productId(entity.getProduct().getProductId())
+                .orderNum(entity.getOrderNum())
+                .orderDescription(entity.getOrderDescription())
+                .orderCode(entity.getOrderCode())
+                .orderStatus(entity.getOrderStatus())
+                .build();
+        return dto;
+    }
+
 }
