@@ -12,7 +12,7 @@
                     <div class="sb-sidenav-menu-heading">메인</div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="false" aria-controls="collapse1">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        상품관리
+                        상품 관리
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapse1" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -23,43 +23,43 @@
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        재고관리
+                        재고 관리
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapse2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" th:href="@{/ezen25/stock/list}">재고리스트</a>
-                            <a class="nav-link" href="#">입고관리</a>
-                            <a class="nav-link" href="#">출고관리</a>
+                            <a class="nav-link" href="#">입고 관리</a>
+                            <a class="nav-link" href="#">출고 관리</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse7" aria-expanded="false" aria-controls="collapse2">
                         <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                        조달계획
+                        조달 계획
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapse7" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" th:href="@{/ezen25/plan/planList}">계획조회</a>
-                            <a class="nav-link" th:href="@{/ezen25/plan/planAdd}">계획등록</a>
+                            <a class="nav-link" th:href="@{/ezen25/plan/planList}">계획 조회</a>
+                            <a class="nav-link" th:href="@{/ezen25/plan/planAdd}">계획 등록</a>
                         </nav>
                     </div>
 
                     <div class="sb-sidenav-menu-heading">협력업체</div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        계약관리
+                        계약 관리
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapse3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" th:href="@{/ezen25/brand/contract/contractList}">계약서 목록</a>
-                            <a class="nav-link" th:href="@{/ezen25/brand/contract/contractAdd}">계약등록</a>
+                            <a class="nav-link" th:href="@{/ezen25/brand/contract/contractAdd}">계약 등록</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4">
                         <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                        요청관리
+                        요청 관리
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapse4" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
@@ -77,24 +77,23 @@
                         <nav class="sb-sidenav-menu-nested nav">
                             <a class="nav-link" th:href="@{/ezen25/request/import}">입고 목록</a>
                             <a class="nav-link" th:href="@{/ezen25/request/importCheck}">입고 검수</a>
-                            <a class="nav-link" th:href="@{/ezen25/request/returns}">반품 목록</a>
                             <a class="nav-link" th:href="@{/ezen25/order/export}">출하 내역</a>
+                        </nav>
+                    </div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse4">
+                        <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                        업체 관리
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapse6" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" th:href="@{/ezen25/brand/list}">업체 목록</a>
+                            <a class="nav-link" th:href="@{/ezen25/brand/register}">업체 등록</a>
                         </nav>
                     </div>
 
 
                     <div class="sb-sidenav-menu-heading">지점</div>
-                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse5">
-                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                        계약관리
-                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                    </a>
-                    <div class="collapse" id="collapse6" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                        <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="#">계약서 목록</a>
-                            <a class="nav-link" href="#">계약등록</a>
-                        </nav>
-                    </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapse8" aria-expanded="false" aria-controls="collapse6">
                     <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         발주관리
@@ -102,7 +101,9 @@
                     </a>
                     <div class="collapse" id="collapse8" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" th:href="@{/ezen25/order/list}">발주 리스트</a>
+                            <a class="nav-link" th:href="@{/ezen25/order/list}">발주 요청 리스트</a>
+                            <a class="nav-link" th:href="@{/ezen25/order/search}">발주 리스트</a>
+                            <a class="nav-link" th:href="@{/ezen25/order/register}">발주 등록</a>
                         </nav>
                     </div>
                 </div>

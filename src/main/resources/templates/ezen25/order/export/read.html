@@ -38,25 +38,22 @@
                                     <th class="td_for_details">발주 코드</th>
                                     <td class="td_for_details">[[${exportDTO.orderCode}]]</td>
                                 </tr>
-                                <tr class="tr_for_details">
-                                    <th class="td_for_details">상태</th>
-                                    <td class="td_for_details">[[${exportDTO.exportStatus}]]</td>
-                                </tr>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
             <div style="float:right;">
-                <a th:href="@{/ezen25/order/export/modify(exportId = ${exportDTO.exportId}, page = ${pageRequestDTO.page},
+                <!--<a th:href="@{/ezen25/order/export/modify(exportId = ${exportDTO.exportId}, page = ${pageRequestDTO.page},
          type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-primary" type="button">Modify</button>
-                </a>
+                </a>-->
                 <a th:href="@{/ezen25/order/export/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
          keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-info" type="button">List</button>
                 </a>
-                <a th:href="@{/ezen25/order/export/print(requestId = ${requestdto.requestId})}">
+                <a th:href="@{/ezen25/order/export/print(exportId = ${exportDTO.exportId})}" target="_blank"
+                   onclick="window.open(this.href, 'SpecWindow', 'width=1111px,height=606px'); return false;">
                     <button class="btn btn-success">Print</button>
                 </a>
             </div>

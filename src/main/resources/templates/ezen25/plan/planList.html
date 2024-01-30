@@ -33,7 +33,6 @@
                             <th>수량</th>
                             <th>상세</th>
                             <th>삭제</th>
-                            <th>계획상태</th>
                         </tr>
                         </thead>
                         <tfoot>
@@ -42,64 +41,93 @@
                             <th>협력업체</th>
                             <th>품목</th>
                             <th>수량</th>
-                            <th>상세</th>
+                            <th>수정</th>
                             <th>삭제</th>
-                            <th>계획상태</th>
                         </tr>
                         </tfoot>
                         <tbody>
                         <tr th:each="plan, planStat: ${pList}">
                             <td>
                                 <input type="hidden" class="planId" th:value="${plan.planId}">
-                                <div class="cellStyle planName" th:text="${#temporals.format(plan.completeDate,'yyyy-MM-dd')}"></div>
+                                <div class="cellStyle planDate" th:text="${#temporals.format(plan.completeDate,'yyyy-MM-dd')}"></div>
                             </td>
-                            <td><div class="cellStyle planName" th:text="${plan.brandName}"></div></td>
-                            <td><div class="cellStyle sCategory" th:text="${plan.productName}"></div></td>
-                            <td><div class="cellStyle sCategory" th:text="${plan.planNumber}"></div></td>
-                            <td><div class="cellStyle"><a href="#" class="card bg-primary text-white mb-2 listBtn resetLink">상세</a></div></td>
+                            <td><div class="cellStyle brandName" th:text="${plan.brandName}"></div></td>
+                            <td><div class="cellStyle productName" th:text="${plan.productName}"></div></td>
+                            <td><div class="cellStyle planNumber" th:text="${plan.planNumber}"></div></td>
+                            <td><div class="cellStyle"><div class="card bg-primary text-white mb-2 listBtn resetLink modify">수량수정</div></div></td>
                             <td><div class="cellStyle"><div class="card bg-danger text-white mb-2 listBtn">삭제</div></div></td>
-                            <td><div class="cellStyle sCategory" th:text="${plan.planStatus}"></div></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
-        <div class="myModal">
+        <div class="myModal modifyModal">
             <div class="card">
                 <div class="card-header">
-                    <div class="modalTitle">품목 삭제</div>
+                    <div class="modalTitle">계획 수량 수정</div>
                 </div>
                 <div class="card-body">
+                    <input type="hidden" class="modalPlanId">
                     <table>
                         <tbody>
                         <tr>
-                            <th rowspan="4">
-                                <input type="hidden" class="modalplanId">
-                                <img class="modalImg" src="/image/NoImg.png" alt="">
-                            </th>
-                            <th>브랜드</th>
-                            <th>대분류</th>
-                            <th>소분류</th>
+                            <th>날짜</th>
+                            <th>협력업체</th>
+                            <th>품목</th>
                         </tr>
                         <tr>
+                            <td class="modalDate"></td>
                             <td class="modalBrand"></td>
-                            <td class="modalMCate"></td>
-                            <td class="modalSCate"></td>
-                        </tr>
-                        <tr>
-                            <th>이름</th>
-                            <th>생산가격</th>
-                            <th>판매가격</th>
-                        </tr>
-                        <tr>
-                            <td class="modalName"></td>
-                            <td class="modalOriginal"></td>
-                            <td class="modalSale"></td>
+                            <td class="modalProduct"></td>
                         </tr>
                         </tbody>
                     </table>
-                    <p>위 상품을 삭제 하시겠습니까?</p>
+                    <div class="form-floating mb-3" style="width: 40%; margin: 20px auto 0;">
+                        <input class="form-control setNum" id="modifyPlanNum" type="text" />
+                        <label for="modifyPlanNum">수량</label>
+                    </div>
+                    <div class="numBtnGroup">
+                        <div class="numBtns">-1</div>
+                        <div class="numBtns">-10</div>
+                        <div class="numBtns">-100</div>
+                        <div class="numBtns">-1000</div>
+                        <div class="numBtns">+1</div>
+                        <div class="numBtns">+10</div>
+                        <div class="numBtns">+100</div>
+                        <div class="numBtns">+1000</div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="card bg-danger text-white mb-2 moBtn modify">수정</div>
+                    <div class="card bg-dark text-white mb-2 moBtn">닫기</div>
+                </div>
+            </div>
+        </div>
+        <div class="myModal deleteModal">
+            <div class="card">
+                <div class="card-header">
+                    <div class="modalTitle">계획 삭제</div>
+                </div>
+                <div class="card-body">
+                    <input type="hidden" class="modalPlanId">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th>날짜</th>
+                            <th>협력업체</th>
+                            <th>품목</th>
+                            <th>수량</th>
+                        </tr>
+                        <tr>
+                            <td class="modalDate"></td>
+                            <td class="modalBrand"></td>
+                            <td class="modalProduct"></td>
+                            <td class="modalCount"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p>위 계획을 삭제 하시겠습니까?</p>
                 </div>
                 <div class="card-footer">
                     <div class="card bg-danger text-white mb-2 moBtn deleteBtn">삭제</div>
@@ -113,13 +141,37 @@
         $(".myModal .moBtn").on("click", () => {
             $(".myModal").hide();
         })
-        $(".myModal .deleteBtn").on("click", () => {
-            let modalplanId = document.querySelector(".modalplanId").value;
+        $(".modifyModal .numBtns").on("click", (e) => {
+            console.log(e);
+            $(".modifyModal .setNum").val(Number($(".modifyModal .setNum").val()) + Number($(e.target).text()))
+        })
+
+        $(".myModal.deleteModal .deleteBtn").on("click", () => {
+            let modalPlanId = document.querySelector(".modalPlanId").value;
             $.ajax({
                 url : "planDelete",
                 type: "post",
                 data: {
-                    planId: modalplanId
+                    planId: modalPlanId
+                },
+                success: function(data) {
+                    location.reload();
+                },
+                error: function(request, error) {
+                    alert("code:" + request.status+ "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            })
+        })
+
+        $(".myModal.modifyModal .modify").on("click", () => {
+            let modalPlanNum = document.querySelector("#modifyPlanNum").value;
+            let modalPlanId = document.querySelector(".modalPlanId").value;
+            $.ajax({
+                url : "planModify",
+                type: "post",
+                data: {
+                    planNum: modalPlanNum,
+                    planId: modalPlanId
                 },
                 success: function(data) {
                     location.reload();

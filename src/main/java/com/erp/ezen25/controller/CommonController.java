@@ -1,9 +1,6 @@
 package com.erp.ezen25.controller;
 
-import com.erp.ezen25.service.BrandService;
-import com.erp.ezen25.service.ImportCheckService;
-import com.erp.ezen25.service.ImportService;
-import com.erp.ezen25.service.RequestService;
+import com.erp.ezen25.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -25,6 +22,8 @@ public class CommonController {
 
     private final ImportCheckService importCheckService;
 
+    private final ProductService productService;
+
     @PostMapping("/brandSelectDelete")
     public String brandSelectDelete(@RequestParam("brandDeleteList") List<Long> brand_ids) {
         for (Long brandId : brand_ids) {
@@ -39,7 +38,13 @@ public class CommonController {
         }
         return "redirect:/ezen25/request/list?page=1";
     }
-
+    @PostMapping("/pListSelectDelete")
+    public String pListSelectDelete(@RequestParam("pListDeleteList") List<Long> pList_ids) {
+        for (Long pList_id : pList_ids) {
+            productService.deleteProduct(pList_id);
+        }
+        return "redirect:/ezen25/request/pList?page=1";
+    }
     @PostMapping("/importSelectDelete")
     public String importSelectDelete(@RequestParam("importDeleteList") List<Long> import_ids) {
         for (Long importId : import_ids) {
