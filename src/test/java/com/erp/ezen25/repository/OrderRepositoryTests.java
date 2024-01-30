@@ -46,7 +46,6 @@ public class OrderRepositoryTests {
                     .productId(Product_Info.builder().productId(410L).build())
                     .exportNum((long) e)
                     .exportDate(outDate)
-                    .exportStatus("미완")
                     .orderCode("" + e + e)
                     .build();
 

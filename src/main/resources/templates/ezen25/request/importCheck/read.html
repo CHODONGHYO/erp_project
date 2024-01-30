@@ -30,8 +30,18 @@
                                                type="text"
                                                th:value="${icDTO.importId}" readonly>
                                     </td>
+                                    <td class="td_for_details">요청 코드</td>
+                                    <td class="form-control">[[${requestCode}]]</td>
                                 </tr>
                                 <tr class="tr_for_details">
+                                    <td class="td_for_details">품목 코드</td>
+                                    <td class="form-control">[[${productId}]]</td>
+                                    <td class="td_for_details">개수</td>
+                                    <td class="form-control">[[${num}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details">날짜</td>
+                                    <td class="form-control">[[${date}]]</td>
                                     <td class="td_for_details">상태</td>
                                     <td class="td_for_details">
                                         <input class="form-control"
@@ -39,6 +49,7 @@
                                                type="text"
                                                th:value="${icDTO.importCheckStatus}" readonly>
                                     </td>
+
                                 </tr>
                             </table>
                         </div>
@@ -46,10 +57,10 @@
                 </div>
             </div>
             <div style="float:right;">
-                <a th:href="@{/ezen25/request/importCheck/modify(importCheckId = ${icDTO.importCheckId}, page = ${pageRequestDTO.page},
+                <!--<a th:href="@{/ezen25/request/importCheck/modify(importCheckId = ${icDTO.importCheckId}, page = ${pageRequestDTO.page},
          type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-primary" type="button">Modify</button>
-                </a>
+                </a>-->
                 <a></a>
                 <a th:href="@{/ezen25/request/importCheck/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
          keyword = ${pageRequestDTO.keyword})}">

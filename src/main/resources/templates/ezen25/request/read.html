@@ -26,12 +26,14 @@
                 <div class="row column_title">
                     <div class="col-md-12">
                         <div class="page_title">
-                            <h1 class="mt-4">요청사항</h1>
+                            <h1 class="mt-4">요청 상세</h1>
                         </div>
                     </div>
                 </div>
                 <input name="requestId" th:value="${requestdto.requestId}" type="hidden">
-
+                <input name="page" th:value="${pageRequestDTO.page}" type="hidden">
+                <input name="type" th:value="${pageRequestDTO.type}" type="hidden">
+                <input name="keyword" th:value="${pageRequestDTO.keyword}" type="hidden">
                 <div>
                     <div class="col-md-12">
                         <div class="white_shd full margin_bottom_30">
@@ -69,20 +71,72 @@
                 </div>
             </div>
             <div style="float:right;">
-                <a th:href="@{/ezen25/request/modify(requestId = ${requestdto.requestId}, page = ${pageRequestDTO.page},
-         type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
-                    <button class="btn btn-primary" type="button">Modify</button>
+                <a th:if="${requestdto.requestStatus} != '완료'">
+                <button class="btn btn-danger removeBtn" type="button"
+                        th:data-request-id="${requestdto.requestId}"
+                        th:data-page="${pageRequestDTO.page}"
+                        th:data-type="${pageRequestDTO.type}"
+                        th:data-keyword="${pageRequestDTO.keyword}"
+                        onclick="confirmAndRemove(this)">삭제</button>
                 </a>
+
+                <a th:href="@{/ezen25/request/modify(requestId = ${requestdto.requestId}, page = ${pageRequestDTO.page},
+         type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}" th:if="${requestdto.requestStatus} != '완료'">
+                    <button class="btn btn-primary" type="button">수정</button>
+                </a>
+
                 <a th:href="@{/ezen25/request/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
          keyword = ${pageRequestDTO.keyword})}">
-                    <button class="btn btn-info" type="button">List</button>
+                    <button class="btn btn-info" type="button">목록</button>
                 </a>
-                <a th:href="@{/ezen25/request/print(requestId = ${requestdto.requestId})}">
+                <a th:href="@{/ezen25/request/print(requestId = ${requestdto.requestId})}" target="_blank"
+                   onclick="window.open(this.href, 'SpecWindow', 'width=1111px,height=606px'); return false;">
                     <button class="btn btn-success">Print</button>
                 </a>
             </div>
         </div>
+        <script th:inline="javascript">
+            function confirmAndRemove(button) {
+                if (confirm('삭제하겠습니까?')) {
+                    var requestId = $(button).data('request-id');
+                    var page = $(button).data('page');
+                    var type = $(button).data('type');
+                    var keyword = $(button).data('keyword');
 
+                    // 출력된 값이 제대로 나오는지 확인
+                    console.log('requestId:', requestId);
+                    console.log('page:', page);
+                    console.log('type:', type);
+                    console.log('keyword:', keyword);
+
+                    // Ajax를 이용한 DELETE 요청
+                    $.ajax({
+                        url: '/ezen25/request/remove',
+                        data: {
+                            requestId: requestId,
+                            page: page,
+                            type: type || '', // type이 undefined일 경우 빈 문자열로 설정
+                            keyword: keyword || '' // keyword가 undefined일 경우 빈 문자열로 설정
+                        },
+                        type: 'POST',
+                        success: function(data) {
+                            // 성공 응답을 처리 (필요에 따라 추가 작업)
+                            console.log('요청이 성공적으로 삭제되었습니다.');
+
+                            // Redirect to the list page with search parameters
+                            var redirectUrl = '/ezen25/request/list?page=' + page + '&type=' + (type || '') + '&keyword=' + (keyword || '');
+                            window.location.href = redirectUrl;
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            // 에러 응답을 처리 (필요에 따라 추가 작업)
+                            console.error('요청을 삭제하는 도중 오류가 발생했습니다.');
+                            console.error('Status:', textStatus);
+                            console.error('Error:', errorThrown);
+                        }
+                    });
+                }
+            }
+        </script>
     </main>
 </th:block>
 </html>

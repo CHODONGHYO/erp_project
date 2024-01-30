@@ -21,7 +21,7 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h2>요청서 관리</h2>
+                        <h2>요청 관리</h2>
                     </div>
                 </div>
             </div>
@@ -32,10 +32,10 @@
                     <div class="white_shd full margin_bottom_30">
                         <div class="full graph_head">
                             <div class="heading1 margin_0">
-                                <h2>요청서 리스트</h2>
+                                <h2>요청 목록</h2>
                             </div>
                             <a th:href="@{/ezen25/request/register}">
-                                <button class="btn btn-outline-primary" style="float:right;" type="button">등록하기</button>
+                                <button class="btn btn-outline-primary" style="float:right;" type="button">요청 등록</button>
                             </a>
                         </div>
                         <div class="full graph_head">
@@ -45,17 +45,20 @@
                                         <input name="page" type="hidden" value="1">
                                         <div class="input-group-prepend">
                                             <select class="custom-select" name="type">
-                                                <option th:selected="${pageRequestDTO.type == 'nped'}" value="nped">
+                                                <option th:selected="${pageRequestDTO.type == 'prsd'}" value="prsd">
                                                     전체
                                                 </option>
-                                                <option th:selected="${pageRequestDTO.type == 'n'}" value="n">
+                                                <option th:selected="${pageRequestDTO.type == 'p'}" value="p">
                                                     품목코드
                                                 </option>
-                                                <option th:selected="${pageRequestDTO.type == 'p'}" value="p">
+                                                <option th:selected="${pageRequestDTO.type == 'r'}" value="r">
                                                     요청서코드
                                                 </option>
-                                                <option th:selected="${pageRequestDTO.type == 'e'}" value="e">
+                                                <option th:selected="${pageRequestDTO.type == 's'}" value="s">
                                                     상태
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'd'}" value="d">
+                                                    요청일자
                                                 </option>
 
                                             </select>
@@ -116,8 +119,10 @@
                                             <td>[[${requestdto.requestDescription}]]</td>
                                             <td>[[${requestdto.requestStatus}]]</td>
                                             <td>
-                                                <a th:href="@{/ezen25/request/print(requestId = ${requestdto.requestId}, page= ${requestResult.page},
-                        type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+                                                <a th:href="@{/ezen25/request/print(requestId=${requestdto.requestId}, page=${requestResult.page},
+                        type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}"
+                                                   target="_blank"
+                                                   onclick="window.open(this.href, 'SpecWindow', 'width=1111px,height=606px'); return false;">
                                                     <b>명세서 보기</b>
                                                 </a>
                                             </td>

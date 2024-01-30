@@ -8,9 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 public class WithdrawalDTO {
 
-    private Long memberId;
     private String name;
-    private Long orderId;
     private String orderCode;
     private Long productId;
     private String image;
@@ -18,5 +16,7 @@ public class WithdrawalDTO {
     private String mCategory;
     private String sCategory;
     private Long orderNum;
+    private String orderStatus;
+    private Long productNum;
 
 }

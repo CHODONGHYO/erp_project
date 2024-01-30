@@ -34,9 +34,9 @@
                             <div class="heading1 margin_0">
                                 <h2>입고 검수 리스트</h2>
                             </div>
-                            <a th:href="@{/ezen25/request/importCheck/register}">
+                            <!--<a th:href="@{/ezen25/request/importCheck/register}">
                                 <button class="btn btn-outline-primary" style="float:right;" type="button">등록하기</button>
-                            </a>
+                            </a>-->
                         </div>
                         <div class="full graph_head">
                             <div>
@@ -45,21 +45,22 @@
                                         <input name="page" type="hidden" value="1">
                                         <div class="input-group-prepend">
                                             <select class="custom-select" name="type">
-                                                <option th:selected="${pageRequestDTO.type == 'nped'}" value="nped">
+                                                <option th:selected="${pageRequestDTO.type == 'nrpd'}" value="nrpd">
                                                     전체
                                                 </option>
                                                 <option th:selected="${pageRequestDTO.type == 'n'}" value="n">
-                                                    이름
+                                                    입고 번호
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'r'}" value="r">
+                                                    요청서 코드
                                                 </option>
                                                 <option th:selected="${pageRequestDTO.type == 'p'}" value="p">
-                                                    연락처
-                                                </option>
-                                                <option th:selected="${pageRequestDTO.type == 'e'}" value="e">
-                                                    이메일
+                                                    품목 코드
                                                 </option>
                                                 <option th:selected="${pageRequestDTO.type == 'd'}" value="d">
-                                                    설명
+                                                    날짜
                                                 </option>
+
 
                                             </select>
                                         </div>
@@ -82,7 +83,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="reviewModalLabel">숫자를 입력하세요</h5>
+                                        <h5 class="modal-title" id="reviewModalLabel">양품의 개수를 입력하세요</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -104,6 +105,10 @@
                                         <tr>
                                             <th>#</th>
                                             <th>입고 번호</th>
+                                            <th>요청서 코드</th>
+                                            <th>품목 코드</th>
+                                            <th>개수</th>
+                                            <th>날짜</th>
                                             <th>상태</th>
                                             <th></th>
                                         </tr>
@@ -118,6 +123,10 @@
                                                 </a>
                                             </td>
                                             <td>[[${icDTO.importId}]]</td>
+                                            <td th:text="${@importServiceImpl.findRequestCodeByImportId(icDTO.importId)}"></td>
+                                            <td th:text="${@importServiceImpl.findProductIdByImportId(icDTO.importId)}"></td>
+                                            <td th:text="${@importServiceImpl.findImportNumByImportId(icDTO.importId)}"></td>
+                                            <td th:text="${@importServiceImpl.findImportDateByImportId(icDTO.importId)}"></td>
                                             <td>[[${icDTO.importCheckStatus}]]</td>
                                             <td>
                                                 <button class="removeBtn" onclick="confirmDelete(this)">
@@ -218,7 +227,7 @@
         </script>
         <script th:inline="javascript">
             function confirmDelete(button) {
-                if (confirm('정말로 삭제하시겠습니까?')) {
+                if (confirm('검수완료 처리하시겠습니까?')) {
                     // Get the importCheckId from the hidden input field in the same row
                     var importCheckId = $(button).closest('tr').find('input[name="importCheckId"]').val();
 

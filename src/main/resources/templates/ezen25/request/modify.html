@@ -10,8 +10,8 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h2>브랜드 수정 - 요청서 코드 : <input name="requestCode" th:value="${requestdto.requestCode}"
-                                                     type="text"></h2>
+                        <h2>요청 수정 : <input name="requestCode" th:value="${requestdto.requestCode}"
+                                           type="text"></h2>
                     </div>
                 </div>
             </div>
@@ -31,9 +31,13 @@
                                     <tr class="tr_for_details">
 
                                         <td class="td_for_details">품목 코드</td>
-                                        <td class="td_for_details"><input class="form-control" name="productId"
-                                                                          th:value="${requestdto.productId}"
-                                                                          type="text"></td>
+                                        <td class="td_for_details" style="display: flex;">
+                                            <input class="form-control"
+                                                   name="productId"
+                                                   th:value="${requestdto.productId}"
+                                                   type="text">
+                                            <span class="form-control" id="productName" type="text">[[${productName}]]</span>
+                                        </td>
                                         <td class="td_for_details">개수</td>
                                         <td class="td_for_details"><input class="form-control" name="requestNum"
                                                                           th:value="${requestdto.requestNum}"
@@ -41,9 +45,11 @@
                                     </tr>
                                     <tr class="tr_for_details">
                                         <td class="td_for_details">브랜드</td>
-                                        <td class="td_for_details">
+                                        <td class="td_for_details" style="display: flex;">
                                             <input class="form-control" name="brandId" th:value="${requestdto.brandId}"
-                                                   type="text"></td>
+                                                   type="text">
+                                            <span class="form-control" id="brandName" type="text">[[${brandName}]]</span>
+                                        </td>
                                         <td class="td_for_details">요청일자</td>
                                         <td class="td_for_details">
                                             <input class="form-control" name="requestDate"
@@ -79,11 +85,16 @@
                 </div>
             </div>
             <div style="float:right;">
-                <button class="btn btn-primary modifyBtn" type="button">Modify</button>
+                <a th:if="${requestdto.requestStatus} != '완료'">
+                    <button class="btn btn-primary modifyBtn" type="button">수정</button>
+                </a>
 
-                <button class="btn btn-info listBtn" type="button">List</button>
+                <button class="btn btn-info listBtn" type="button">목록</button>
 
-                <button class="btn btn-danger removeBtn" type="button">Remove</button>
+                <a th:if="${requestdto.requestStatus} != '완료'">
+                    <button class="btn btn-danger removeBtn" type="button">삭제</button>
+                </a>
+
             </div>
         </div>
 
@@ -95,6 +106,10 @@
             var actionForm = $("form");
 
             $(".removeBtn").click(function(){
+
+                if(!confirm("삭제하겠습니까?")) {
+                    return ;
+                }
 
                 actionForm
                     .attr("action", "/ezen25/request/remove")
@@ -133,6 +148,25 @@
 
                 console.log(actionForm.html());
                 actionForm.submit();
+            });
+        </script>
+        <script th:inline="javascript">
+            $(document).ready(function () {
+                // Function to open plist.html in a new window
+                function openPlistWindow() {
+                    window.open('/ezen25/request/plist', 'plistWindow', 'width=800,height=600');
+                }
+
+                // Attach click event to the "품목 코드" input to open the plist.html window
+                $('input[name="productId"]').on('click', function () {
+                    openPlistWindow();
+                });
+
+                // Function to handle selection in plist.html and update the value in the original window
+                window.updateProductId = function (selectedProductId) {
+                    // Use the opener to access the parent window
+                    opener.$('input[name="productId"]').val(selectedProductId);
+                };
             });
         </script>
 

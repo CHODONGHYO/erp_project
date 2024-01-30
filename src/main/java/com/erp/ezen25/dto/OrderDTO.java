@@ -16,11 +16,10 @@ public class OrderDTO {
     private Long orderId;
     private Long memberId;
     private String name;
-    private LocalDateTime orderDate;
+    private String orderDate;
     private Long productId;
     private Long orderNum;
     private String orderDescription;
-    private LocalDateTime orderOutDate;
     private String orderStatus;
     private String orderCode;
 
