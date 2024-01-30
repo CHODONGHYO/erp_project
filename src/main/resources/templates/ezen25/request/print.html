@@ -8,6 +8,7 @@
 <link rel="stylesheet" th:href="@{/css/commonStyle.css}"/>
 <script th:src="@{/js/jQuery-min.js}"></script>
 <script crossorigin="anonymous" th:src="@{https://use.fontawesome.com/releases/v6.3.0/js/all.js}"></script>
+<title>명세서 인쇄</title>
 <main>
     <div class="container-fluid">
         <div class="jasonNoh">
@@ -55,10 +56,10 @@
                     </div>
                 </div>
                 <div style="float:right;">
-                    <a th:href="@{/ezen25/request/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
+                    <!--<a th:href="@{/ezen25/request/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
          keyword = ${pageRequestDTO.keyword})}">
                         <button class="btn btn-info">List</button>
-                    </a>
+                    </a>-->
 
                     <a>
                         <button class="btn btn-success" onclick="printPage()">Print</button>

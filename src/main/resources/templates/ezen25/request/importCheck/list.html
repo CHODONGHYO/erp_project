@@ -83,7 +83,7 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="reviewModalLabel">숫자를 입력하세요</h5>
+                                        <h5 class="modal-title" id="reviewModalLabel">양품의 개수를 입력하세요</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -227,7 +227,7 @@
         </script>
         <script th:inline="javascript">
             function confirmDelete(button) {
-                if (confirm('정말로 삭제하시겠습니까?')) {
+                if (confirm('검수완료 처리하시겠습니까?')) {
                     // Get the importCheckId from the hidden input field in the same row
                     var importCheckId = $(button).closest('tr').find('input[name="importCheckId"]').val();
 
