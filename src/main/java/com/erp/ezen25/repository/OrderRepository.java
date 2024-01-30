@@ -27,6 +27,10 @@ import org.springframework.data.jpa.repository.Query;
         @Query("SELECT o FROM Order o JOIN FETCH o.member WHERE o.orderCode = :orderCode")
         Optional<Order> getByOrderCode(@Param("orderCode") String orderCode);
 
+        @Query(value = "select o.order_id, o.member_id, o.order_date, o.product_id, o.order_num, o.order_description, o.order_status, o.order_code, m.name" +
+                " from ordering o, member m where o.member_id = m.member_id and o.order_code= :orderCode LIMIT 1",nativeQuery = true)
+        Optional<Order> getOneByOrderCode(@Param("orderCode") String orderCode);
+
         @Query(value = "select o.order_id, o.member_id, o.order_date, o.product_id, o.order_num, o.order_description, o.order_status, o.order_code, m.name " +
                 "from ordering o, member m where o.member_id = m.member_id and o.member_id = :memberId", nativeQuery = true)
         List<Order> getListByMemberId(@Param("memberId") Long memberId);
@@ -51,18 +55,16 @@ import org.springframework.data.jpa.repository.Query;
 
 
 
+        @Query(value = "select s.product_name, s.order_num, product_num from\n" +
+                "(select product_name, sum(order_num) as order_num, p.product_id\n" +
+                "\tfrom ordering p\n" +
+                "    left join product_info pi on p.product_id = pi.product_id\n" +
+                "    where p.order_status < 1 and p.order_date > date(now())\n" +
+                "    group by p.product_id) s\n" +
+                "    left join product_stock ps on s.product_id = ps.product_id" ,nativeQuery = true)
+        List<OrderAndStockMapping> findOrderAndStockList();
+
+
+
     }
-public interface OrderRepository extends JpaRepository<Order, Long> {
-    @Query("SELECT o FROM Order o JOIN FETCH o.member WHERE o.orderCode = :orderCode")
-    List<Order> findByOrderCode(String orderCode);
 
-    @Query(value = "select s.product_name, s.order_num, product_num from\n" +
-            "(select product_name, sum(order_num) as order_num, p.product_id\n" +
-            "\tfrom ordering p\n" +
-            "    left join product_info pi on p.product_id = pi.product_id\n" +
-            "    where p.order_status < 1 and p.order_date > date(now())\n" +
-            "    group by p.product_id) s\n" +
-            "    left join product_stock ps on s.product_id = ps.product_id" ,nativeQuery = true)
-    List<OrderAndStockMapping> findOrderAndStockList();
-
-}

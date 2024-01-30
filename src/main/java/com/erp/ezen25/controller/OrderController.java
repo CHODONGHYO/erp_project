@@ -63,9 +63,13 @@ public class OrderController {
         return "ezen25/order/orderDetails";
     }
     @GetMapping("/print")
-    public String orderprint(@RequestParam("orderId") Long orderId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model){
-        OrderDTO orderdto = orderService.read(orderId);
-        model.addAttribute("orderDTO", orderdto);
+    public String orderprint(@RequestParam("orderCode") String orderCode, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model){
+        List<OrderDTO> orderList = orderService.getmList(orderCode);
+        OrderDTO orderdto = orderService.getOneOrderInfo(orderCode);
+        model.addAttribute("orderlist", orderList);
+        model.addAttribute("orderdto",orderdto);
+        log.info("print로가는 orderdto는:"+orderdto);
+        model.addAttribute("orderCode",orderCode);
         return "ezen25/order/orderPrint";
     }
     @GetMapping("/mod")
@@ -113,12 +117,13 @@ public class OrderController {
     }
     @GetMapping("/itemlist")
     public String listbymember(Model model, HttpSession session,@RequestParam(value="orderCode",required = false) String orderCode){
+        log.info("itemlist진입");
         log.info("orderCode는 :" + orderCode);
         List<OrderDTO> orderList = orderService.getmList(orderCode);
-        OrderDTO oList = orderService.getOrderInfo(orderCode);
-        log.info("발주코드에따른 정보는:"+oList);
         model.addAttribute("orderList", orderList);
-        model.addAttribute("olist",oList);
+        log.info("리스트는:"+orderList);
+        model.addAttribute("orderCode",orderCode);
+        log.info("보내는 orderCode:"+orderCode);
         return "ezen25/order/itemList";
     }
 
@@ -158,7 +163,7 @@ public class OrderController {
         List<String> mCateList = orderService.getMCategoryList();
         List<MemberDTO> mList = memberService.getAllMembers();
 
-        OrderDTO oList = orderService.getOrderInfo(orderCode);
+        OrderDTO oList = orderService.getOneOrderInfo(orderCode);
         log.info("발주코드에따른 정보는:"+oList);
 
         LocalDateTime LDTCT = LocalDateTime.now();

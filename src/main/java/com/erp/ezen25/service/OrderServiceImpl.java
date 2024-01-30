@@ -49,6 +49,11 @@ public class OrderServiceImpl implements OrderService {
 
         return order.map(this::entityToDto).orElse(null);
     }
+    @Override
+    public OrderDTO getOneOrderInfo(String orderCode){
+        Optional<Order> order = repository.getOneByOrderCode(orderCode);
+        return order.map(this::entityToDto).orElse(null);
+    }
 
     @Override
     public void remove(Long orderId) {

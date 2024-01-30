@@ -16,7 +16,6 @@ public interface OrderService {
     PageResultDTO<OrderDTO, Order> getList(PageRequestDTO pageRequestDTO);
     OrderDTO read(Long orderId);
 
-
     void remove(Long orderId);
 
     List<OrderDTO> getList();
@@ -28,6 +27,7 @@ public interface OrderService {
     List<OrderDTO> getmList(String orderCode);
 
     OrderDTO getOrderInfo(String orderCode);
+    OrderDTO getOneOrderInfo(String orderCode);
 
     List<String> getMCategoryList();
     // 서브 카테고리 가져오기
