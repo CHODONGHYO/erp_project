@@ -32,11 +32,6 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <select class="form-control blist">
-                        <option value="0">협력업체</option>
-                        <option value="1">협력업체1</option>
-                        <option value="2">협력업체2</option>
-                    </select>
                     <table id="datatablesSimple">
                         <thead>
                         <tr>
@@ -151,6 +146,8 @@
     </main>
 
     <script>
+        $("#datatablesSimple").ajax.reload( null, false );
+
         $(".myModal .moBtn").on("click", () => {
             $(".myModal").hide();
         })
@@ -204,6 +201,8 @@
                 }
             })
         })
+
+
     </script>
 </th:block>
 </html>
