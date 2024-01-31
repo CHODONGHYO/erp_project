@@ -20,7 +20,7 @@
                             입력란
                         </div>
                     </div>
-                    <form method="post" enctype="multipart/form-data" class="card-body" id="productModifyForm">
+                    <form method="post" enctype="multipart/form-data" class="card-body" id="productModifyForm" name="productModifyForm">
                         <div class="inputLine">
                             <label for="productId">품목코드</label><input th:value="${product.productId}" class="form-control" id="productId" name="productId" placeholder="자동기입" disabled>
                         </div>
@@ -134,7 +134,48 @@
         })
 
         $(".modifyBtn").on("click", (e) => {
-            console.log("ddd");
+
+            if (document.productModifyForm.productName.value == "") {
+                alert("이름을 입력해주세요")
+                document.productModifyForm.productName.focus();
+                return false;
+            }
+            if (document.productModifyForm.brandName.value == "") {
+                alert("브랜드를 입력해주세요")
+                document.productModifyForm.brandList.focus();
+                return false;
+            }
+            if (document.productModifyForm.mCategory.value == "") {
+                alert("대분류를 입력해주세요")
+                document.productModifyForm.mCategoryList.focus();
+                return false;
+            }
+            if (document.productModifyForm.sCategory.value == "") {
+                alert("소분류를 입력해주세요")
+                document.productModifyForm.sCategoryList.focus();
+                return false;
+            }
+            if (document.productModifyForm.originalPrice.value == "") {
+                alert("생산가격을 입력해주세요")
+                document.productModifyForm.originalPrice.focus();
+                return false;
+            }
+            if (document.productModifyForm.sellPrice.value == "") {
+                alert("판매가격을 입력해주세요")
+                document.productModifyForm.sellPrice.focus();
+                return false;
+            }
+            if (document.productModifyForm.productDescription.value == "") {
+                alert("설명을 입력해주세요")
+                document.productModifyForm.productDescription.focus();
+                return false;
+            }
+            if (document.productModifyForm.imageSelect.files.length != 0 && document.productModifyForm.imageSelect.files[0].type != 'image/png' && document.productModifyForm.imageSelect.files[0].type != 'image/jpeg') {
+                alert("'jpg', 'png' 타입의 파일을 넣어주세요")
+                document.productModifyForm.imageSelect.value = ""
+                document.productModifyForm.imageSelect.focus();
+                return false;
+            }
             $("#productModifyForm").submit();
         })
         $(".resetBtn").on("click", (e) => {

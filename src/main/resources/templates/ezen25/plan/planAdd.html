@@ -156,6 +156,14 @@
 
         let registerBtn = document.querySelector(".registerBtn");
         registerBtn.addEventListener("click", () => {
+
+            if ($("#completeDate").val() == "") {
+                alert("날짜를 입력해주세요");
+                $("#completeDate").focus();
+                return false;
+            }
+
+
             let planDate = document.querySelector("#completeDate").value;
             let trCount = document.querySelectorAll(".inputListTable tbody tr:not(:first-child)");
             let objList = [];

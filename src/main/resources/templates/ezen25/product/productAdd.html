@@ -20,7 +20,7 @@
                             입력란
                         </div>
                     </div>
-                    <form method="post" class="card-body" id="productAddForm" enctype="multipart/form-data">
+                    <form method="post" class="card-body" id="productAddForm" name="productAddForm" enctype="multipart/form-data">
                         <div class="inputLine">
                             <label for="productId">품목코드</label><input class="form-control" id="productId" placeholder="자동기입" disabled>
                         </div>
@@ -117,9 +117,50 @@
             $('.image').attr('src', reader.result);
         };
     })
-
+    console.log(document.productAddForm.productName.value);
     $(".registerBtn").on("click", (e) => {
-        console.log("ddd");
+
+        if (document.productAddForm.productName.value == "") {
+            alert("이름을 입력해주세요")
+            document.productAddForm.productName.focus();
+            return false;
+        }
+        if (document.productAddForm.brandName.value == "") {
+            alert("브랜드를 입력해주세요")
+            document.productAddForm.brandList.focus();
+            return false;
+        }
+        if (document.productAddForm.mCategory.value == "") {
+            alert("대분류를 입력해주세요")
+            document.productAddForm.mCategoryList.focus();
+            return false;
+        }
+        if (document.productAddForm.sCategory.value == "") {
+            alert("소분류를 입력해주세요")
+            document.productAddForm.sCategoryList.focus();
+            return false;
+        }
+        if (document.productAddForm.originalPrice.value == "") {
+            alert("생산가격을 입력해주세요")
+            document.productAddForm.originalPrice.focus();
+            return false;
+        }
+        if (document.productAddForm.sellPrice.value == "") {
+            alert("판매가격을 입력해주세요")
+            document.productAddForm.sellPrice.focus();
+            return false;
+        }
+        if (document.productAddForm.productDescription.value == "") {
+            alert("설명을 입력해주세요")
+            document.productAddForm.productDescription.focus();
+            return false;
+        }
+        if (document.productModifyForm.imageSelect.files.length != 0 && document.productAddForm.imageSelect.files[0].type != 'image/png' && document.productAddForm.imageSelect.files[0].type != 'image/jpeg') {
+            alert("'jpg', 'png' 타입의 파일을 넣어주세요")
+            document.productAddForm.imageSelect.value = ""
+            document.productAddForm.imageSelect.focus();
+            return false;
+        }
         $("#productAddForm").submit();
     })
     </script>
