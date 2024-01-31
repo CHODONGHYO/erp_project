@@ -63,7 +63,6 @@ public class RequestController {
         model.addAttribute("Now", currentTime);
         model.addAttribute("Now3", currentTimeplus3);
 
-
     }
 
     @GetMapping("/getBrandName")
@@ -71,6 +70,13 @@ public class RequestController {
     public void getBrandName(@RequestParam Long brandId, Model model) {
         String brandName = brandService.findBrandName(brandId);
         model.addAttribute("brandName", brandName);
+    }
+
+    @GetMapping("/getProductName")
+    @ResponseBody
+    public void getProductName(@RequestParam Long productId, Model model) {
+        String productName = productService.getProductName(productId);
+        model.addAttribute("productName", productName);
     }
 
     @PostMapping("/register")
@@ -88,8 +94,12 @@ public class RequestController {
         log.info("Get Read/Modify. requestId : " + requestId);
 
         RequestDTO dto = requestService.read(requestId);
+        String brandName = brandService.findBrandName(dto.getBrandId());
+        String productName = productService.getProductName(dto.getProductId());
 
         model.addAttribute("requestdto", dto);
+        model.addAttribute("brandName", brandName);
+        model.addAttribute("productName", productName);
     }
 
     @PostMapping("/remove")
@@ -166,8 +176,10 @@ public class RequestController {
         log.info("Get Read/Modify. importId : " + importId);
 
         ImportDTO i = importService.read(importId);
+        String productName = productService.getProductName(i.getProductId());
 
         model.addAttribute("importDTO", i);
+        model.addAttribute("productName", productName);
     }
 
     @PostMapping("/import/remove")
@@ -246,8 +258,17 @@ public class RequestController {
         log.info("Get Read/Modify. importId : " + importCheckId);
 
         ImportCheckDTO ic = importCheckService.read(importCheckId);
+        String requestCode = importService.findRequestCodeByImportId(ic.getImportId());
+        Long productId = importService.findProductIdByImportId(ic.getImportId());
+        Long num = importService.findImportNumByImportId(ic.getImportId());
+        String date = importService.findImportDateByImportId(ic.getImportId());
 
         model.addAttribute("icDTO", ic);
+        model.addAttribute("requestCode", requestCode);
+        model.addAttribute("productId", productId);
+        model.addAttribute("num", num);
+        model.addAttribute("date", date);
+
     }
 
     @PostMapping("/importCheck/remove")

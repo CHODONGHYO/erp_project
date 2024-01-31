@@ -1,12 +1,15 @@
 package com.erp.ezen25.controller;
 
+import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.etc.MemberCreateForm;
+import com.erp.ezen25.service.BrandService;
 import com.erp.ezen25.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,9 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 // 메인 관련 Controller
 public class MainController {
     private final MemberService memberService;
+    private final BrandService brandService;
 
-    @GetMapping("")
-    public String mainPage() {
+    @GetMapping({"", "/"})
+    public String mainPage(PageRequestDTO pageRequestDTO, Model model) {
+        log.info("brandList. ");
+        log.info(pageRequestDTO);
+
+        model.addAttribute("brandResult", brandService.getList(pageRequestDTO));
+
         return "ezen25/main/mainPage";
     }
 

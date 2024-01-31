@@ -18,18 +18,25 @@
                                 <th>상품코드</th>
                                 <th>상품명</th>
                                 <th>상품분류</th>
-                                <th>수량</th>
+                                <th>발주수량</th>
+                                <th>재고수량</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dto : ${withdrawalList}">
-                                <th><input type="checkbox" name="checkbox" checked></th>
-                                <td th:text="${dto.image}"></td>
-                                <td th:text="${dto.productId}"></td>
-                                <td th:text="${dto.productName}"></td>
-                                <td th:text="${dto.mCategory + '/' + dto.sCategory}"></td>
-                                <td th:text="${dto.orderNum}"></td>
+                            <tr id="noItem" style="display:none;">
+                                <td colspan="7" style="text-align: center;">모든 상품이 불출되었습니다.</td>
                             </tr>
+                            <th:block th:each="dto : ${withdrawalList}">
+                                <tr th:if="${dto.orderStatus == '0'}">
+                                    <th><input type="checkbox" name="checkbox" checked></th>
+                                    <td th:text="${dto.image}"></td>
+                                    <td th:text="${dto.productId}"></td>
+                                    <td th:text="${dto.productName}"></td>
+                                    <td th:text="${dto.mCategory + '/' + dto.sCategory}"></td>
+                                    <td th:text="${dto.orderNum}"></td>
+                                    <td th:text="${dto.productNum}"></td>
+                                </tr>
+                            </th:block>
                         </tbody>
                     </table>
                     <input type="hidden" name="orderCode" th:value="${orderCode}">
@@ -93,4 +100,8 @@
             $("#withdrawalForm").submit();
         });
     });
+
+    if(document.querySelector('#withdrawalForm tr:nth-child(2)') == null) {
+        $("#noItem").show();
+    }
 </script>

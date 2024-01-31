@@ -2,6 +2,7 @@ package com.erp.ezen25.controller;
 
 import com.erp.ezen25.dto.ExportDTO;
 import com.erp.ezen25.dto.OrderDTO;
+import com.erp.ezen25.dto.OrderListDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.service.ExportService;
 import com.erp.ezen25.service.ImportService;
@@ -51,7 +52,7 @@ public class OrderController {
     @GetMapping("/list")
     public String orderList(Model model) {
         log.info("발주요청목록 페이지로 이동........");
-        List<OrderDTO> orderList = orderService.getList();
+        List<OrderListDTO> orderList = orderService.getOrderListDTO();
         model.addAttribute("orderList", orderList);
         return "ezen25/order/orderList";
     }
