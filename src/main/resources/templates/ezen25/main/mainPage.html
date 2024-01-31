@@ -77,7 +77,7 @@
         background: #f99;
         color: #fff;
         padding: 5px;
-        margin-left: 10px;
+        margin-left: 5px;
         border-radius: 3px;
         }
         .fc .fc-toolbar.fc-header-toolbar {
@@ -91,14 +91,13 @@
             <div class="row" style="text-align:center;">
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-primary text-white mb-4">
-                        <div class="card-body" style="color:black;text-align:center;background:white;"><b>현재 지점 : 1개</b>
+                        <div class="card-body" style="color:black;text-align:center;background:white;"><b>현재 지점 : [[${countMember}]]개</b>
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-warning text-white mb-4">
-                        <div class="card-body" style="color:black;text-align:center;background:white;"><b>현재 협력업체 :
-                            10개</b></div>
+                        <div class="card-body" style="color:black;text-align:center;background:white;"><b>현재 협력업체 : [[${countBrand}]]개</b></div>
                     </div>
                 </div>
                 <div class="col-xl-3 col-md-6">
@@ -111,7 +110,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="card bg-danger text-white mb-4">
                         <div class="card-body" style="color:black;text-align:center;background:white;">
-                            <a>
+                            <a href="/ezen25/main/signup">
                                 <b>지점 등록하기</b>
                             </a>
                         </div>
@@ -124,7 +123,20 @@
                         <div class="card-header">
                             <b class="newIcon">지점</b>
                         </div>
-                        <div class="card-body"></div>
+                        <div class="card-body">
+                            <table class="table" style="text-align:center;">
+                                <tr>
+                                    <td>#</td>
+                                    <td>지점</td>
+                                    <td>이메일</td>
+                                </tr>
+                                <tr th:each="member : ${members}">
+                                    <td>[[${member.memberId}]]</td>
+                                    <td>[[${member.name}]]</td>
+                                    <td>[[${member.email}]]</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xl-4">
@@ -133,16 +145,16 @@
                             <b class="newIcon">협력업체</b>
                         </div>
                         <div class="card-body">
-                            <table>
+                            <table class="table" style="text-align:center;">
                                 <tr>
-                                    <td>협력업체 ID</td>
-                                    <td>이름</td>
+                                    <td>#</td>
+                                    <td>협력업체</td>
                                     <td>설명</td>
                                 </tr>
-                                <tr th:each="dto : ${brandResult.dtoList}">
-                                    <td>[[${dto.brandId}]]</td>
-                                    <td>[[${dto.brandName}]]</td>
-                                    <td>[[${dto.brandDescription}]]</td>
+                                <tr th:each="dto : ${brandResult}">
+                                    <td th:text="${dto?.brandId}"></td>
+                                    <td th:text="${dto?.brandName}"></td>
+                                    <td th:text="${dto?.brandDescription}"></td>
                                 </tr>
                             </table>
                         </div>
