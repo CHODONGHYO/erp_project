@@ -112,6 +112,27 @@ img {
 .tableListStyle .listBtn.processBtn:hover {
     background-color: var(--bs-gray-900) !important;
 }
+.tableListStyle .leftHeader {
+    align-items: center;
+}
+.tableListStyle .leftHeader input {
+    margin-left: 10px;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 50%;
+}
+.tableListStyle .leftHeader .shrink{
+    flex-shrink:0;
+}
+.tableListStyle .leftHeader .bg-teal{
+    background-color: var(--bs-teal);
+}
+.tableListStyle .leftHeader .bg-teal a {
+    border-radius: var(--bs-card-border-radius);
+}
+.tableListStyle .leftHeader .bg-teal a:hover{
+    background-color: var(--bs-green);
+}
 /* 폼 레이아웃 */
 .formStyle .cardForm {
     width: 60%;
@@ -170,15 +191,20 @@ img {
 .formStyle img {
     max-width: 200px;
 }
+.tableListStyle .datatable-table > tbody > tr > td,
+.tableListStyle .datatable-table > tbody > tr > th,
+.tableListStyle .datatable-table > tfoot > tr > td,
+.tableListStyle .datatable-table > tfoot > tr > th,
+.tableListStyle .datatable-table > thead > tr > td,
+.tableListStyle .datatable-table > thead > tr > th {
+    padding: 0.3rem 0.5rem;
+}
 /* --- 품목관리 스타일 --- */
 /* 품목리스트 */
 
 
 
 /* ----- 계약관리 ----- */
-.contractList a.moBtn {
-    text-decoration: none;
-}
 .contractList a.moBtn {
     text-decoration: none;
 }

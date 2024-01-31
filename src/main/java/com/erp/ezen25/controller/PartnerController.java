@@ -2,6 +2,7 @@ package com.erp.ezen25.controller;
 
 import com.erp.ezen25.dto.*;
 import com.erp.ezen25.dto.contractDTOs.*;
+import com.erp.ezen25.dto.planDTOs.PlanListResponseDTO;
 import com.erp.ezen25.dto.productDTOs.ProductBnameListResponseDTO;
 import com.erp.ezen25.service.BrandService;
 import com.erp.ezen25.service.ContractService;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -99,6 +101,13 @@ public class PartnerController {
         List<ContractListResponseDTO> cList = contractService.contractList();
 
         model.addAttribute("cList", cList);
+    }
+
+    @GetMapping(value = {"/contract/contractList{date1}~{date2}"})
+    public String contractListByDate(@PathVariable(value = "date1", required = false) LocalDate date1, @PathVariable(value = "date2",required = false) LocalDate date2, Model model) {
+        List<ContractListResponseDTO> cList = contractService.getContractListByDate(date1, date2);
+        model.addAttribute("cList", cList);
+        return "/ezen25/brand/contract/contractList";
     }
     @GetMapping("/contract/contractAdd")
     public void contractAddForm (Model model) {
