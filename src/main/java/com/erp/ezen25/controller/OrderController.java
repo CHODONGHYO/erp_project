@@ -21,8 +21,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -75,15 +73,15 @@ public class OrderController {
         return "ezen25/order/orderPrint";
     }
     @GetMapping("/mod")
-    public String orderMod(@RequestParam("orderId") Long orderId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model){
+    public String itemMod(@RequestParam("orderId") Long orderId, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model){
         OrderDTO orderdto = orderService.read(orderId);
         model.addAttribute("orderDTO", orderdto);
-        return "ezen25/order/orderModify";
+        return "ezen25/order/itemModify";
     }
     @PostMapping("/mod")
-    public String orderMod(@ModelAttribute("orderDTO") OrderDTO orderDTO,
-                               @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO,
-                               RedirectAttributes redirectAttributes) {
+    public String itemMod(@ModelAttribute("orderDTO") OrderDTO orderDTO,
+                          @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO,
+                          RedirectAttributes redirectAttributes) {
 
         log.info("진입");
         orderService.modify(orderDTO);
@@ -93,7 +91,30 @@ public class OrderController {
         redirectAttributes.addAttribute("keyword", pageRequestDTO.getKeyword());
         redirectAttributes.addAttribute("orderId", orderDTO.getOrderId());
 
-        return "redirect:/ezen25/order/itemlist";
+        return "redirect:/ezen25/order/rd";
+    }
+    @GetMapping("/ordermod")
+    public String orderMod(@RequestParam("orderCode") String orderCode, @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO, Model model){
+        log.info("받은 수정진입 orderCode--------------:" +orderCode);
+        List<OrderDTO> orderList = orderService.getmList(orderCode);
+
+        OrderDTO orderdto = orderService.getOneOrderInfo(orderCode);
+        model.addAttribute("orderlist", orderList);
+        model.addAttribute("orderdto",orderdto);
+        model.addAttribute("orderCode",orderCode);
+        return "ezen25/order/orderModify";
+    }
+    @PostMapping("/ordermod")
+    public String orderMod(@RequestParam("orderCode") String orderCode,@RequestParam("orderDescription") String orderDescription,@ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO,
+                           RedirectAttributes redirectAttributes) {
+
+        log.info("진입");
+        orderService.modifyOrder(orderCode, orderDescription);
+
+        redirectAttributes.addAttribute("page", pageRequestDTO.getPage());
+        redirectAttributes.addAttribute("type", pageRequestDTO.getType());
+        redirectAttributes.addAttribute("keyword", pageRequestDTO.getKeyword());
+        return "redirect:/ezen25/order/search";
     }
     /*@GetMapping("/search")
     public String orderSearch(HttpSession session , Model model, @RequestParam(name = "memberId", required = false) Long memberId,@ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO) {
@@ -107,7 +128,7 @@ public class OrderController {
 
     }*/
     @GetMapping("/search")
-    public String orderSearchByCode( Model model,@ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO) {
+    public String orderSearchByCode(HttpSession session,Model model,@ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO) {
 
 //        List<OrderDTO> memberorderList = orderService.getListByMemberId(memberId);
 //        log.info("리스트:"+memberorderList);
@@ -118,7 +139,8 @@ public class OrderController {
 
     }
     @GetMapping("/itemlist")
-    public String listbymember(Model model, HttpSession session,@RequestParam(value="orderCode",required = false) String orderCode){
+    public String listbymember(Model model, HttpSession session,@RequestParam(value="orderCode",required = false) String orderCode,
+                               @ModelAttribute("pageRequestDTO") PageRequestDTO pageRequestDTO){
         log.info("itemlist진입");
         log.info("orderCode는 :" + orderCode);
         List<OrderDTO> orderList = orderService.getmList(orderCode);
@@ -215,7 +237,7 @@ public class OrderController {
         return products;
     }
 
-    @PostMapping("/del")
+    @PostMapping("/itemdel")
     public String orderRm(@RequestParam(value="orderId",required = false) Long orderId) {
         log.info("제거 : " + orderId);
 
@@ -223,6 +245,15 @@ public class OrderController {
 
         return "redirect:/ezen25/order/search";
     }
+    @PostMapping("/orderdel")
+    public String orderRm(@RequestParam(value="orderCode",required = false) String orderCode) {
+        log.info("받은 삭제 orderCode--------------:" +orderCode);
+
+        orderService.listremove(orderCode);
+
+        return "redirect:/ezen25/order/search";
+    }
+
 
 
     // export 관련 Controller

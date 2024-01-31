@@ -65,8 +65,8 @@
                                         <td class="td_for_details">
 
 
-                                              <select class="form-control" name="memberId" th:value="${memberId}">
-                                             <option th:each="member : ${mList}" th:value="${member.memberId}" th:text="${member.name}"></option>
+                                            <select class="form-control" name="memberId" th:value="${memberId}">-->
+                                                <option th:each="member : ${mList}" th:value="${member.memberId}" th:text="${member.name}"></option>
                                             </select>
                                         </td>
                                         <td class="td_for_details">발주일자</td>
@@ -87,6 +87,9 @@
                             </div>
                         </div>
                         <div style="float:right;">
+                            <a th:href="@{/ezen25/order/list?page=1}">
+                                <button class="btn btn-primary" type="button" th:onclick="'location.href=\'' + @{/ezen25/order/list?page=1} + '\''">목록으로</button>
+                            </a>
                             <button class="btn btn-primary" type="submit">등록하기</button>
                             <button class="btn btn-primary" type="reset">다시하기</button>
                         </div>

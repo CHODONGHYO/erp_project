@@ -38,8 +38,6 @@
                         <tr>
                             <th>No</th>
                             <th>지점명</th>
-                            <th>품목코드</th>
-                            <th>수량</th>
                             <th>발주일자</th>
                             <th>상태</th>
                             <th>조회</th>
@@ -50,8 +48,6 @@
                             th:if="${stat.index == 0 or dto.orderId != orderList[stat.index - 1].orderId}">
                             <td th:text="${stat.count}"></td>
                             <td th:text="${dto.name}"></td>
-                            <td th:text="${dto.productId}"></td>
-                            <td th:text="${dto.orderNum}"></td>
                             <td th:text="${dto.orderDate}"></td>
 
                             <td>
@@ -59,6 +55,7 @@
                                 <span th:if="${dto.orderStatus == '1'}">진행중</span>
                                 <span th:if="${dto.orderStatus == '2'}">완료</span>
                             </td>
+
                             <td>
                                 <a th:href="@{/ezen25/order/rd(orderId=${dto.orderId})}"><button class="btn btn-primary addBtn" type="button">조회</button></a>
                             </td>

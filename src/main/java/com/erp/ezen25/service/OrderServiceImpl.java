@@ -59,7 +59,12 @@ public class OrderServiceImpl implements OrderService {
     public void remove(Long orderId) {
         repository.deleteById(orderId);
     }
+    @Override
+    @Transactional
+    public void listremove(String orderCode){
 
+        repository.deleteByOrderCode(orderCode);
+    }
     @Override
     public void modify(OrderDTO orderDTO) {
         Optional<Order> oporder = repository.findById(orderDTO.getOrderId());
@@ -74,6 +79,20 @@ public class OrderServiceImpl implements OrderService {
             repository.save(order);
         }
     }
+    @Override
+    @Transactional
+    public void modifyOrder(String orderCode, String orderDescription) {
+        // 주어진 orderCode로 주문을 찾아옵니다.
+        List<Order> orders = repository.getListByOrderCode(orderCode);
+
+        // 찾아온 주문들에 대해 orderDescription을 수정하고 저장합니다.
+        for (Order order : orders) {
+            order.changeOrderDescription(orderDescription);
+        }
+
+        repository.saveAll(orders);
+    }
+
 
 
     @Override

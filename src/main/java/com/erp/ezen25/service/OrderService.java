@@ -6,7 +6,6 @@ import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.entity.Product_Info;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
@@ -18,9 +17,10 @@ public interface OrderService {
     OrderDTO read(Long orderId);
 
     void remove(Long orderId);
-
+    void listremove(String orderCode);
     List<OrderDTO> getList();
     void modify(OrderDTO orderDTO);
+    void  modifyOrder(String orderCode,String orderDescription);
     List<WithdrawalDTO> getWithdrawalList(String orderCode);
     String getNameByOrderCode(String orderCode);
 
