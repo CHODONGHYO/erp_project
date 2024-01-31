@@ -23,7 +23,7 @@
                             <table class="table_for_details" width="100%">
                                 <tr class="tr_for_details" style="font-align:left;">
                                     <th class="td_for_details">품목 코드</th>
-                                    <td class="td_for_details">[[${importDTO.productId}]]</td>
+                                    <td class="td_for_details">#[[${importDTO.productId}]] - [[${productName}]]</td>
                                 </tr>
                                 <tr class="tr_for_details">
                                     <th class="td_for_details">개수</th>
@@ -50,16 +50,16 @@
                 <form id="deleteForm" action="/ezen25/request/import/remove" method="post">
                     <input name="importId" th:value="${importDTO.importId}" type="hidden">
                 </form>
-                <a th:href="@{/ezen25/request/import/modify(importId = ${importDTO.importId}, page = ${pageRequestDTO.page},
+                <!--<a th:href="@{/ezen25/request/import/modify(importId = ${importDTO.importId}, page = ${pageRequestDTO.page},
          type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-primary" type="button">Modify</button>
-                </a>
+                </a>-->
                 <a></a>
                 <a th:href="@{/ezen25/request/import/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
          keyword = ${pageRequestDTO.keyword})}">
                     <button class="btn btn-info" type="button">List</button>
                 </a>
-                <button class="btn btn-danger removeBtn" type="button">삭제하기</button>
+                <!--<button class="btn btn-danger removeBtn" type="button">삭제하기</button>-->
 
             </div>
         </div>

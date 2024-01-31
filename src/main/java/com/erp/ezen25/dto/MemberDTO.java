@@ -12,9 +12,11 @@ import java.util.Collection;
 @Getter
 @Setter
 @ToString
+@Data
 public class MemberDTO{
         private Long memberId;
         private String userId;
+        private String password;
         private String email;
         private String name;
         private Integer percent;

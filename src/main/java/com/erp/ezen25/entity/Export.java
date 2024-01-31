@@ -25,7 +25,6 @@ public class Export {
 
     @ManyToOne(targetEntity = Product_Info.class, fetch = FetchType.LAZY)
     @JoinColumn(name="product_id", nullable = false)
-
     private Product_Info productId;
 
     @Column(nullable = false)
@@ -48,10 +47,6 @@ public class Export {
 
     public void changeExportDate(String exportDate) {
         this.exportDate = exportDate;
-    }
-
-    public void changeOrderCode(String orderCode) {
-        this.orderCode = orderCode;
     }
 
     public Export setExportId(Long exportId) {

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko"
       xmlns="http://www.w3.org/1999/xhtml"
@@ -8,18 +9,17 @@
 <link rel="stylesheet" th:href="@{/css/commonStyle.css}"/>
 <script th:src="@{/js/jQuery-min.js}"></script>
 <script crossorigin="anonymous" th:src="@{https://use.fontawesome.com/releases/v6.3.0/js/all.js}"></script>
-<title>명세서 인쇄</title>
 <main>
     <div class="container-fluid">
         <div class="jasonNoh">
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h1 class="mt-4">요청사항</h1>
+                        <h1 class="mt-4">발주사항</h1>
                     </div>
                 </div>
             </div>
-            <input name="requestId" th:value="${requestdto.requestId}" type="hidden">
+            <input name="orderCode" th:value="${orderCode}" type="hidden">
 
             <div>
                 <div class="col-md-12">
@@ -27,28 +27,34 @@
                         <div class="full graph_head">
                             <table class="table_for_details" width="100%">
                                 <tr class="tr_for_details">
+                                    <td class="td_for_details">발주코드</td>
+                                    <td class="td_for_details" colspan="3">[[${orderCode}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details">지점명</td>
+                                    <td class="td_for_details">[[${orderdto.name}]]</td>
+                                    <td class="td_for_details">발주일자</td>
+                                    <td class="td_for_details">[[${orderdto.orderDate}]]</td>
+                                </tr>
+                                <tr th:each="order : ${orderlist}" class="tr_for_details">
                                     <td class="td_for_details">품목 코드</td>
-                                    <td class="td_for_details">[[${requestdto.requestCode}]]</td>
+                                    <td class="td_for_details" th:text="${order.productId}"></td>
                                     <td class="td_for_details">개수</td>
-                                    <td class="td_for_details">[[${requestdto.requestNum}]]개</td>
+                                    <td class="td_for_details" th:text="${order.orderNum}"></td>
                                 </tr>
                                 <tr class="tr_for_details">
-                                    <td class="td_for_details">브랜드</td>
-                                    <td class="td_for_details">[[${requestdto.brandId}]]</td>
-                                    <td class="td_for_details">요청일자</td>
-                                    <td class="td_for_details">[[${requestdto.requestDate}]]</td>
-                                </tr>
-                                <tr class="tr_for_details">
-                                    <td class="td_for_details">완료예정</td>
-                                    <td class="td_for_details">[[${requestdto.requestOutDate}]]</td>
                                     <td class="td_for_details">상태</td>
-                                    <td class="td_for_details">[[${requestdto.requestStatus}]]</td>
+                                    <td>
+                                        <span th:if="${orderdto.orderStatus == '0'}">발주요청</span>
+                                        <span th:if="${orderdto.orderStatus == '1'}">진행중</span>
+                                        <span th:if="${orderdto.orderStatus == '2'}">완료</span>
+                                    </td>
                                 </tr>
                                 <tr class="tr_for_details">
                                     <td class="td_for_details" colspan="1">비고</td>
                                     <td class="td_for_details" colspan="5">
-                                        <textarea class="form-control" name="requestDescription" readonly style="height: 225px;
-                                        ">[[${requestdto.requestDescription}]]</textarea>
+                                        <textarea class="form-control" name="orderDescription" readonly style="height: 225px;
+                                        ">[[${orderdto.orderDescription}]]</textarea>
                                     </td>
                                 </tr>
                             </table>
@@ -56,10 +62,10 @@
                     </div>
                 </div>
                 <div style="float:right;">
-                    <!--<a th:href="@{/ezen25/request/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
+                    <a th:href="@{/ezen25/order/search(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
          keyword = ${pageRequestDTO.keyword})}">
                         <button class="btn btn-info">List</button>
-                    </a>-->
+                    </a>
 
                     <a>
                         <button class="btn btn-success" onclick="printPage()">Print</button>

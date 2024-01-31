@@ -159,4 +159,14 @@ public class BrandServiceImpl implements BrandService {
 
         return builder;
     }
+
+    @Override
+    public String findBrandName(Long brandId) {
+        Brand brand = brandRepository.findBrandByBrandId(brandId);
+        if (brand != null) {
+            return brand.getBrandName();
+        } else {
+            return "Unknown Brand";
+        }
+    }
 }

@@ -40,19 +40,15 @@
                                 <th class="td_for_details">발주 코드</th>
                                 <td class="td_for_details">[[${exportDTO.orderCode}]]</td>
                             </tr>
-                            <tr class="tr_for_details">
-                                <th class="td_for_details">상태</th>
-                                <td class="td_for_details">[[${exportDTO.exportStatus}]]</td>
-                            </tr>
                         </table>
                     </div>
                 </div>
             </div>
                 <div style="float:right;">
-                    <a th:href="@{/ezen25/order/export/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
+                    <!--<a th:href="@{/ezen25/order/export/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
          keyword = ${pageRequestDTO.keyword})}">
                         <button class="btn btn-info">List</button>
-                    </a>
+                    </a>-->
                     <a>
                         <button class="btn btn-success" onclick="printPage()">Print</button>
                     </a>

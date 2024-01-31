@@ -109,10 +109,12 @@
                                             <td>[[${importDTO.importDate}]]</td>
                                             <td>[[${importDTO.requestCode}]]</td>
                                             <td>[[${importDTO.importStatus}]]</td>
-                                            <td>
-                                                <button class="removeBtn">
-                                                    출하
-                                                </button>
+                                            <td >
+                                                <a th:if="${importDTO.importStatus} != '완료'">
+                                                    <button class="removeBtn">
+                                                        출하
+                                                    </button>
+                                                </a>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -159,14 +161,14 @@
         </script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-        <script>
+        <script th:inline="javascript">
             // 출하 버튼 클릭 시 AJAX를 통해 importId를 서버로 전송하고 해당 기록 삭제
             $(".removeBtn").click(function () {
                 // 현재 버튼이 속한 행에서 importId 값을 가져오기
                 var importId = $(this).closest('tr').find('[name="importId"]').val();
 
                 // 사용자에게 삭제 여부를 묻기
-                var confirmRemove = confirm("이 수입 기록을 삭제하시겠습니까?");
+                var confirmRemove = confirm("출하 하시겠습니까?");
                 if (!confirmRemove) {
                     return;
                 }

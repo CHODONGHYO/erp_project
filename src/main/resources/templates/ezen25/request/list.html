@@ -119,8 +119,10 @@
                                             <td>[[${requestdto.requestDescription}]]</td>
                                             <td>[[${requestdto.requestStatus}]]</td>
                                             <td>
-                                                <a th:href="@{/ezen25/request/print(requestId = ${requestdto.requestId}, page= ${requestResult.page},
-                        type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+                                                <a th:href="@{/ezen25/request/print(requestId=${requestdto.requestId}, page=${requestResult.page},
+                        type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}"
+                                                   target="_blank"
+                                                   onclick="window.open(this.href, 'SpecWindow', 'width=1111px,height=606px'); return false;">
                                                     <b>명세서 보기</b>
                                                 </a>
                                             </td>
