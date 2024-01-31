@@ -19,10 +19,11 @@ public interface OrderService {
     OrderDTO read(Long orderId);
 
     void remove(Long orderId);
-
+    void listremove(String orderCode);
     List<OrderDTO> getList();
     void modify(OrderDTO orderDTO);
 
+    void  modifyOrder(String orderCode,String orderDescription);
     List<WithdrawalDTO> getWithdrawalList(String orderCode);
     /*String getNameByOrderCode(String orderCode);*/
     List<OrderListDTO> getOrderListDTO();
