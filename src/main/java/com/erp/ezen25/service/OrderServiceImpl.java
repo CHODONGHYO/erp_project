@@ -146,7 +146,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Object[]> getProductList(String subcategory) {
+    public List<String> getProductList(String subcategory) {
         return repository.findProductList(subcategory);
     }
     @Override
