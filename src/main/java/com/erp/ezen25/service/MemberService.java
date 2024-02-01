@@ -1,9 +1,9 @@
 package com.erp.ezen25.service;
 
-import com.erp.ezen25.dto.*;
-import com.erp.ezen25.entity.Brand;
+import com.erp.ezen25.dto.MemberDTO;
+import com.erp.ezen25.dto.PageRequestDTO;
+import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.entity.Member;
-import com.erp.ezen25.entity.QBrand;
 import com.erp.ezen25.entity.QMember;
 import com.erp.ezen25.repository.MemberRepository;
 import com.querydsl.core.BooleanBuilder;
@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,9 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
+    public void remove(Long memberId) {
+        memberRepository.deleteById(memberId);
+    }
 
     public Member create(String userId, String password, String email, String name) {
         Member member = new Member();
@@ -101,8 +103,12 @@ public class MemberService {
 
         BooleanBuilder sBuilder = new BooleanBuilder();
 
-        if (type.contains("n")) {
+        if (type.contains("e")) {
             sBuilder.or(qMember.email.contains(keyword));
+        }
+
+        if (type.contains("n")) {
+            sBuilder.or(qMember.name.contains(keyword));
         }
 
 

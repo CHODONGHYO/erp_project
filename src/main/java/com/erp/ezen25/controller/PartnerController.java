@@ -1,14 +1,14 @@
 package com.erp.ezen25.controller;
 
-import com.erp.ezen25.dto.*;
+import com.erp.ezen25.dto.BrandDTO;
+import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.contractDTOs.*;
-import com.erp.ezen25.dto.planDTOs.PlanListResponseDTO;
 import com.erp.ezen25.dto.productDTOs.ProductBnameListResponseDTO;
 import com.erp.ezen25.service.BrandService;
 import com.erp.ezen25.service.ContractService;
+import com.erp.ezen25.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +26,17 @@ import java.util.List;
 @RequiredArgsConstructor
 // 협력업체 관련 Controller
 public class PartnerController {
-    @Autowired
-    private BrandService brandService;
+
+    private final BrandService brandService;
 
     private final ContractService contractService;
+
+    private final MemberService memberService;
+
+    @GetMapping("/memberList")
+    public void memberList(PageRequestDTO pageRequestDTO, Model model) {
+        model.addAttribute("memberResult", memberService.getList(pageRequestDTO));
+    }
 
     @GetMapping("/")
     public String brandHome() {
