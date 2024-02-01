@@ -34,7 +34,7 @@
                         </thead>
                         <tbody>
                         <tr th:each="dto, stat : ${stockList}">
-                            <th th:text="${stat.count}"></th>
+                            <th th:text="${stockList.size() - stat.count + 1}"></th>
                             <td>
                                 <img style="width: 30px;" class="image" th:if="${dto?.image != null}" th:src="@{|/image/${dto?.image.substring(0,10).replaceAll('-','/')}/${dto?.image}|}" alt="이미지"/>
                                 <img style="width: 30px;" class="image" th:unless="${dto?.image != null}" th:src="@{/image/NoImg.png}" alt="이미지"/>
