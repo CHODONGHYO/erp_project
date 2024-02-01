@@ -29,7 +29,10 @@
                             <th:block th:each="dto : ${withdrawalList}">
                                 <tr th:if="${dto.orderStatus == '0'}">
                                     <th><input type="checkbox" name="checkbox" checked></th>
-                                    <td th:text="${dto.image}"></td>
+                                    <td>
+                                        <img style="height: 40px; width: 40px;" class="image" th:if="${dto.image != null}" th:src="@{|/image/${dto.image.substring(0,10).replaceAll('-','/')}/${dto.image}|}" alt="이미지"/>
+                                        <img style="height: 40px; width: 40px;" class="image" th:unless="${dto.image != null}" th:src="@{/image/NoImg.png}" alt="이미지"/>
+                                    </td>
                                     <td th:text="${dto.productId}"></td>
                                     <td th:text="${dto.productName}"></td>
                                     <td th:text="${dto.mCategory + '/' + dto.sCategory}"></td>
