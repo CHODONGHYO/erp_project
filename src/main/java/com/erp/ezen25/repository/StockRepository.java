@@ -43,4 +43,11 @@ public interface StockRepository extends JpaRepository<Product_Stock, Long> {
     @Query("UPDATE Order o SET o.orderStatus = '2' WHERE o.orderCode = :orderCode")
     void updateOrderStatus2(String orderCode);
 
+/*
+    @Modifying
+    @Transactional
+    @Query("UPDATE Product_Stock ps SET ps.productNum = ps.productNum - o.orderNum " +
+            "WHERE EXISTS (SELECT 1 FROM Order o WHERE o.product.productId = ps.product.productId AND o.orderCode = :orderCode)")
+    void updateProductNum(@Param("orderCode") String orderCode);
+*/
 }

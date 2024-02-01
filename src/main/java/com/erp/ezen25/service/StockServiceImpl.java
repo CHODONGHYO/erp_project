@@ -82,6 +82,12 @@ public class StockServiceImpl implements StockService {
         stockRepository.updateOrderStatus2(orderCode);
     }
 
+    /*@Override
+    @Transactional
+    public void updateProductNum(String orderCode) {
+        stockRepository.updateProductNum(orderCode);
+    }*/
+
     @Override
     @Transactional(readOnly = true)
     public List<ExportDTO> getListForExportByOrderCodeAndProductIds(String orderCode) {
