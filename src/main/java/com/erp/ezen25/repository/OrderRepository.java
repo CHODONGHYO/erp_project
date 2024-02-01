@@ -56,7 +56,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> , QuerydslPr
     List<String> findMCategoryList();
 
     @Query(value = "SELECT product_id,product_name from product_info where s_category= :subcategory",nativeQuery = true)
-    List<String> findProductList(@Param("subcategory") String subcategory);
+    List<Object[]> findProductList(@Param("subcategory") String subcategory);
 
     @Query(value = "SELECT product_id,product_name from product_info where m_category= :upperCategory",nativeQuery = true)
     List<Object[]> findProductListByUpCate(@Param("upperCategory") String upperCategory);
