@@ -205,13 +205,13 @@ public class OrderController {
 
         return "ezen25/order/orderItemRegister";
     }
-    @PostMapping("itemregister")
-    public String itmRegister(OrderDTO orderDTO) {
+    @PostMapping("/itemregister")
+    public String itmRegister(OrderDTO orderDTO,@RequestParam(value="orderCode",required = false) String orderCode) {
         log.info("POST 형식");
         orderService.register(orderDTO);
 
 
-        return "redirect:/ezen25/order/itemList";
+        return "redirect:/ezen25/order/itemlist?orderCode=" + orderCode;
 
     }
 

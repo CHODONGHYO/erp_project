@@ -18,7 +18,7 @@
             <div class="">
                 <!-- table section -->
                 <div class="col-md-12">
-                    <form action="/ezen25/order/register" th:method="post">
+                    <form action="/ezen25/order/itemregister" th:method="post">
                         <div class="white_shd full margin_bottom_30">
                             <div class="full graph_head">
                                 <table class="table_for_details" width="100%">
@@ -63,7 +63,8 @@
                                     <tr class="tr_for_details">
                                         <td class="td_for_details">지점명</td>
                                         <td class="td_for_details">
-                                            <input class="form-control" name="memberId" type="text" th:value="${olist.memberId}" readonly>
+                                            <span th:text="${olist.Name}"></span>
+                                            <input type="hidden" name="memberId" th:value="${olist.memberId}" readonly/>
                                         </td>
                                         <td class="td_for_details">발주일자</td>
                                         <td class="td_for_details">
