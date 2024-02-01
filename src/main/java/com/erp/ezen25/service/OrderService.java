@@ -36,7 +36,7 @@ public interface OrderService {
     // 서브 카테고리 가져오기
     List<String> getSCategoryList(String upperCategory);
 
-    List<String> getProductList(String subcategory);
+    List<Object[]> getProductList(String subcategory);
     List<Object[]> getProductListByUpperCategory(String upperCategory);
 
 

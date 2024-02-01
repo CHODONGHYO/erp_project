@@ -224,7 +224,7 @@ public class OrderController {
 
     @GetMapping("/getproducts")
     @ResponseBody
-    public List<String> getProducts(@RequestParam("subcategory") String subcategory) {
+    public List<Object[]> getProducts(@RequestParam("subcategory") String subcategory) {
         return orderService.getProductList(subcategory);
     }
     @GetMapping("/getproduct")
