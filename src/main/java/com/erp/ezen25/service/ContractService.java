@@ -113,10 +113,13 @@ public class ContractService {
     // pdf to image
     private void pdfToThumbnail(String saveName) throws IOException {
         File file = new File(uploadPath+saveName.substring(0,10).replaceAll("-","/")+"/"+saveName);
+
         PDDocument document = PDDocument.load(file);
         PDFRenderer render = new PDFRenderer(document);
         BufferedImage bim = render.renderImage(0);
+
         File outputFile = new File(uploadPath+saveName.substring(0,10).replaceAll("-","/")+"/"+saveName.substring(0,saveName.length()-4) + ".jpg");
+
         ImageIO.write(bim, "jpg", outputFile);
         System.out.println("썸네일만들기 지나감");
     }
