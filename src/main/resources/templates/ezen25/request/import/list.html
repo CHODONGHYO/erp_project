@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<th:block layout:fragment="content">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="/pluto/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- responsive css -->
+    <link href="/pluto/css/responsive.css" rel="stylesheet"/>
+    <!-- select bootstrap -->
+    <link href="/pluto/css/bootstrap-select.css" rel="stylesheet"/>
+    <!-- scrollbar css -->
+    <link href="/pluto/css/perfect-scrollbar.css" rel="stylesheet"/>
+    <!-- fancy box js -->
+    <link href="/pluto/css/jquery.fancybox.css" rel="stylesheet"/>
+    <!-- 여기에 생성할 페이지 코드 작성 -->
+    <main>
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>입고 관리</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- row -->
+            <div class="">
+                <!-- table section -->
+                <div class="col-md-12">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>입고 요청 목록</h2>
+                            </div>
+                            <!--<a th:href="@{/ezen25/request/import/register}">
+                                <button class="btn btn-outline-primary" style="float:right;" type="button">등록하기</button>
+                            </a>-->
+                        </div>
+                        <div class="full graph_head">
+                            <div>
+                                <form action="/ezen25/request/import/list" id="searchForm" method="get">
+                                    <div class="input-group">
+                                        <input name="page" type="hidden" value="1">
+                                        <div class="input-group-prepend">
+                                            <select class="custom-select" name="type">
+                                                <option th:selected="${pageRequestDTO.type == 'prsd'}" value="prsd">
+                                                    전체
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'p'}" value="p">
+                                                    품목 코드
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'r'}" value="r">
+                                                    요청서 코드
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 's'}" value="s">
+                                                    상태
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'd'}" value="d">
+                                                    날짜
+                                                </option>
+
+                                            </select>
+                                        </div>
+                                        <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}"
+                                               type="text">
+                                        <div class="input-group-append" id="button-addon4">
+                                            <button class="btn btn-outline-secondary btn-search" type="button">Search
+                                            </button>
+                                            <button class="btn btn-outline-secondary btn-clear" type="button">Clear
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                        <div class="table_section padding_infor_info">
+                            <div class="table-responsive-sm">
+                                    <table class="table" style="text-align:center;">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>품목 코드</th>
+                                            <th>품목 이름</th>
+                                            <th>개수</th>
+                                            <th>날짜</th>
+                                            <th>요청서 코드</th>
+                                            <th>상태</th>
+                                            <th>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="importDTO : ${importResult.dtoList}">
+                                            <input name="importId" th:value="${importDTO.importId}" type="hidden">
+                                            <td>
+                                                <a th:href="@{/ezen25/request/import/read(importId = ${importDTO.importId}, page= ${importResult.page},
+                        type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+                                                    [[${importDTO.importId}]]
+                                                </a>
+                                            </td>
+                                            <td>[[${importDTO.productId}]]</td>
+                                            <td th:text="${@productService.getProductName(importDTO.productId)}"></td>
+                                            <td>[[${importDTO.importNum}]]</td>
+                                            <td>[[${importDTO.importDate}]]</td>
+                                            <td>[[${importDTO.requestCode}]]</td>
+                                            <td>[[${importDTO.importStatus}]]</td>
+                                            <td >
+                                                <a th:if="${importDTO.importStatus} != '완료'">
+                                                    <button class="removeBtn">
+                                                        출하
+                                                    </button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                <ul class="pagination h-100 justify-content-center align-items-center">
+                                    <li class="page-item " th:if="${importResult.prev}">
+                                        <a class="page-link" tabindex="-1" th:href="@{/ezen25/request/import/list(page = ${importResult.start-1}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}"><</a>
+                                    </li>
+
+                                    <li th:class="'page-item ' + ${importResult.page == page?'active':''}"
+                                        th:each="page: ${importResult.pageList}">
+                                        <a class="page-link" th:href="@{/ezen25/request/import/list(page = ${page}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}">[[${page}]]</a>
+                                    </li>
+
+                                    <li class="page-item" th:if="${importResult.next}">
+                                        <a class="page-link" th:href="@{/ezen25/request/import/list(page = ${importResult.end + 1}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}">></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+
+            var searchForm = $("#searchForm");
+
+            $('.btn-search').click(function(e) {
+
+                searchForm.submit();
+
+            });
+
+            $('.btn-clear').click(function(e) {
+
+                searchForm.empty().submit();
+
+            });
+
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+        <script th:inline="javascript">
+            // 출하 버튼 클릭 시 AJAX를 통해 importId를 서버로 전송하고 해당 기록 삭제
+            $(".removeBtn").click(function () {
+                // 현재 버튼이 속한 행에서 importId 값을 가져오기
+                var importId = $(this).closest('tr').find('[name="importId"]').val();
+
+                // 사용자에게 삭제 여부를 묻기
+                var confirmRemove = confirm("출하 하시겠습니까?");
+                if (!confirmRemove) {
+                    return;
+                }
+
+                // AJAX 요청 설정
+                $.ajax({
+                    type: "POST",
+                    url: "/ezen25/request/import/remove",
+                    data: { "importId": importId },
+                    success: function (response) {
+                        // 삭제 성공 시 import 목록 페이지로 리다이렉트
+                        window.location.href = '/ezen25/request/import/list';
+                    },
+                    error: function (error) {
+                        console.error("수입 기록 삭제 중 오류 발생: " + error);
+                        // 오류 처리를 추가하십시오 (예: 사용자에게 알림)
+                    }
+                });
+            });
+        </script>
+    </main>
+</th:block>
+</html>

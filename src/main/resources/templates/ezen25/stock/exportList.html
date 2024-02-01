@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+
+<th:block layout:fragment="content">
+
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">재고관리</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a th:href="@{/ezen25/stock/exporting}">출고리스트</a></li>
+                <li class="breadcrumb-item active">재고관리</li>
+            </ol>
+            <div class="card mb-4">
+                <div class="card-body">
+                    DataTables is a third party plugin that is used to generate the demo table below. For more information
+                    about DataTables, please visit the
+                    <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                    .
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    출고리스트
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>지점명</th>
+                            <th>발주서 코드</th>
+                            <th>상품코드</th>
+                            <th>상품명</th>
+                            <th>출고수량</th>
+                            <th>출고일자</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="dto,stat : ${exportCompleteList}">
+                                <th>[[${stat.count}]]</th>
+                                <td>[[${dto.name}]]</td>
+                                <td>[[${dto.orderCode}]]</td>
+                                <td>[[${dto.productId}]]</td>
+                                <td>[[${dto.productName}]]</td>
+                                <td>[[${dto.exportNum}]]</td>
+                                <td>[[${dto.exportDate}]]</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</th:block>
+</html>

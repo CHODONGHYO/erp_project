@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+<th:block layout:fragment="content">
+    <!-- 여기에 생성할 페이지 코드 작성 -->
+    <main class="tableListStyle contractList">
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">계약서 목록</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item">협력업체</li>
+                <li class="breadcrumb-item active">계약관리</li>
+            </ol>
+
+            <div class="card mb-4">
+                <div class="card-header">
+                    <div class="flex leftHeader">
+                        <i class="fas fa-table me-1 "></i>
+                        <span>계약 목록</span>
+                        <div class="flex ">
+                            <input type="date" th:value="${date1}" class="form-control  selectDate selectDate1" style="margin-right: 10px;"> ~
+                            <input type="date" th:value="${date2}" class="form-control  selectDate selectDate2">
+                        </div>
+                        <div class="card bg-teal text-white mb-2 prodBtn" style="margin-left: 10px !important;">
+                            <a href="#" class="card-body resetLink" id="dateConfirm">날짜조회</a>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="card bg-primary text-white mb-2 prodBtn">
+                            <a href="contractAdd" class="card-body resetLink">계획등록</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                        <tr>
+                            <th>계약업체</th>
+                            <th>계약제품</th>
+                            <th>계약날짜</th>
+                            <th>상세</th>
+                            <th>삭제</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>계약업체</th>
+                            <th>계약제품</th>
+                            <th>계약날짜</th>
+                            <th>계약서보기</th>
+                            <th>삭제</th>
+                        </tr>
+                        </tfoot>
+                        <tbody >
+                        <tr th:each="contract : ${cList}">
+                            <td>
+                                <input type="hidden" class="contractId" th:value="${contract.contractId}">
+                                <input type="hidden" class="contractFile" th:value="${contract.contractFile}">
+                                <div class="cellStyle brandName" th:text="${contract.brandName}" ></div>
+                            </td>
+                            <td><div class="cellStyle productName" th:text="${contract.productName}" ></div></td>
+                            <td><div class="cellStyle contractDate" th:text="${#temporals.format(contract.contractDate, 'yyyy-MM-dd')}"></div></td>
+                            <td>
+                                <div class="cellStyle">
+                                    <div th:if="${contract.contractFile != '없음'}" class="card bg-primary text-white mb-2 listBtn resetLink">등록완료</div>
+                                    <div th:unless="${contract.contractFile != '없음'}" class="card bg-primary text-white mb-2 listBtn resetLink processBtn">진행중</div>
+                                </div>
+                            </td>
+                            <td><div class="cellStyle"><div class="card bg-danger text-white mb-2 listBtn">삭제</div></div></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="myModal detailModal">
+            <div class="card">
+                <div class="card-header">
+                    <div class="modalTitle">계약 상세</div>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th><input type="hidden" class="modalContractId">계약업체</th>
+                            <th>계약제품</th>
+                            <th>계약날짜</th>
+                        </tr>
+                        <tr>
+                            <td class="modalBrandName"></td>
+                            <td class="modalProductName"></td>
+                            <td class="modalContractDate"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <img class="modalContractThumbnail" src="/image/NoImg.png" alt="이미지 없음">
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="card bg-info text-white mb-2 moBtn modalContractFile">계약서보기</a>
+                    <a href="contractModify" class="card bg-primary text-white mb-2 moBtn modify">수정</a>
+                    <div class="card bg-dark text-white mb-2 moBtn close">닫기</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="myModal deleteModal">
+            <div class="card">
+                <div class="card-header">
+                    <div class="modalTitle">품목 삭제</div>
+                </div>
+                <div class="card-body">
+                    <table>
+                        <tbody>
+                        <tr>
+                            <th><input type="hidden" class="modalContractId">계약업체</th>
+                            <th>계약제품</th>
+                            <th>계약날짜</th>
+                        </tr>
+                        <tr>
+                            <td class="modalBrandName"></td>
+                            <td class="modalProductName"></td>
+                            <td class="modalContractDate"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <p>위 상품을 삭제 하시겠습니까?</p>
+                </div>
+                <div class="card-footer">
+                    <div class="card bg-danger text-white mb-2 moBtn deleteBtn">삭제</div>
+                    <div class="card bg-dark text-white mb-2 moBtn close">닫기</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        $(".myModal .moBtn.close").on("click", (e) => {
+            $(e.target).parents(".myModal").hide();
+        })
+
+        let selectDate1 = $(".selectDate1").val();
+        let selectDate2 = $(".selectDate2").val();
+        $("#dateConfirm").attr("href", `contractList${selectDate1}~${selectDate2}`);
+        $(".selectDate").on("change", (e) => {
+            selectDate1 = $(".selectDate1").val();
+            selectDate2 = $(".selectDate2").val();
+            $("#dateConfirm").attr("href", `contractList${selectDate1}~${selectDate2}`);
+        })
+
+        $(".myModal.deleteModal .deleteBtn").on("click", () => {
+            let modalContractId = document.querySelector(".modalContractId").value;
+            $.ajax({
+                url : "contractDelete",
+                type: "post",
+                data: {
+                    contractId: modalContractId
+                },
+                dataType: "json",
+                success: function(data) {
+                    location.reload();
+                },
+                error: function(request, error) {
+                    alert("code:" + request.status+ "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            })
+        })
+    </script>
+</th:block>
+</html>

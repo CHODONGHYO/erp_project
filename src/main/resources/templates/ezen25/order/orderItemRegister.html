@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<th:block layout:fragment="content">
+    <main>
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>품목 추가</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="">
+                <!-- table section -->
+                <div class="col-md-12">
+                    <form action="/ezen25/order/register" th:method="post">
+                        <div class="white_shd full margin_bottom_30">
+                            <div class="full graph_head">
+                                <table class="table_for_details" width="100%">
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">발주 코드</td>
+                                        <td class="td_for_details" colspan="3"><input class="form-control" name="orderCode" type="text" th:value="${olist.orderCode}" readonly></td>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">대분류</td>
+                                        <td class="td_for_details">
+                                            <select class="form-control" name="mCateList" id="select-upper-category">
+                                                <option disabled selected value="0">----- 상위 카테고리 -----</option>
+                                                <option th:each="mcate : ${mcategories}" th:value="${mcate}"
+                                                        th:text="${mcate}"></option>
+                                            </select>
+                                        </td>
+                                        <td class="td_for_details">소분류</td>
+                                        <td class="td_for_details">
+                                            <select class="form-control" name="sCateList" id="select-category">
+                                                <option disabled selected value="0" id="sub-default">----- 하위
+                                                    카테고리 -----
+                                                </option>
+                                                <option th:each="scate:${scategories}" th:value="${scate}"
+                                                        th:text="${scate}"></option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">품목 코드</td>
+                                        <td class="td_for_details">
+                                            <!-- 품목 코드(productId) 옵션들을 동적으로 생성 -->
+                                            <select class="form-control" name="productId" id="select-product">
+                                                <option disabled selected id='cate-default'>- 상품 선택하기 -</option>
+                                            </select>
+                                        </td>
+                                        <td class="td_for_details">개수</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" name="orderNum" type="text">
+                                        </td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">지점명</td>
+                                        <td class="td_for_details">
+                                            <span th:text="${olist.Name}"></span>
+                                            <input type="hidden" th:value="${olist.orderId}" readonly/>
+                                        </td>
+                                        <td class="td_for_details">발주일자</td>
+                                        <td class="td_for_details">
+                                            <input class="form-control" name="orderDate" type="text" th:value="${olist.orderDate}" readonly>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details" colspan="1">비고</td>
+                                        <td class="td_for_details" colspan="5">
+                                            <textarea class="form-control" name="orderDescription"
+                                                      style="height: 225px;" th:value="${olist.orderDescription}" th:text="${olist.orderDescription}" readonly></textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                        <div style="float:right;">
+                            <a th:href="@{/ezen25/order/list?page=1}">
+                                <button class="btn btn-primary" type="button" th:onclick="'location.href=\'' + @{/ezen25/order/list?page=1} + '\''">목록으로</button>
+                            </a>
+                            <button class="btn btn-primary" type="submit">등록하기</button>
+                            <button class="btn btn-primary" type="reset">다시하기</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script type="text/javascript">
+        $(document).ready(function () {
+    // 대분류 드롭다운이 변경될 때
+    $("#select-upper-category").change(function () {
+        // 선택된 값을 가져옴
+        var selectedUpperCategory = $(this).val();
+        //대분류만 선택했을시에도 품목가져올수있도록
+         $.ajax({
+                url: '/ezen25/order/getproduct',
+                method: 'GET',
+                data: { upperCategory: selectedUpperCategory },
+                success: function (products) {
+                    // 품목 코드 드롭다운의 기존 옵션을 지움
+                    $("#select-product").empty();
+
+                    // 기본 선택 옵션을 유지하면서 새로운 옵션을 추가
+                    $("#select-product").append('<option disabled selected id="cate-default">- 상품 선택하기 -</option>');
+
+                    // 품목 코드 데이터를 기반으로 새로운 옵션을 추가
+                    $.each(products, function (index, value) {
+                        var productId = value[0];
+                        var productName = value[1];
+                        $("#select-product").append('<option value="' + productId + '">' + productName + '</option>');
+                    });
+                },
+                error: function (error) {
+                    console.error('품목 코드를 가져오는 중 에러 발생:', error);
+                }
+            });
+
+
+        // 선택된 대분류를 기반으로 소분류 옵션을 가져오기 위한 AJAX 호출
+        $.ajax({
+            url: '/ezen25/order/getSubcategories',
+            method: 'GET',
+            data: { upperCategory: selectedUpperCategory },
+            success: function (subcategories) {
+                // 소분류 드롭다운의 기존 옵션을 지움
+                $("#select-category").empty();
+
+                // 기본 선택 옵션을 유지하면서 새로운 옵션을 추가
+                $("#select-category").append('<option disabled selected value="0" id="sub-default">----- 하위 카테고리 -----</option>');
+
+                // 가져온 데이터를 기반으로 새로운 옵션을 추가
+                $.each(subcategories, function (index, value) {
+                    $("#select-category").append('<option value="' + value + '">' + value + '</option>');
+                });
+            },
+            error: function (error) {
+                console.error('소분류를 가져오는 중 에러 발생:', error);
+            }
+        });
+    });
+
+    // 소분류 드롭다운이 변경될 때
+    $("#select-category").change(function () {
+        // 선택된 값을 가져옴
+        var selectedSubCategory = $(this).val();
+
+        // 선택된 소분류를 기반으로 상품 옵션을 가져오기 위한 AJAX 호출
+        $.ajax({
+            url: '/ezen25/order/getproducts',
+            method: 'GET',
+            data: { subcategory: selectedSubCategory },
+            success: function (products) {
+                // 상품 드롭다운의 기존 옵션을 지움
+                $("#select-product").empty();
+
+
+                // 기본 선택 옵션을 유지하면서 새로운 옵션을 추가
+                $("#select-product").append('<option disabled selected id="cate-default">- 상품 선택하기 -</option>');
+
+                $.each(products, function (index, value) {
+                        // 로그로 찍어서 실제 값이 어떤지 확인
+                        console.log(value);
+
+                        // value[0]은 productId, value[1]은 productName
+                        var productId = value[0];
+                        var productName = value[1];
+                        $("#select-product").append('<option value="' + productId + '">' + productName + '</option>');
+                    });
+                },
+            error: function (error) {
+                console.error('상품을 가져오는 중 에러 발생:', error);
+            }
+        });
+    });
+});
+
+    </script>
+</th:block>
+
+</html>

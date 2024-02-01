@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<th:block layout:fragment="content">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="/pluto/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- responsive css -->
+    <link href="/pluto/css/responsive.css" rel="stylesheet"/>
+    <!-- select bootstrap -->
+    <link href="/pluto/css/bootstrap-select.css" rel="stylesheet"/>
+    <!-- scrollbar css -->
+    <link href="/pluto/css/perfect-scrollbar.css" rel="stylesheet"/>
+    <!-- fancy box js -->
+    <link href="/pluto/css/jquery.fancybox.css" rel="stylesheet"/>
+    <!-- 여기에 생성할 페이지 코드 작성 -->
+    <main>
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>협력업체 관리</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- row -->
+            <div class="">
+                <!-- table section -->
+                <div class="col-md-12">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>협력업체 리스트</h2>
+                                <login>
+                                    <a sec:authorize="isAnonymous()" th:href="@{/ezen25/main/login}">Login</a>
+                                    <a sec:authorize="isAuthenticated()" th:href="@{/ezen25/main/logout}">Logout</a>
+                                </login>
+                                <a th:href="@{/ezen25/main/signup}">Sign Up</a>
+                            </div>
+                            <a th:href="@{/ezen25/brand/register}">
+                                <button class="btn btn-outline-primary" style="float:right;" type="button">등록하기</button>
+                            </a>
+                        </div>
+                        <div class="full graph_head">
+                            <div>
+                                <form action="/ezen25/brand/list" id="searchForm" method="get">
+                                    <div class="input-group">
+                                        <input name="page" type="hidden" value="1">
+                                        <div class="input-group-prepend">
+                                            <select class="custom-select" name="type">
+                                                <option th:selected="${pageRequestDTO.type == 'nped'}" value="nped">
+                                                    전체
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'n'}" value="n">
+                                                    이름
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'p'}" value="p">
+                                                    연락처
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'e'}" value="e">
+                                                    이메일
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'd'}" value="d">
+                                                    설명
+                                                </option>
+
+                                            </select>
+                                        </div>
+                                        <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}"
+                                               type="text">
+                                        <div class="input-group-append" id="button-addon4">
+                                            <button class="btn btn-outline-secondary btn-search" type="button">Search
+                                            </button>
+                                            <button class="btn btn-outline-secondary btn-clear" type="button">Clear
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                        <div class="table_section padding_infor_info">
+                            <div class="table-responsive-sm">
+                                <form action="/ezen25/common/brandSelectDelete" method="post">
+                                    <table class="table" style="text-align:center;">
+                                        <thead>
+                                        <tr>
+                                            <th><input id="selectAll" type="checkbox"></th>
+                                            <th>#</th>
+                                            <th>브랜드 이름</th>
+                                            <th>연락처</th>
+                                            <th>이메일</th>
+                                            <th>설명</th>
+                                            <th>
+                                                <button class="new-button" onclick="return brandDeleteSelected()"
+                                                        type="submit">
+                                                    <strong>선택 삭제</strong>
+                                                </button>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="dto : ${brandResult.dtoList}">
+                                            <td><input name="brandDeleteList" th:value="${dto.brandId}" type="checkbox">
+                                            </td>
+                                            <td>
+                                                <a th:href="@{/ezen25/brand/read(brandId = ${dto.brandId}, page= ${brandResult.page},
+                        type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+                                                    [[${dto.brandId}]]
+                                                </a></td>
+                                            <td>[[${dto.brandName}]]</td>
+                                            <td>[[${dto.brandPhone}]]</td>
+                                            <td>[[${dto.brandEmail}]]</td>
+                                            <td>[[${dto.brandDescription}]]</td>
+                                            <td></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                                <ul class="pagination h-100 justify-content-center align-items-center">
+                                    <li class="page-item " th:if="${brandResult.prev}">
+                                        <a class="page-link" tabindex="-1" th:href="@{/ezen25/brand/list(page = ${brandResult.start-1}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}"><</a>
+                                    </li>
+
+                                    <li th:class="'page-item ' + ${brandResult.page == page?'active':''}"
+                                        th:each="page: ${brandResult.pageList}">
+                                        <a class="page-link" th:href="@{/ezen25/brand/list(page = ${page}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}">[[${page}]]</a>
+                                    </li>
+
+                                    <li class="page-item" th:if="${brandResult.next}">
+                                        <a class="page-link" th:href="@{/ezen25/brand/list(page = ${brandResult.end + 1}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}">></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+
+            var searchForm = $("#searchForm");
+
+            $('.btn-search').click(function(e) {
+
+                searchForm.submit();
+
+            });
+
+            $('.btn-clear').click(function(e) {
+
+                searchForm.empty().submit();
+
+            });
+
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script th:inline="javascript">
+            $(document).ready(function() {
+              // 전체 선택 체크박스
+              $("#selectAll").click(function() {
+                  $("input[name='brandDeleteList']").prop('checked', this.checked);
+              });
+          });
+          // 선택 삭제 함수
+          function brandDeleteSelected() {
+              var selectedItems = [];
+
+              // 선택된 체크박스 가져오기
+              $('input[name="brandDeleteList"]:checked').each(function() {
+                  selectedItems.push($(this).val());
+              });
+
+              // 선택된 항목이 없을 경우 알림
+              if (selectedItems.length === 0) {
+                  alert("선택된 항목이 없습니다.");
+                  return false;
+              }
+
+              // 사용자에게 삭제 여부 확인
+              var isConfirmed = confirm("선택한 항목을 삭제하시겠습니까?");
+
+              // 사용자가 확인을 눌렀을 때 삭제 요청
+              if (isConfirmed) {
+                  console.log("deleteSelected 함수 호출됨");
+                  alert("삭제완료");
+
+                  return true;
+              } else {
+                  return false;
+              }
+          }
+        </script>
+    </main>
+</th:block>
+</html>

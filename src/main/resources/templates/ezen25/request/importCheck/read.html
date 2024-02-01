@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<th:block layout:fragment="content">
+    <!-- 여기에 생성할 페이지 코드 작성 -->
+    <main>
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h1 class="mt-4">검수 품목 : [[${icDTO.importCheckId}]]</h1>
+                    </div>
+                </div>
+            </div>
+            <input name="importCheckId" th:value="${icDTO.importCheckId}" type="hidden">
+
+            <div>
+                <div class="col-md-12">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <table class="table_for_details" width="100%">
+                                <tr class="tr_for_details" style="font-align:left;">
+                                    <td class="td_for_details">입고 번호</td>
+                                    <td class="td_for_details">
+                                        <input class="form-control"
+                                               name="importId"
+                                               type="text"
+                                               th:value="${icDTO.importId}" readonly>
+                                    </td>
+                                    <td class="td_for_details">요청 코드</td>
+                                    <td class="form-control">[[${requestCode}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details">품목 코드</td>
+                                    <td class="form-control">[[${productId}]]</td>
+                                    <td class="td_for_details">개수</td>
+                                    <td class="form-control">[[${num}]]</td>
+                                </tr>
+                                <tr class="tr_for_details">
+                                    <td class="td_for_details">날짜</td>
+                                    <td class="form-control">[[${date}]]</td>
+                                    <td class="td_for_details">상태</td>
+                                    <td class="td_for_details">
+                                        <input class="form-control"
+                                               name="importCheckStatus"
+                                               type="text"
+                                               th:value="${icDTO.importCheckStatus}" readonly>
+                                    </td>
+
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="float:right;">
+                <!--<a th:href="@{/ezen25/request/importCheck/modify(importCheckId = ${icDTO.importCheckId}, page = ${pageRequestDTO.page},
+         type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}">
+                    <button class="btn btn-primary" type="button">Modify</button>
+                </a>-->
+                <a></a>
+                <a th:href="@{/ezen25/request/importCheck/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
+         keyword = ${pageRequestDTO.keyword})}">
+                    <button class="btn btn-info" type="button">List</button>
+                </a>
+            </div>
+        </div>
+    </main>
+</th:block>
+</html>

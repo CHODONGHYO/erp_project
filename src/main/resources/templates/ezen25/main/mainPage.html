@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block layout:fragment="content">
+    <script type='importmap'>
+        {
+          "imports": {
+            "@fullcalendar/core": "https://cdn.skypack.dev/@fullcalendar/core@6.1.10",
+            "@fullcalendar/daygrid": "https://cdn.skypack.dev/@fullcalendar/daygrid@6.1.10"
+
+          }
+        }
+    </script>
+
+    <script type='module'>
+        import { Calendar } from '@fullcalendar/core'
+        import dayGridPlugin from '@fullcalendar/daygrid'
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new Calendar(calendarEl, {
+                locale: 'ko',
+                plugins: [dayGridPlugin],
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev',
+                    center: 'title',
+                    right: 'next'
+                },
+
+                dayCellContent: function(info) {
+                    var number = document.createElement("a");
+                    number.classList.add("fc-daygrid-day-number");
+                    number.innerHTML = info.dayNumberText.replace("일", "");
+                    if (info.view.type === "dayGridMonth") {
+                        return {
+                            html: number.outerHTML
+                        };
+                    }
+                    return {
+                        domNodes: []
+                    };
+                }
+            });
+            calendar.render();
+
+        });
+    </script>
+    <style>
+        #calendar-container {
+            overflow: hidden;
+            font-size: 14px; /* Adjust the font size as needed */
+        }
+
+        #calendar {
+            font-size: 12px; /* Adjust the font size as needed */
+        }
+        .fc-daygrid-day-events {
+            display: none;
+        }
+        .fc-daygrid-day-frame {
+            text-align: center; /* 가운데 정렬을 추가함 */
+        }
+        a {
+            color: black;
+            text-decoration: none;
+        }
+        .fc .fc-daygrid-day-top {
+            flex-direction: column;
+        }
+        .newIcon::after {
+        content: "NEW"; /* new클래스 요소 뒤에 텍스트 'NEW' 삽입 */
+        font-size: .75rem;
+        background: #f99;
+        color: #fff;
+        padding: 5px;
+        margin-left: 5px;
+        border-radius: 3px;
+        }
+        .fc .fc-toolbar.fc-header-toolbar {
+            margin-bottom: auto;
+        }
+    </style>
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4"><b>EZEN25</b></h1>
+            <br>
+            <div class="row" style="text-align:center;">
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-primary text-white mb-4">
+                        <div class="card-body" style="color:black;text-align:center;background:white;"><b>현재 지점 : [[${countMember}]]개</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-warning text-white mb-4">
+                        <div class="card-body" style="color:black;text-align:center;background:white;"><b>현재 협력업체 : [[${countBrand}]]개</b></div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body" style="color:black;text-align:center;background:white;"><b>Today 발주 :
+                            100개</b></div>
+
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card bg-danger text-white mb-4">
+                        <div class="card-body" style="color:black;text-align:center;background:white;">
+                            <a href="/ezen25/main/signup">
+                                <b>지점 등록하기</b>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <b class="newIcon">지점</b>
+                        </div>
+                        <div class="card-body">
+                            <table class="table" style="text-align:center;">
+                                <tr>
+                                    <td>#</td>
+                                    <td>지점</td>
+                                    <td>이메일</td>
+                                </tr>
+                                <tr th:each="member : ${members}">
+                                    <td>[[${member.memberId}]]</td>
+                                    <td>[[${member.name}]]</td>
+                                    <td>[[${member.email}]]</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <b class="newIcon">협력업체</b>
+                        </div>
+                        <div class="card-body">
+                            <table class="table" style="text-align:center;">
+                                <tr>
+                                    <td>#</td>
+                                    <td>협력업체</td>
+                                    <td>설명</td>
+                                </tr>
+                                <tr th:each="dto : ${brandResult}">
+                                    <td th:text="${dto?.brandId}"></td>
+                                    <td th:text="${dto?.brandName}"></td>
+                                    <td th:text="${dto?.brandDescription}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3" style="width:33%;">
+                    <div class="card mb-5">
+                        <div id='calendar-container'>
+                            <div id='calendar'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</th:block>
+</html>

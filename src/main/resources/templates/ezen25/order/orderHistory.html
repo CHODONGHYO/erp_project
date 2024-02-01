@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layout/layout}">
+
+
+<th:block layout:fragment="content">
+
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">발주관리</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item"><a th:href="@{/ezen25/order/list}">발주 리스트</a></li>
+                <li class="breadcrumb-item active">발주품목조회</li>
+            </ol>
+            <div class="card mb-4">
+                <div class="card-body">
+                    DataTables is a third party plugin that is used to generate the demo table below. For more information
+                    about DataTables, please visit the
+                    <a target="_blank" href="https://datatables.net/">official DataTables documentation</a>
+                    .
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table me-1"></i>
+                    발주 요청리스트
+
+                </div>
+
+                <div class="card-body">
+                    <table id="datatablesSimple">
+                        <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>발주코드</th>
+                            <th>지점명</th>
+                            <th>발주일자</th>
+                            <th>상태</th>
+                            <th>인쇄</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="dto, stat : ${orderList}">
+                            <!-- Check if the current row is the first occurrence of the order code -->
+                            <th:block th:if="${stat.index == 0 or dto.orderCode != orderList[stat.index - 1].orderCode}">
+                                <td th:text="${stat.count}"></td>
+                                <td th:text="${dto.orderCode}"></td>
+                                <td th:text="${dto.name}"></td>
+                                <td th:text="${dto.orderDate}"></td>
+                                <td>
+                                    <span th:if="${dto.orderStatus == '0'}">발주요청</span>
+                                    <span th:if="${dto.orderStatus == '1'}">진행중</span>
+                                    <span th:if="${dto.orderStatus == '2'}">완료</span>
+                                </td>
+                                <td>
+                                    <a th:href="@{/ezen25/order/print(orderCode=${dto.orderCode})}">
+                                        <button class="btn btn-success">Print</button>
+                                    </a>
+                                    <a th:href="@{/ezen25/order/itemlist(orderCode=${dto.orderCode})}">
+                                        <button class="btn btn-success">조회</button>
+                                    </a>
+                                    <a th:href="@{/ezen25/order/ordermod(orderCode=${dto.orderCode})}">
+                                        <button class="btn btn-success">수정</button>
+                                    </a>
+                                </td>
+                            </th:block>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</th:block>
+</html>

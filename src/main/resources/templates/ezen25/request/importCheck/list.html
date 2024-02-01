@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<th:block layout:fragment="content">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="/pluto/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- responsive css -->
+    <link href="/pluto/css/responsive.css" rel="stylesheet"/>
+    <!-- select bootstrap -->
+    <link href="/pluto/css/bootstrap-select.css" rel="stylesheet"/>
+    <!-- scrollbar css -->
+    <link href="/pluto/css/perfect-scrollbar.css" rel="stylesheet"/>
+    <!-- fancy box js -->
+    <link href="/pluto/css/jquery.fancybox.css" rel="stylesheet"/>
+    <!-- 여기에 생성할 페이지 코드 작성 -->
+    <main>
+        <div class="container-fluid">
+            <div class="row column_title">
+                <div class="col-md-12">
+                    <div class="page_title">
+                        <h2>입고 검수</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- row -->
+            <div class="">
+                <!-- table section -->
+                <div class="col-md-12">
+                    <div class="white_shd full margin_bottom_30">
+                        <div class="full graph_head">
+                            <div class="heading1 margin_0">
+                                <h2>입고 검수 리스트</h2>
+                            </div>
+                            <!--<a th:href="@{/ezen25/request/importCheck/register}">
+                                <button class="btn btn-outline-primary" style="float:right;" type="button">등록하기</button>
+                            </a>-->
+                        </div>
+                        <div class="full graph_head">
+                            <div>
+                                <form action="/ezen25/request/importCheck/list" id="searchForm" method="get">
+                                    <div class="input-group">
+                                        <input name="page" type="hidden" value="1">
+                                        <div class="input-group-prepend">
+                                            <select class="custom-select" name="type">
+                                                <option th:selected="${pageRequestDTO.type == 'nrpd'}" value="nrpd">
+                                                    전체
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'n'}" value="n">
+                                                    입고 번호
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'r'}" value="r">
+                                                    요청서 코드
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'p'}" value="p">
+                                                    품목 코드
+                                                </option>
+                                                <option th:selected="${pageRequestDTO.type == 'd'}" value="d">
+                                                    날짜
+                                                </option>
+
+
+                                            </select>
+                                        </div>
+                                        <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}"
+                                               type="text">
+                                        <div class="input-group-append" id="button-addon4">
+                                            <button class="btn btn-outline-secondary btn-search" type="button">Search
+                                            </button>
+                                            <button class="btn btn-outline-secondary btn-clear" type="button">Clear
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                        <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="reviewModalLabel">양품의 개수를 입력하세요</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" id="numInput" class="form-control" placeholder="숫자를 입력하세요">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                        <button type="button" class="btn btn-primary" id="submitBtn">확인</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table_section padding_infor_info">
+                            <div class="table-responsive-sm">
+                                    <table class="table" style="text-align:center;">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>입고 번호</th>
+                                            <th>요청서 코드</th>
+                                            <th>품목 코드</th>
+                                            <th>개수</th>
+                                            <th>날짜</th>
+                                            <th>상태</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="icDTO : ${icResult.dtoList}">
+                                            <input name="importCheckId" th:value="${icDTO.importCheckId}" type="hidden">
+                                            <td>
+                                                <a th:href="@{/ezen25/request/importCheck/read(importCheckId = ${icDTO.importCheckId}, page= ${icResult.page},
+                        type=${pageRequestDTO.type}, keyword=${pageRequestDTO.keyword})}">
+                                                    [[${icDTO.importCheckId}]]
+                                                </a>
+                                            </td>
+                                            <td>[[${icDTO.importId}]]</td>
+                                            <td th:text="${@importServiceImpl.findRequestCodeByImportId(icDTO.importId)}"></td>
+                                            <td th:text="${@importServiceImpl.findProductIdByImportId(icDTO.importId)}"></td>
+                                            <td th:text="${@importServiceImpl.findImportNumByImportId(icDTO.importId)}"></td>
+                                            <td th:text="${@importServiceImpl.findImportDateByImportId(icDTO.importId)}"></td>
+                                            <td>[[${icDTO.importCheckStatus}]]</td>
+                                            <td>
+                                                <button class="removeBtn" onclick="confirmDelete(this)">
+                                                    검수완료
+                                                </button>
+                                                <button class="reviewBtn" onclick="openReviewModal(this)">
+                                                    반품처리
+                                                    <input name="importCheckId" th:value="${icDTO.importCheckId}" type="hidden">
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                <ul class="pagination h-100 justify-content-center align-items-center">
+                                    <li class="page-item " th:if="${icResult.prev}">
+                                        <a class="page-link" tabindex="-1" th:href="@{/ezen25/request/importCheck/list(page = ${icResult.start-1}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}"><</a>
+                                    </li>
+
+                                    <li th:class="'page-item ' + ${icResult.page == page?'active':''}"
+                                        th:each="page: ${icResult.pageList}">
+                                        <a class="page-link" th:href="@{/ezen25/request/importCheck/list(page = ${page}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}">[[${page}]]</a>
+                                    </li>
+
+                                    <li class="page-item" th:if="${icResult.next}">
+                                        <a class="page-link" th:href="@{/ezen25/request/importCheck/list(page = ${icResult.end + 1}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}">></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            function openReviewModal(button) {
+                // 나중에 사용할 수 있도록 모달에 importCheckId 설정
+                var importCheckId = $(button).closest('tr').find('[name="importCheckId"]').val();
+                console.log('importCheckId:', importCheckId); // 추가된 로그
+                $('#reviewModal').data('importCheckId', importCheckId); // 변경된 부분
+
+                // 모달 표시
+                $('#reviewModal').modal('show');
+            }
+
+            $(document).ready(function () {
+                $("#submitBtn").click(function () {
+                    var num = $("#numInput").val();
+                    var importCheckId = $('#reviewModal').data('importCheckId');
+                    console.log('data-importCheckId:', importCheckId); // 추가된 로그
+
+                    if (!isNaN(num) && num !== "" && importCheckId !== undefined) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/ezen25/request/importCheck/review",
+                            data: {
+                                importCheckId: importCheckId,
+                                num: num
+                            },
+                            success: function (data) {
+                                // 처리가 성공한 경우 리다이렉트
+                                window.location.href = "/ezen25/request/importCheck/list";
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('에러:', error);
+                            }
+                        });
+
+                        $('#reviewModal').modal('hide'); // 모달 닫기
+                    } else {
+                        alert("올바른 숫자를 입력하세요.");
+                    }
+                });
+            });
+        </script>
+
+
+
+
+        <script th:inline="javascript">
+
+            var searchForm = $("#searchForm");
+
+            $('.btn-search').click(function(e) {
+
+                searchForm.submit();
+
+            });
+
+            $('.btn-clear').click(function(e) {
+
+                searchForm.empty().submit();
+
+            });
+
+        </script>
+        <script th:inline="javascript">
+            function confirmDelete(button) {
+                if (confirm('검수완료 처리하시겠습니까?')) {
+                    // Get the importCheckId from the hidden input field in the same row
+                    var importCheckId = $(button).closest('tr').find('input[name="importCheckId"]').val();
+
+                    // Alternatively, you can use pure JavaScript to get the value
+                    // var importCheckId = document.getElementsByName('importCheckId')[0].value;
+
+                    // If the user confirms, send an Ajax request to delete the record
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ezen25/request/importCheck/remove',
+                        data: { importCheckId: importCheckId },
+                        success: function (data) {
+                            // Optionally, handle the response from the server
+                            console.log('Delete response:', data);
+
+                            // Redirect to the list page after successful deletion
+                            window.location.href = '/ezen25/request/importCheck/list';
+                        },
+                        error: function (error) {
+                            console.error('Error deleting record:', error);
+                        }
+                    });
+                }
+            }
+        </script>
+
+    </main>
+</th:block>
+</html>

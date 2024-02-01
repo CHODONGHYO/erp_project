@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko" layout:decorate="~{/layout/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<style th:inline="text">
+    @media print {
+        /* 프린트 페이지에 적용될 스타일 */
+        printPageSet {
+            font-size: 12pt;
+        }
+        .page_title h1 {
+            font-size: 16pt;
+        }
+        .print-hidden {
+            display: none !important;
+        }
+    }
+</style>
+<th:block layout:fragment="content">
+    <!-- 여기에 생성할 페이지 코드 작성 -->
+    <main>
+        <div class="container-fluid">
+            <div class="jasonNoh">
+                <div class="row column_title">
+                    <div class="col-md-12">
+                        <div class="page_title">
+                            <h1 class="mt-4">요청 상세</h1>
+                        </div>
+                    </div>
+                </div>
+                <input name="requestId" th:value="${requestdto.requestId}" type="hidden">
+                <input name="page" th:value="${pageRequestDTO.page}" type="hidden">
+                <input name="type" th:value="${pageRequestDTO.type}" type="hidden">
+                <input name="keyword" th:value="${pageRequestDTO.keyword}" type="hidden">
+                <div>
+                    <div class="col-md-12">
+                        <div class="white_shd full margin_bottom_30">
+                            <div class="full graph_head">
+                                <table class="table_for_details" width="100%">
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">품목 코드</td>
+                                        <td class="td_for_details">[[${requestdto.requestCode}]]</td>
+                                        <td class="td_for_details">개수</td>
+                                        <td class="td_for_details">[[${requestdto.requestNum}]]개</td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">브랜드</td>
+                                        <td class="td_for_details">[[${requestdto.brandId}]]</td>
+                                        <td class="td_for_details">요청일자</td>
+                                        <td class="td_for_details">[[${requestdto.requestDate}]]</td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">완료예정</td>
+                                        <td class="td_for_details">[[${requestdto.requestOutDate}]]</td>
+                                        <td class="td_for_details">상태</td>
+                                        <td class="td_for_details">[[${requestdto.requestStatus}]]</td>
+                                    </tr>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details" colspan="1">비고</td>
+                                        <td class="td_for_details" colspan="5">
+                                        <textarea class="form-control" name="requestDescription" readonly style="height: 225px;
+                                        ">[[${requestdto.requestDescription}]]</textarea>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="float:right;">
+                <a th:if="${requestdto.requestStatus} != '완료'">
+                <button class="btn btn-danger removeBtn" type="button"
+                        th:data-request-id="${requestdto.requestId}"
+                        th:data-page="${pageRequestDTO.page}"
+                        th:data-type="${pageRequestDTO.type}"
+                        th:data-keyword="${pageRequestDTO.keyword}"
+                        onclick="confirmAndRemove(this)">삭제</button>
+                </a>
+
+                <a th:href="@{/ezen25/request/modify(requestId = ${requestdto.requestId}, page = ${pageRequestDTO.page},
+         type = ${pageRequestDTO.type}, keyword = ${pageRequestDTO.keyword})}" th:if="${requestdto.requestStatus} != '완료'">
+                    <button class="btn btn-primary" type="button">수정</button>
+                </a>
+
+                <a th:href="@{/ezen25/request/list(page=${pageRequestDTO.page}, type = ${pageRequestDTO.type},
+         keyword = ${pageRequestDTO.keyword})}">
+                    <button class="btn btn-info" type="button">목록</button>
+                </a>
+                <a th:href="@{/ezen25/request/print(requestId = ${requestdto.requestId})}" target="_blank"
+                   onclick="window.open(this.href, 'SpecWindow', 'width=1111px,height=606px'); return false;">
+                    <button class="btn btn-success">Print</button>
+                </a>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            function confirmAndRemove(button) {
+                if (confirm('삭제하겠습니까?')) {
+                    var requestId = $(button).data('request-id');
+                    var page = $(button).data('page');
+                    var type = $(button).data('type');
+                    var keyword = $(button).data('keyword');
+
+                    // 출력된 값이 제대로 나오는지 확인
+                    console.log('requestId:', requestId);
+                    console.log('page:', page);
+                    console.log('type:', type);
+                    console.log('keyword:', keyword);
+
+                    // Ajax를 이용한 DELETE 요청
+                    $.ajax({
+                        url: '/ezen25/request/remove',
+                        data: {
+                            requestId: requestId,
+                            page: page,
+                            type: type || '', // type이 undefined일 경우 빈 문자열로 설정
+                            keyword: keyword || '' // keyword가 undefined일 경우 빈 문자열로 설정
+                        },
+                        type: 'POST',
+                        success: function(data) {
+                            // 성공 응답을 처리 (필요에 따라 추가 작업)
+                            console.log('요청이 성공적으로 삭제되었습니다.');
+
+                            // Redirect to the list page with search parameters
+                            var redirectUrl = '/ezen25/request/list?page=' + page + '&type=' + (type || '') + '&keyword=' + (keyword || '');
+                            window.location.href = redirectUrl;
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            // 에러 응답을 처리 (필요에 따라 추가 작업)
+                            console.error('요청을 삭제하는 도중 오류가 발생했습니다.');
+                            console.error('Status:', textStatus);
+                            console.error('Error:', errorThrown);
+                        }
+                    });
+                }
+            }
+        </script>
+    </main>
+</th:block>
+</html>

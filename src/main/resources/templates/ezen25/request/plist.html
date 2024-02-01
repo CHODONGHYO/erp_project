@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+<link rel="stylesheet" th:href="@{/css/styles.css}"/>
+<link rel="stylesheet" th:href="@{/css/commonStyle.css}"/>
+<script th:src="@{/js/jQuery-min.js}"></script>
+<script crossorigin="anonymous" th:src="@{https://use.fontawesome.com/releases/v6.3.0/js/all.js}"></script>
+<link href="/pluto/css/bootstrap.min.css" rel="stylesheet"/>
+<!-- responsive css -->
+<link href="/pluto/css/responsive.css" rel="stylesheet"/>
+<!-- select bootstrap -->
+<link href="/pluto/css/bootstrap-select.css" rel="stylesheet"/>
+<!-- scrollbar css -->
+<link href="/pluto/css/perfect-scrollbar.css" rel="stylesheet"/>
+<!-- fancy box js -->
+<link href="/pluto/css/jquery.fancybox.css" rel="stylesheet"/>
+<main>
+    <div class="full graph_head">
+        <div>
+            <form action="/ezen25/request/plist" id="searchForm" method="get">
+                <div class="input-group">
+                    <input name="page" type="hidden" value="1">
+                    <div class="input-group-prepend">
+                        <select class="custom-select" name="type">
+                            <option th:selected="${pageRequestDTO.type == 'pnpcmcscbnbc'}" value="pnpcmcscbnbc">
+                                전체
+                            </option>
+                            <option th:selected="${pageRequestDTO.type == 'pnpc'}" value="pnpc">
+                                품목 이름 + 코드
+                            </option>
+                            <option th:selected="${pageRequestDTO.type == 'mcsc'}" value="mcsc">
+                                카테고리
+                            </option>
+                            <option th:selected="${pageRequestDTO.type == 'bnbc'}" value="bnbc">
+                                브랜드 이름 + 코드
+                            </option>
+
+                        </select>
+                    </div>
+                    <input class="form-control" name="keyword" th:value="${pageRequestDTO.keyword}"
+                           type="text">
+                    <div class="input-group-append" id="button-addon4">
+                        <button class="btn btn-outline-secondary btn-search" type="button">Search
+                        </button>
+                        <button class="btn btn-outline-secondary btn-clear" type="button">Clear
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div>
+
+        </div>
+    </div>
+
+    <div class="table_section padding_infor_info">
+        <div class="table-responsive-sm">
+            <form action="/ezen25/common/pListSelectDelete" method="post">
+                <table class="table" style="text-align:center;">
+                    <thead>
+                    <tr>
+                        <th>품목 코드</th>
+                        <th>품목 이름</th>
+                        <th>이미지</th>
+                        <th>주 카테고리</th>
+                        <th>부 카테고리</th>
+                        <th>브랜드 코드</th>
+                        <th>브랜드 이름</th>
+                        <th>선택</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product : ${pList.dtoList}">
+                        <td>[[${product.productId}]]</td>
+                        <td>[[${product.productName}]]</td>
+                        <td>[[${product.image}]]</td>
+                        <td>[[${product.mCategory}]]</td>
+                        <td>[[${product.sCategory}]]</td>
+                        <td>[[${product.brandId}]]</td>
+                        <td th:text="${@brandServiceImpl.findBrandName(product.brandId)}"></td>
+                        <td>
+                            <a th:attr="onclick='closeAndSetValue(\'' + ${product.productId} + '\', \'' + ${product.brandId} +
+                             '\', \'' + ${@brandServiceImpl.findBrandName(product.brandId)} + '\', \'' + ${product.productName} + '\')'">선택하기</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </form>
+            <ul class="pagination h-100 justify-content-center align-items-center">
+                <li class="page-item " th:if="${pList.prev}">
+                    <a class="page-link" tabindex="-1" th:href="@{/ezen25/request/plist(page = ${pList.start-1}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}"><</a>
+                </li>
+
+                <li th:class="'page-item ' + ${pList.page == page?'active':''}"
+                    th:each="page: ${pList.pageList}">
+                    <a class="page-link" th:href="@{/ezen25/request/plist(page = ${page}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}">[[${page}]]</a>
+                </li>
+
+                <li class="page-item" th:if="${pList.next}">
+                    <a class="page-link" th:href="@{/ezen25/request/plist(page=${pList.end + 1}, type=${pageRequestDTO.type},
+                keyword=${pageRequestDTO.keyword})}">></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <script th:inline="javascript">
+
+        var searchForm = $("#searchForm");
+
+        $('.btn-search').click(function(e) {
+
+            searchForm.submit();
+
+        });
+
+        $('.btn-clear').click(function(e) {
+
+            searchForm.empty().submit();
+
+        });
+
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script th:inline="javascript">
+        $(document).ready(function() {
+          // 전체 선택 체크박스
+          $("#selectAll").click(function() {
+              $("input[name='pListDeleteList']").prop('checked', this.checked);
+          });
+      });
+      // 선택 삭제 함수
+      function pListDeleteSelected() {
+          var selectedItems = [];
+
+          // 선택된 체크박스 가져오기
+          $('input[name="pListDeleteList"]:checked').each(function() {
+              selectedItems.push($(this).val());
+          });
+
+          // 선택된 항목이 없을 경우 알림
+          if (selectedItems.length === 0) {
+              alert("선택된 항목이 없습니다.");
+              return false;
+          }
+
+          // 사용자에게 삭제 여부 확인
+          var isConfirmed = confirm("선택한 항목을 삭제하시겠습니까?");
+
+          // 사용자가 확인을 눌렀을 때 삭제 요청
+          if (isConfirmed) {
+              console.log("deleteSelected 함수 호출됨");
+              alert("삭제완료");
+              return true;
+
+          } else {
+              return false;
+          }
+      }
+    </script>
+    <script th:inline="javascript">
+        // Add closeAndSetValue function
+        function closeAndSetValue(productId, brandId, brandName, productName) {
+            // Close the current window
+            window.close();
+
+            // Set the values in the parent window's inputs
+            opener.$('input[name="productId"]').val(productId);
+            opener.$('input[name="brandId"]').val(brandId);
+            opener.$('span[id="brandName"]').text(brandName);
+            opener.$('span[id="productName"]').text(productName);
+        }
+    </script>
+</main>
+</html>
