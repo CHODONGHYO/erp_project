@@ -69,6 +69,7 @@ public class StockController {
     public String exportPOST(@RequestParam(value = "orderCode") String orderCode, Model model) {
         log.info("출고리스트 페이지로...........");
         stockService.updateOrderStatus2(orderCode);
+        /*stockService.updateProductNum(orderCode);*/
         return "ezen25/stock/exportList";
     }
 

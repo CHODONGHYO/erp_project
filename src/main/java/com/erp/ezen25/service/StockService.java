@@ -17,6 +17,7 @@ public interface StockService {
 
     void updateOrderStatus(String orderCode, List<Long> productIds);
     void updateOrderStatus2(String orderCode);
+    /*void updateProductNum(String orderCode);*/
 
     default Product_Stock dtoToEntity(StockDTO dto) {
         Product_Stock entity = Product_Stock.builder()
