@@ -24,7 +24,7 @@ import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> , QuerydslPredicateExecutor<Order> {
     @Query("SELECT o FROM Order o JOIN FETCH o.member WHERE o.orderCode = :orderCode")
-    List<Order> findByOrderCode(String orderCode);
+    List<Order> findByOrderCode(@Param("orderCode") String orderCode);
 
     @Query("SELECT o FROM Order o WHERE o.orderId= :orderId")
     Optional<Order> findByOrderId(@Param("orderId") Long orderId);
@@ -88,5 +88,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> , QuerydslPr
             "FROM Order o JOIN o.member m " +
             "GROUP BY m.name, o.orderCode, o.orderDate")
     List<OrderListDTO> getOrderListDTO();
-    long countByOrderDate(String orderDate);
+    long countByOrderDate(@Param("orderCode") String orderDate);
 }
