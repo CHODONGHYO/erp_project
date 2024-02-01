@@ -19,7 +19,7 @@
                     <form action="/ezen25/order/mod" method="post">
                         <!--페이지 번호 hidden으로 받기-->
                         <input name="orderId" th:value="${orderDTO.orderId}" type="hidden">
-                        <input name="orderCode" th:value="${orderDTO.orderCode}" type="hidden">
+
                         <div class="white_shd full margin_bottom_30">
                             <input name="page" th:value="${pageRequestDTO.page}" type="hidden">
                             <input name="type" th:value="${pageRequestDTO.type}" type="hidden">
@@ -39,7 +39,7 @@
                                             <input class="form-control"
                                                    name="productId"
                                                    th:value="${orderDTO.productId}"
-                                                   type="text">
+                                                   type="text" readonly>
                                         </td>
                                     </tr>
                                     <tr class="tr_for_details">
@@ -69,10 +69,8 @@
                                     <tr class="tr_for_details">
                                         <td class="td_for_details">비고</td>
                                         <td class="td_for_details">
-                                            <input class="form-control"
-                                                   name="orderDescription"
-                                                   th:value="${orderDTO.orderDescription}"
-                                                   type="text" readonly>
+                                            <textarea class="form-control" name="orderDescription"
+                                                      style="height: 225px;" th:value="${orderDTO.orderDescription}" th:text="${orderDTO.orderDescription}" readonly></textarea>
                                         </td>
                                     </tr>
                                 </table>
@@ -120,7 +118,7 @@
                 var page = $("input[name='page']");
                 var type = $("input[name='type']");
                 var keyword = $("input[name='keyword']");
-                var orderCode= $("input[name='orderCode]");
+                var orderCode= $("input[name='orderCode']");
 
                 actionForm.empty();
                 actionForm.append(page);
