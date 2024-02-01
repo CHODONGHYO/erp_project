@@ -30,20 +30,21 @@
                             <th>입고가</th>
                             <th>판매가</th>
                             <th>재고수량</th>
-                            <th>입고일</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each="dto, stat : ${stockList}">
                             <th th:text="${stat.count}"></th>
-                            <td th:text="${dto?.image}"></td>
+                            <td>
+                                <img style="width: 30px;" class="image" th:if="${dto?.image != null}" th:src="@{|/image/${dto?.image.substring(0,10).replaceAll('-','/')}/${dto?.image}|}" alt="이미지"/>
+                                <img style="width: 30px;" class="image" th:unless="${dto?.image != null}" th:src="@{/image/NoImg.png}" alt="이미지"/>
+                            </td>
                             <td th:text="${dto?.productId}"></td>
                             <td th:text="${dto?.productName}"></td>
                             <td th:text="${dto?.mCategory} + '/' + ${dto?.sCategory}"></td>
                             <td th:text="${dto?.originalPrice}"></td>
                             <td th:text="${dto?.sellPrice}"></td>
                             <td th:text="${dto?.productNum}"></td>
-                            <td th:text="${#temporals.format(dto?.importDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>
                         </tbody>
                     </table>

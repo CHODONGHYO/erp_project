@@ -19,7 +19,7 @@ public interface StockService {
     void updateOrderStatus2(String orderCode);
     /*void updateProductNum(String orderCode);*/
 
-    default Product_Stock dtoToEntity(StockDTO dto) {
+    /*default Product_Stock dtoToEntity(StockDTO dto) {
         Product_Stock entity = Product_Stock.builder()
                 .pNumId(dto.getPNumId())
                 .product(new Product_Info().setProductId(dto.getProductId()))
@@ -28,6 +28,6 @@ public interface StockService {
                 .totalPrice(dto.getTotalPrice())
                 .build();
         return entity;
-    }
+    }*/
 
 }
