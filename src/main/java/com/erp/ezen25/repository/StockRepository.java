@@ -3,10 +3,12 @@ package com.erp.ezen25.repository;
 import com.erp.ezen25.dto.ExportCompleteDTO;
 import com.erp.ezen25.dto.ExportDTO;
 import com.erp.ezen25.dto.StockDTO;
+import com.erp.ezen25.entity.Product_Info;
 import com.erp.ezen25.entity.Product_Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.parameters.P;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-public interface StockRepository extends JpaRepository<Product_Stock, Long> {
+public interface StockRepository extends JpaRepository<Product_Stock, Long>, QuerydslPredicateExecutor<Product_Stock> {
 
     @Query("select new com.erp.ezen25.dto.StockDTO(ps.pNumId, pi.image, pi.productId, ps.productNum, pi.productName, pi.mCategory, pi.sCategory, pi.originalPrice, pi.sellPrice) from Product_Stock ps left join Product_Info pi on pi.productId = ps.product.productId ORDER BY ps.pNumId DESC")
     List<StockDTO> getImportDateWithImport();
@@ -38,7 +40,7 @@ public interface StockRepository extends JpaRepository<Product_Stock, Long> {
     @Modifying
     @Transactional
     @Query("UPDATE Order o SET o.orderStatus = '1' WHERE o.orderCode = :orderCode AND o.product.productId IN :productIds")
-    void updateOrderStatus(@Param("orderCode") String orderCode, List<Long> productIds);
+    void updateOrderStatus(@Param("orderCode") String orderCode, @Param("productIds") List<Long> productIds);
 
     @Modifying
     @Transactional

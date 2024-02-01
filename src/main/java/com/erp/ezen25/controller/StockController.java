@@ -29,12 +29,12 @@ public class StockController {
         List<StockDTO> stockList = stockService.getListWithProduct();
         System.out.println(stockList);
         model.addAttribute("stockList", stockList);
-        return "ezen25/stock/stockList";
+        return "/ezen25/stock/stockList";
     }
 
     // 재고불출 페이지로 이동(모달)
     @GetMapping("/withdrawal")
-    public String withdrawalGET(@RequestParam String orderCode, Model model) {
+    public String withdrawalGET(@RequestParam("orderCode") String orderCode, Model model) {
         log.info("재고불출 페이지로 이동........");
         List<WithdrawalDTO> withdrawalList = orderService.getWithdrawalList(orderCode);
         String name = withdrawalList.get(0).getName();
@@ -42,7 +42,7 @@ public class StockController {
         model.addAttribute("withdrawalList", withdrawalList);
         model.addAttribute("orderCode",orderCode);
         model.addAttribute("name",name);
-        return "ezen25/stock/withdrawal";
+        return "/ezen25/stock/withdrawal";
     }
 
     // 재고불출 페이지에서 출고하기 버튼 클릭 시 처리
@@ -62,7 +62,7 @@ public class StockController {
         model.addAttribute("name",name);
         model.addAttribute("orderCode",orderCode);
         log.info("exportList :" + exportList);
-        return "ezen25/stock/exporting";
+        return "/ezen25/stock/exporting";
     }
 
     // 출고처리 페이지에서 확인 버튼 클릭 시 처리
@@ -71,7 +71,7 @@ public class StockController {
         log.info("출고리스트 페이지로...........");
         stockService.updateOrderStatus2(orderCode);
         /*stockService.updateProductNum(orderCode);*/
-        return "ezen25/stock/exportList";
+        return "/ezen25/stock/exportList";
     }
 
     // 출고리스트 페이지로 이동
@@ -80,6 +80,6 @@ public class StockController {
         List<ExportCompleteDTO> exportCompleteList = stockService.getCompletedExportList();
         model.addAttribute("exportCompleteList", exportCompleteList);
         log.info("출고 완료 리스트: "+ exportCompleteList);
-        return "ezen25/stock/exportList";
+        return "/ezen25/stock/exportList";
     }
 }
