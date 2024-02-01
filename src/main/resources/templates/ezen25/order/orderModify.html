@@ -10,16 +10,16 @@
             <div class="row column_title">
                 <div class="col-md-12">
                     <div class="page_title">
-                        <h1 class="mt-4"> 발주 품목 수정 - #[[${orderDTO.orderId}]]</h1>
+                        <h1 class="mt-4"> 발주 수정 - #[[${orderCode}]]</h1>
                     </div>
                 </div>
             </div>
             <div>
                 <div class="col-md-12">
-                    <form action="/ezen25/order/mod" method="post">
+                    <form action="/ezen25/order/ordermod" method="post">
                         <!--페이지 번호 hidden으로 받기-->
-                        <input name="orderId" th:value="${orderDTO.orderId}" type="hidden">
-                        <input name="orderCode" th:value="${orderDTO.orderCode}" type="hidden">
+                        <input name="orderId" th:value="${orderdto.orderId}" type="hidden">
+                        <input name="orderCode" th:value="${orderCode}" type="hidden">
                         <div class="white_shd full margin_bottom_30">
                             <input name="page" th:value="${pageRequestDTO.page}" type="hidden">
                             <input name="type" th:value="${pageRequestDTO.type}" type="hidden">
@@ -28,54 +28,35 @@
                             <div class="full graph_head">
                                 <table class="table_for_details" width="100%">
                                     <tr class="tr_for_details">
-                                        <td class="td_for_details">발주 코드</td>
-                                        <td class="td_for_details">
-                                            [[${orderDTO.orderCode}]]
-                                        </td>
+                                    <tr class="tr_for_details">
+                                        <td class="td_for_details">발주코드</td>
+                                        <td class="td_for_details" colspan="3">[[${orderCode}]]</td>
                                     </tr>
                                     <tr class="tr_for_details">
+                                        <td class="td_for_details">지점명</td>
+                                        <td class="td_for_details">[[${orderdto.name}]]</td>
+                                        <td class="td_for_details">발주일자</td>
+                                        <td class="td_for_details">[[${orderdto.orderDate}]]</td>
+                                    </tr>
+                                    <tr th:each="order : ${orderlist}" class="tr_for_details">
                                         <td class="td_for_details">품목 코드</td>
-                                        <td class="td_for_details">
-                                            <input class="form-control"
-                                                   name="productId"
-                                                   th:value="${orderDTO.productId}"
-                                                   type="text">
-                                        </td>
-                                    </tr>
-                                    <tr class="tr_for_details">
+                                        <td class="td_for_details" th:text="${order.productId}"></td>
                                         <td class="td_for_details">개수</td>
-                                        <td class="td_for_details">
-                                            <input class="form-control"
-                                                   name="orderNum"
-                                                   th:value="${orderDTO.orderNum}"
-                                                   type="text">
-                                        </td>
-                                    </tr>
-                                    <tr class="tr_for_details">
-                                        <td class="td_for_details">날짜</td>
-                                        <td class="td_for_details">
-                                            <input class="form-control"
-                                                   name="orderDate"
-                                                   th:value="${orderDTO.orderDate}"
-                                                   type="text">
-                                        </td>
+                                        <td class="td_for_details" th:text="${order.orderNum}"></td>
                                     </tr>
                                     <tr class="tr_for_details">
                                         <td class="td_for_details">상태</td>
-                                        <td class="td_for_details">
-                                            <input class="form-control"
-                                                   name="orderStatus"
-                                                   th:value="${orderDTO.orderStatus}"
-                                                   type="text">
+                                        <td class="td_for_details" colspan="3">
+                                            <span th:if="${orderdto.orderStatus == '0'}">발주요청</span>
+                                            <span th:if="${orderdto.orderStatus == '1'}">진행중</span>
+                                            <span th:if="${orderdto.orderStatus == '2'}">완료</span>
                                         </td>
                                     </tr>
                                     <tr class="tr_for_details">
-                                        <td class="td_for_details">특이사항</td>
-                                        <td class="td_for_details">
-                                            <input class="form-control"
-                                                   name="orderDescription"
-                                                   th:value="${orderDTO.orderDescription}"
-                                                   type="text">
+                                        <td class="td_for_details">비고</td>
+                                        <td class="td_for_details" colspan="5">
+                                           <textarea class="form-control" name="orderDescription"
+                                                     style="height: 225px;" th:text="${orderdto.orderDescription}"></textarea>
                                         </td>
                                     </tr>
                                 </table>
@@ -101,7 +82,7 @@
             $(".removeBtn").click(function(){
 
                 actionForm
-                    .attr("action", "/ezen25/order/del")
+                    .attr("action", "/ezen25/order/orderdel")
                     .attr("method", "post");
 
                 actionForm.submit();
@@ -113,7 +94,7 @@
         return;
     }
 
-    actionForm.attr("action", "/ezen25/order/mod");
+    actionForm.attr("action", "/ezen25/order/ordermod");
     actionForm.attr("method", "post");
     actionForm.submit();
 });
@@ -123,14 +104,16 @@
                 var page = $("input[name='page']");
                 var type = $("input[name='type']");
                 var keyword = $("input[name='keyword']");
+                var orderCode= $("input[name='orderCode]");
+
 
                 actionForm.empty();
                 actionForm.append(page);
                 actionForm.append(type);
                 actionForm.append(keyword);
-
+                actionForm.append(orderCode);
                 actionForm
-                    .attr("action", "/ezen25/order/search")
+                    .attr("action", "/ezen25/order/itemlist")
                     .attr("method", "get");
 
                 console.log(actionForm.html());

@@ -1,6 +1,7 @@
 package com.erp.ezen25.repository;
 
 
+
 import com.erp.ezen25.dto.OrderListDTO;
 import com.erp.ezen25.dto.WithdrawalDTO;
 import com.erp.ezen25.entity.Export;
@@ -8,19 +9,23 @@ import com.erp.ezen25.entity.Order;
 import com.querydsl.core.BooleanBuilder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import org.springframework.data.repository.query.Param;
 import com.erp.ezen25.queryMapping.OrderAndStockMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
+import com.erp.ezen25.entity.Order;
+import com.erp.ezen25.queryMapping.OrderAndStockMapping;
 import java.util.List;
 import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long> , QuerydslPredicateExecutor<Order> {
     @Query("SELECT o FROM Order o JOIN FETCH o.member WHERE o.orderCode = :orderCode")
     List<Order> findByOrderCode(String orderCode);
+
     @Query("SELECT o FROM Order o WHERE o.orderId= :orderId")
     Optional<Order> findByOrderId(@Param("orderId") Long orderId);
 
@@ -28,7 +33,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> , QuerydslPr
     Optional<Order> getByOrderCode(@Param("orderCode") String orderCode);
 
     @Query(value = "select o.order_id, o.member_id, o.order_date, o.product_id, o.order_num, o.order_description, o.order_status, o.order_code, m.name" +
-            " from ordering o, member m where o.member_id = m.member_id and o.order_code= :orderCode LIMIT 1",nativeQuery = true)
+            " from ordering o, member m where o.member_id = m.member_id and o.order_code= :orderCode ORDER BY o.order_id ASC LIMIT 1",nativeQuery = true)
     Optional<Order> getOneByOrderCode(@Param("orderCode") String orderCode);
 
     @Query(value = "select o.order_id, o.member_id, o.order_date, o.product_id, o.order_num, o.order_description, o.order_status, o.order_code, m.name " +
@@ -53,7 +58,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> , QuerydslPr
     @Query(value = "SELECT product_id from product_info where s_category= :subcategory",nativeQuery = true)
     List<String> findProductList(@Param("subcategory") String subcategory);
 
-
+    @Modifying
+    @Query(value="DELETE FROM ORDERING WHERE order_code= :orderCode",nativeQuery = true)
+    void deleteByOrderCode(@Param("orderCode") String orderCode);
 
     @Query(value = "select s.product_name, s.order_num, product_num from\n" +
             "(select product_name, sum(order_num) as order_num, p.product_id\n" +

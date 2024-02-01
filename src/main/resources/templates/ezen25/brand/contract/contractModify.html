@@ -9,8 +9,8 @@
         <div class="container-fluid px-4">
             <h1 class="mt-4">계약수정</h1>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item">계약관리</li>
-                <li class="breadcrumb-item active">계약수정</li>
+                <li class="breadcrumb-item">협력업체</li>
+                <li class="breadcrumb-item active">계약관리</li>
             </ol>
             <div class="cardGroup">
                 <div class="card mb-4 cardForm">
@@ -20,7 +20,7 @@
                             입력란
                         </div>
                     </div>
-                    <form method="post" class="card-body" id="contractAddForm" enctype="multipart/form-data">
+                    <form method="post" class="card-body" id="contractAddForm" name="contractAddForm" enctype="multipart/form-data">
                         <input type="hidden" id="contractId" name="contractId" th:value="${contract.contractId}">
                         <div class="inputLine relative">
                             <label for="brandName">계약 업체</label><input type="text" class="form-control" id="brandName" name="brandName" th:value="${contract.BrandName}" readonly>
@@ -105,7 +105,27 @@
         })
 
         $(".registerBtn").on("click", (e) => {
-            console.log("ddd");
+            if (document.contractAddForm.brandName.value == "") {
+                alert("브랜드를 입력해주세요")
+                document.contractAddForm.bNameList.focus();
+                return false;
+            }
+            if (document.contractAddForm.productName.value == "") {
+                alert("제품이름을 입력해주세요")
+                document.contractAddForm.pNameList.focus();
+                return false;
+            }
+            if (document.contractAddForm.contractDate.value == "") {
+                alert("날짜를 입력해주세요")
+                document.contractAddForm.contractDate.focus();
+                return false;
+            }
+            if (document.contractAddForm.contractSelect.files.length != 0 && document.contractAddForm.contractSelect.files[0].type != 'application/pdf') {
+                alert("'pdf' 타입의 파일을 넣어주세요")
+                document.contractAddForm.contractSelect.value = ""
+                document.contractAddForm.contractSelect.focus();
+                return false;
+            }
             $("#contractAddForm").submit();
         })
     </script>

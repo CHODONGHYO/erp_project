@@ -7,7 +7,7 @@
     <!-- 여기에 생성할 페이지 코드 작성 -->
     <main class="tableListStyle contractList">
         <div class="container-fluid px-4">
-            <h1 class="mt-4">계약관리</h1>
+            <h1 class="mt-4">계약서 목록</h1>
             <ol class="breadcrumb mb-4">
                 <li class="breadcrumb-item">협력업체</li>
                 <li class="breadcrumb-item active">계약관리</li>
@@ -15,12 +15,21 @@
 
             <div class="card mb-4">
                 <div class="card-header">
-                    <div>
-                        <i class="fas fa-table me-1"></i>
-                        품목 리스트
+                    <div class="flex leftHeader">
+                        <i class="fas fa-table me-1 "></i>
+                        <span>계약 목록</span>
+                        <div class="flex ">
+                            <input type="date" th:value="${date1}" class="form-control  selectDate selectDate1" style="margin-right: 10px;"> ~
+                            <input type="date" th:value="${date2}" class="form-control  selectDate selectDate2">
+                        </div>
+                        <div class="card bg-teal text-white mb-2 prodBtn" style="margin-left: 10px !important;">
+                            <a href="#" class="card-body resetLink" id="dateConfirm">날짜조회</a>
+                        </div>
                     </div>
-                    <div class="card bg-primary text-white mb-2 prodBtn">
-                        <a href="contractAdd" class="card-body resetLink">계약 등록</a>
+                    <div class="flex">
+                        <div class="card bg-primary text-white mb-2 prodBtn">
+                            <a href="contractAdd" class="card-body resetLink">계획등록</a>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -130,6 +139,16 @@
         $(".myModal .moBtn.close").on("click", (e) => {
             $(e.target).parents(".myModal").hide();
         })
+
+        let selectDate1 = $(".selectDate1").val();
+        let selectDate2 = $(".selectDate2").val();
+        $("#dateConfirm").attr("href", `contractList${selectDate1}~${selectDate2}`);
+        $(".selectDate").on("change", (e) => {
+            selectDate1 = $(".selectDate1").val();
+            selectDate2 = $(".selectDate2").val();
+            $("#dateConfirm").attr("href", `contractList${selectDate1}~${selectDate2}`);
+        })
+
         $(".myModal.deleteModal .deleteBtn").on("click", () => {
             let modalContractId = document.querySelector(".modalContractId").value;
             $.ajax({
