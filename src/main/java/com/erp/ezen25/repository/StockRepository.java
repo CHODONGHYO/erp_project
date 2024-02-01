@@ -15,7 +15,7 @@ import java.util.List;
 
 public interface StockRepository extends JpaRepository<Product_Stock, Long> {
 
-    @Query("select new com.erp.ezen25.dto.StockDTO(ps.pNumId, pi.image, pi.productId, ps.productNum, pi.productName, pi.mCategory, pi.sCategory, pi.originalPrice, pi.sellPrice) from Product_Stock ps left join Product_Info pi on pi.productId = ps.product.productId")
+    @Query("select new com.erp.ezen25.dto.StockDTO(ps.pNumId, pi.image, pi.productId, ps.productNum, pi.productName, pi.mCategory, pi.sCategory, pi.originalPrice, pi.sellPrice) from Product_Stock ps left join Product_Info pi on pi.productId = ps.product.productId ORDER BY ps.pNumId DESC")
     List<StockDTO> getImportDateWithImport();
 
     @Query("SELECT new com.erp.ezen25.dto.ExportDTO(e.exportId, pi.productId, pi.image, pi.productName, pi.mCategory, pi.sCategory, o.orderNum, ps.productNum, pi.sellPrice, e.exportNum, o.orderStatus, e.exportDate, e.orderCode) " +
