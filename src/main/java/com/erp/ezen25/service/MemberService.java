@@ -50,6 +50,16 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
+    public List<MemberDTO> getAllMembers2() {
+        List<Member> members = memberRepository.findAll();
+
+        return members.stream()
+                .map(this::convertToDTO)
+                .sorted(Comparator.comparing(MemberDTO::getMemberId).reversed())
+                .collect(Collectors.toList());
+    }
+
+
     private boolean isUserIdOrNameInBrand(MemberDTO memberDTO) {
         String userId = memberDTO.getUserId();
         String name = memberDTO.getName();

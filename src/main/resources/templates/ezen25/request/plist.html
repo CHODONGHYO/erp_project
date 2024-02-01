@@ -17,6 +17,7 @@
 <link href="/pluto/css/perfect-scrollbar.css" rel="stylesheet"/>
 <!-- fancy box js -->
 <link href="/pluto/css/jquery.fancybox.css" rel="stylesheet"/>
+
 <main>
     <div class="full graph_head">
         <div>
@@ -76,7 +77,10 @@
                     <tr th:each="product : ${pList.dtoList}">
                         <td>[[${product.productId}]]</td>
                         <td>[[${product.productName}]]</td>
-                        <td>[[${product.image}]]</td>
+                        <td>
+                            <img style="width:100px" class="image" th:if="${product.image != null}" th:src="@{|/image/${product.image.substring(0,10).replaceAll('-','/')}/${product.image}|}" alt="이미지"/>
+                            <img style="width:100px" class="image" th:unless="${product.image != null}" th:src="@{/image/NoImg.png}" alt="이미지"/>
+                            </td>
                         <td>[[${product.mCategory}]]</td>
                         <td>[[${product.sCategory}]]</td>
                         <td>[[${product.brandId}]]</td>

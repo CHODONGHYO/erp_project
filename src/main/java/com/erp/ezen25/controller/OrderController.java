@@ -1,39 +1,18 @@
 package com.erp.ezen25.controller;
 
-import com.erp.ezen25.dto.ExportDTO;
-import com.erp.ezen25.dto.OrderDTO;
-import com.erp.ezen25.dto.OrderListDTO;
-import com.erp.ezen25.dto.PageRequestDTO;
-import com.erp.ezen25.service.ExportService;
-import com.erp.ezen25.service.ImportService;
-import com.erp.ezen25.service.OrderService;
-import com.erp.ezen25.service.ProductService;
 import com.erp.ezen25.dto.*;
-import com.erp.ezen25.dto.planDTOs.PlanListResponseDTO;
-import com.erp.ezen25.dto.productDTOs.ProductListResponseDTO;
-import com.erp.ezen25.dto.productDTOs.ProductMCateListResponseDTO;
-import com.erp.ezen25.dto.productDTOs.ProductSCateListResponseDTO;
-import com.erp.ezen25.entity.Member;
-import com.erp.ezen25.entity.Order;
-import com.erp.ezen25.repository.MemberRepository;
 import com.erp.ezen25.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.aspectj.weaver.ast.Or;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/ezen25/order")
@@ -159,7 +138,7 @@ public class OrderController {
 
 
         List<String> mCateList = orderService.getMCategoryList();
-        List<MemberDTO> mList = memberService.getAllMembers();
+        List<MemberDTO> mList = memberService.getAllMembers2();
         List<OrderDTO> oList = orderService.getmList(orderCode);
 
         LocalDateTime LDTCT = LocalDateTime.now();
@@ -187,7 +166,7 @@ public class OrderController {
     @GetMapping("/itemregister")
     public String addItems(Model model,@RequestParam(value="orderCode",required = false) String orderCode){
         List<String> mCateList = orderService.getMCategoryList();
-        List<MemberDTO> mList = memberService.getAllMembers();
+        List<MemberDTO> mList = memberService.getAllMembers2();
 
         OrderDTO oList = orderService.getOneOrderInfo(orderCode);
         log.info("발주코드에따른 정보는:"+oList);
