@@ -27,6 +27,7 @@ public class StockController {
     public String stockList(Model model) {
         log.info("재고리스트 페이지로 이동........");
         List<StockDTO> stockList = stockService.getListWithProduct();
+        System.out.println(stockList);
         model.addAttribute("stockList", stockList);
         return "ezen25/stock/stockList";
     }

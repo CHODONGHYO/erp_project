@@ -30,44 +30,42 @@ public class StockServiceImpl implements StockService {
     @Override
     @Transactional(readOnly = true)
     public List<StockDTO> getListWithProduct() {
-        List<Object[]> result = stockRepository.getImportDateWithImport();
-        return result.stream()
-                .map(this::objectArrayToStockDTOWithProduct)
-                .collect(Collectors.toList());
+        return stockRepository.getImportDateWithImport();
+
     }
 
-    private StockDTO objectArrayToStockDTOWithProduct(Object[] objects) {
-        Product_Stock Stock = (Product_Stock) objects[0];
-        Hibernate.initialize(Stock.getProduct());
-        Product_Info product = Stock.getProduct();
-
-        String dateString = objects[1].toString();
-        try {
-            LocalDateTime importDate = LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-            StockDTO dto = StockDTO.builder()
-                    .pNumId(Stock.getPNumId())
-                    .productId(product.getProductId())
-                    .productNum(Stock.getProductNum())
-                    .memberId(Stock.getMember().getMemberId())
-                    .totalPrice(Stock.getTotalPrice())
-                    .productName(product.getProductName())
-                    .mCategory(product.getMCategory())
-                    .sCategory(product.getSCategory())
-                    .originalPrice(String.valueOf(product.getOriginalPrice()))
-                    .sellPrice(String.valueOf(product.getSellPrice()))
-                    .image(product.getImage())
-                    .importDate(importDate)
-                    .build();
-
-            dto.setProduct(product);
-
-            return dto;
-        } catch (DateTimeParseException e) {
-            log.error("Error parsing date string: " + dateString, e);
-            return null;
-        }
-    }
+//    private StockDTO objectArrayToStockDTOWithProduct(Object[] objects) {
+//        Product_Stock Stock = (Product_Stock) objects[0];
+//        Hibernate.initialize(Stock.getProduct());
+//        Product_Info product = Stock.getProduct();
+//
+//        String dateString = objects[1].toString();
+//        try {
+//            LocalDateTime importDate = LocalDateTime.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+//
+//            StockDTO dto = StockDTO.builder()
+//                    .pNumId(Stock.getPNumId())
+//                    .productId(product.getProductId())
+//                    .productNum(Stock.getProductNum())
+//                    .memberId(Stock.getMember().getMemberId())
+//                    .totalPrice(Stock.getTotalPrice())
+//                    .productName(product.getProductName())
+//                    .mCategory(product.getMCategory())
+//                    .sCategory(product.getSCategory())
+//                    .originalPrice(String.valueOf(product.getOriginalPrice()))
+//                    .sellPrice(String.valueOf(product.getSellPrice()))
+//                    .image(product.getImage())
+//                    .importDate(importDate)
+//                    .build();
+//
+//            dto.setProduct(product);
+//
+//            return dto;
+//        } catch (DateTimeParseException e) {
+//            log.error("Error parsing date string: " + dateString, e);
+//            return null;
+//        }
+//    }
 
     //withdrawal 페이지에서 exporting 페이지로 넘어갈 때, orderCode = '0' 에서 '1'로 변경
     @Override

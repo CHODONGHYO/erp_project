@@ -10,22 +10,16 @@ import java.time.LocalDateTime;
 
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class StockDTO {
 
     private Long pNumId;
+    private String image;
     private Long productId;
     private Long productNum;
-    private Long memberId;
-    private Long totalPrice;
     private String productName;
     private String mCategory;
     private String sCategory;
-    private String originalPrice;
-    private String sellPrice;
-    private String image;
-    private LocalDateTime importDate;
-    private Product_Info product;
-
+    private Long originalPrice;
+    private Long sellPrice;
 }

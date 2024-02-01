@@ -2,6 +2,7 @@ package com.erp.ezen25.repository;
 
 import com.erp.ezen25.dto.ExportCompleteDTO;
 import com.erp.ezen25.dto.ExportDTO;
+import com.erp.ezen25.dto.StockDTO;
 import com.erp.ezen25.entity.Product_Stock;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,8 +15,8 @@ import java.util.List;
 
 public interface StockRepository extends JpaRepository<Product_Stock, Long> {
 
-    @Query("select ps, i.importDate from Product_Stock ps left join Import i on i.product = ps.product")
-    List<Object[]> getImportDateWithImport();
+    @Query("select new com.erp.ezen25.dto.StockDTO(ps.pNumId, pi.image, pi.productId, ps.productNum, pi.productName, pi.mCategory, pi.sCategory, pi.originalPrice, pi.sellPrice) from Product_Stock ps left join Product_Info pi on pi.productId = ps.product.productId")
+    List<StockDTO> getImportDateWithImport();
 
     @Query("SELECT new com.erp.ezen25.dto.ExportDTO(e.exportId, pi.productId, pi.image, pi.productName, pi.mCategory, pi.sCategory, o.orderNum, ps.productNum, pi.sellPrice, e.exportNum, o.orderStatus, e.exportDate, e.orderCode) " +
             "FROM Export e " +
