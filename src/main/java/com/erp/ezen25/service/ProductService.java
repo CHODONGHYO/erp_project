@@ -5,9 +5,12 @@ import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.dto.productDTOs.*;
 import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.entity.Product_Info;
+import com.erp.ezen25.entity.Product_Stock;
 import com.erp.ezen25.entity.QProduct_Info;
 import com.erp.ezen25.repository.BrandRepository;
+import com.erp.ezen25.repository.MemberRepository;
 import com.erp.ezen25.repository.ProductRepository;
+import com.erp.ezen25.repository.StockRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +38,8 @@ public class ProductService {
 
     private final BrandRepository brandRepository;
     private final ProductRepository productRepository;
+    private final StockRepository stockRepository;
+    private final MemberRepository memberRepository;
 
     // 리스트 받기
     public List<ProductListResponseDTO> getproductList () {
@@ -70,6 +75,12 @@ public class ProductService {
 
         Product_Info pInfo = getRequest.toEntity();
         productRepository.save(pInfo);
+
+        ProductStockAddReqeustDTO pSt = new ProductStockAddReqeustDTO();
+
+        pSt.setProduct(pInfo);
+        pSt.setMember(memberRepository.getReferenceById(1L));
+        stockRepository.save(pSt.toEntity());
     }
 
     // 파일업로드
