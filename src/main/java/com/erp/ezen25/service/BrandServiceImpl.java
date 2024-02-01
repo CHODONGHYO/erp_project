@@ -1,6 +1,7 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.BrandDTO;
+import com.erp.ezen25.dto.MemberDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.entity.Brand;
@@ -21,8 +22,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -42,19 +46,19 @@ public class BrandServiceImpl implements BrandService {
         Brand brand = dtoToEntity(brandDTO);
 
         brandRepository.save(brand);
-        String convertedBrandName = converter.convertToRoman(brand.getBrandName());
+        /*String convertedBrandName = converter.convertToRoman(brand.getBrandName());
         String password = convertedBrandName + LocalDateTime.now().getYear();
         Member member = Member.builder()
                 .userId(brand.getBrandPhone())
                 .password(password)
-                /*.authority("PARTNER")*/
+                *//*.authority("PARTNER")*//*
                 .email(brand.getBrandEmail())
                 .name(brand.getBrandName())
                 .percent(0)
                 .build();
         member.addMemberRole(MemberRole.PARTNER);
 
-        memberRepository.save(member);
+        memberRepository.save(member);*/
 
         return brand.getBrandId();
     }
@@ -168,5 +172,22 @@ public class BrandServiceImpl implements BrandService {
         } else {
             return "Unknown Brand";
         }
+    }
+
+    @Override
+    public List<BrandDTO> getAllMembers() {
+        List<Brand> brands = brandRepository.findAll();
+
+        return brands.stream()
+                .map(this::entityToDTO)
+                .sorted(Comparator.comparing(BrandDTO::getBrandId).reversed()) // 내림차순으로 정렬하려는 필드를 선택 (getSomeField 대신 실제 필드를 사용)
+                .limit(5)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public int getNumberOfBrands() {
+        List<Brand> brands = brandRepository.findAll();
+        return brands.size();
     }
 }

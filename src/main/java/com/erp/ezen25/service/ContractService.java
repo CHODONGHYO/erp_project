@@ -1,8 +1,10 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.contractDTOs.*;
+import com.erp.ezen25.dto.planDTOs.PlanListResponseDTO;
 import com.erp.ezen25.dto.productDTOs.ProductBnameListResponseDTO;
 import com.erp.ezen25.entity.Contract;
+import com.erp.ezen25.entity.Plan;
 import com.erp.ezen25.repository.BrandRepository;
 import com.erp.ezen25.repository.ContractRepository;
 import com.erp.ezen25.repository.ProductRepository;
@@ -34,6 +36,24 @@ public class ContractService {
     private final ProductRepository productRepository;
     public List<ContractListResponseDTO> contractList() {
         return contractRepository.findAllByOrderByContractDateDesc().stream()
+                .map(ContractListResponseDTO::new)
+                .toList();
+    }
+
+    public List<ContractListResponseDTO> getContractListByDate(LocalDate date1, LocalDate date2) {
+        List<Contract> cList= null;
+
+        if (date1 == null && date2 == null) {
+            cList = contractRepository.findAllByOrderByContractDateDesc();
+        } else if (date1 == null) {
+            cList = contractRepository.findAllByContractDateLessThanEqualOrderByContractDateDesc(date2);
+        } else if (date2 == null) {
+            cList = contractRepository.findAllByContractDateGreaterThanEqual(date1);
+        } else {
+            cList = contractRepository.findAllByContractDateBetween(date1, date2);
+        }
+
+        return cList.stream()
                 .map(ContractListResponseDTO::new)
                 .toList();
     }

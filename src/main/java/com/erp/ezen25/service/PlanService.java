@@ -1,7 +1,9 @@
 package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.BrandDTO;
+import com.erp.ezen25.dto.contractDTOs.ContractPnameListResponseDTO;
 import com.erp.ezen25.dto.planDTOs.*;
+import com.erp.ezen25.dto.productDTOs.ProductBnameListResponseDTO;
 import com.erp.ezen25.entity.Brand;
 import com.erp.ezen25.entity.Plan;
 import com.erp.ezen25.entity.Product_Info;
@@ -34,6 +36,26 @@ public class PlanService {
                 .map(PlanListResponseDTO::new)
                 .toList();
     }
+
+
+    public List<PlanListResponseDTO> getPlanListByDate(LocalDate date1, LocalDate date2) {
+        List<Plan> pList= null;
+
+        if (date1 == null && date2 == null) {
+            pList = planRepository.findAllByOrderByCompleteDateDesc();
+        } else if (date1 == null) {
+            pList = planRepository.findAllByCompleteDateLessThanEqualOrderByCompleteDateDesc(date2);
+        } else if (date2 == null) {
+            pList = planRepository.findAllByCompleteDateGreaterThanEqual(date1);
+        } else {
+            pList = planRepository.findAllByCompleteDateBetween(date1, date2);
+        }
+
+        return pList.stream()
+                .map(PlanListResponseDTO::new)
+                .toList();
+    }
+
 
     public List<PbListResponseDTO> addFormOptionList () {
         return productRepository.findAllByOrderByProductNameAsc().stream()

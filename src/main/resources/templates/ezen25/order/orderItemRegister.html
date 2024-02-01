@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko" layout:decorate="~{/layout/layout}"
       xmlns="http://www.w3.org/1999/xhtml"
@@ -71,10 +72,10 @@
                                     </tr>
 
                                     <tr class="tr_for_details">
-                                        <td class="td_for_details" colspan="1">특이사항</td>
+                                        <td class="td_for_details" colspan="1">비고</td>
                                         <td class="td_for_details" colspan="5">
                                             <textarea class="form-control" name="orderDescription"
-                                                      style="height: 225px;" th:value="${olist.orderDescription}" th:text="${olist.orderDescription}"></textarea>
+                                                      style="height: 225px;" th:value="${olist.orderDescription}" th:text="${olist.orderDescription}" readonly></textarea>
                                         </td>
                                     </tr>
                                 </table>
