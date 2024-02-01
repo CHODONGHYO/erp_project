@@ -1,11 +1,10 @@
 package com.erp.ezen25.controller;
 
-import com.erp.ezen25.dto.MemberDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
-import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.etc.MemberCreateForm;
 import com.erp.ezen25.service.BrandService;
 import com.erp.ezen25.service.MemberService;
+import com.erp.ezen25.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -17,8 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 @Controller
 @Log4j2
 @RequiredArgsConstructor
@@ -27,6 +24,7 @@ import java.util.List;
 public class MainController {
     private final MemberService memberService;
     private final BrandService brandService;
+    private final OrderService orderService;
 
     @GetMapping({"", "/"})
     public String mainPage(PageRequestDTO pageRequestDTO, Model model) {
@@ -37,6 +35,7 @@ public class MainController {
         model.addAttribute("members", memberService.getAllMembers());
         model.addAttribute("countMember", memberService.getNumberOfMembers());
         model.addAttribute("countBrand", brandService.getNumberOfBrands());
+        model.addAttribute("countOrder", orderService.countOrdersWithSpecificDate());
         return "/ezen25/main/mainPage";
     }
 

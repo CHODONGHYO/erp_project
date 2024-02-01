@@ -1,24 +1,16 @@
 package com.erp.ezen25.repository;
 
 
-
 import com.erp.ezen25.dto.OrderListDTO;
 import com.erp.ezen25.dto.WithdrawalDTO;
-import com.erp.ezen25.entity.Export;
 import com.erp.ezen25.entity.Order;
-import com.querydsl.core.BooleanBuilder;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
+import com.erp.ezen25.queryMapping.OrderAndStockMapping;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
-import com.erp.ezen25.queryMapping.OrderAndStockMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
-import com.erp.ezen25.entity.Order;
-import com.erp.ezen25.queryMapping.OrderAndStockMapping;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -83,6 +75,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> , QuerydslPr
             "FROM Order o JOIN o.member m " +
             "GROUP BY m.name, o.orderCode, o.orderDate")
     List<OrderListDTO> getOrderListDTO();
-
+    long countByOrderDate(String orderDate);
 }
 

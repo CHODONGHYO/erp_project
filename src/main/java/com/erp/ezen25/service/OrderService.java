@@ -4,7 +4,6 @@ import com.erp.ezen25.dto.*;
 import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.entity.Product_Info;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -66,4 +65,5 @@ public interface OrderService {
         return dto;
     }
 
+    long countOrdersWithSpecificDate();
 }
