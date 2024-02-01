@@ -24,6 +24,8 @@ public class CommonController {
 
     private final ProductService productService;
 
+    private final MemberService memberService;
+
     @PostMapping("/brandSelectDelete")
     public String brandSelectDelete(@RequestParam("brandDeleteList") List<Long> brand_ids) {
         for (Long brandId : brand_ids) {
@@ -31,6 +33,15 @@ public class CommonController {
         }
         return "redirect:/ezen25/brand/list?page=1";
     }
+
+    @PostMapping("/memberSelectDelete")
+    public String memberSelectDelete(@RequestParam("memberDeleteList") List<Long> member_ids) {
+        for (Long memberId : member_ids) {
+            memberService.remove(memberId);
+        }
+        return "redirect:/ezen25/brand/memberList?page=1";
+    }
+
     @PostMapping("/requestSelectDelete")
     public String requestSelectDelete(@RequestParam("requestDeleteList") List<Long> request_ids) {
         for (Long requestId : request_ids) {
