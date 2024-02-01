@@ -33,6 +33,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/ezen25/order")
@@ -223,20 +224,15 @@ public class OrderController {
 
     @GetMapping("/getproducts")
     @ResponseBody
-    public List<String> getProducts(@RequestParam("subcategory") String subcategory) {
+    public List<Object[]> getProducts(@RequestParam("subcategory") String subcategory) {
         return orderService.getProductList(subcategory);
     }
-
     @GetMapping("/getproduct")
     @ResponseBody
-    public List<String> getproduct(@RequestParam String subcategory) {
-        log.info("갱신완료");
-
-        List<String> products = orderService.getProductList(subcategory);
-        // 가져온 소분류 리스트 반환
-        log.info("리스트:"+products);
-        return products;
+    public List<Object[]> getProduct(@RequestParam("upperCategory") String upperCategory) {
+        return orderService.getProductListByUpperCategory(upperCategory);
     }
+
 
     @PostMapping("/itemdel")
     public String orderRm(@RequestParam(value="orderId",required = false) Long orderId) {

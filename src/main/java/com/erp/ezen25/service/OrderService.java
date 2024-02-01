@@ -4,6 +4,7 @@ import com.erp.ezen25.dto.*;
 import com.erp.ezen25.entity.Member;
 import com.erp.ezen25.entity.Order;
 import com.erp.ezen25.entity.Product_Info;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -35,7 +36,9 @@ public interface OrderService {
     // 서브 카테고리 가져오기
     List<String> getSCategoryList(String upperCategory);
 
-    List<String> getProductList(String subcategory);
+    List<Object[]> getProductList(String subcategory);
+    List<Object[]> getProductListByUpperCategory(String upperCategory);
+
 
     default Order dtoToEntity(OrderDTO dto) {
         Order entity = Order.builder()
