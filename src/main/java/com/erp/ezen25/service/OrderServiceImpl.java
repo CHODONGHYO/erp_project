@@ -2,25 +2,24 @@ package com.erp.ezen25.service;
 
 import com.erp.ezen25.dto.*;
 import com.erp.ezen25.entity.Order;
-import com.erp.ezen25.entity.*;
-import com.erp.ezen25.queryMapping.SCategoryListMapping;
+import com.erp.ezen25.entity.Product_Info;
+import com.erp.ezen25.entity.QOrder;
 import com.erp.ezen25.repository.OrderRepository;
-import com.erp.ezen25.repository.ProductRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import static com.erp.ezen25.dto.OrderDTO.*;
 
 
 
@@ -185,6 +184,13 @@ public class OrderServiceImpl implements OrderService {
         return builder;
 
     }
+    @Override
+    public long countOrdersWithSpecificDate() {
+        String today = LocalDate.now().toString();
+/*        log.info("오늘 : " + today);
+        String specificDate = "2024-02-01";*/
 
+        return repository.countByOrderDate(today);
+    }
 
 }

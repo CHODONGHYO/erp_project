@@ -155,7 +155,7 @@
             document.productAddForm.productDescription.focus();
             return false;
         }
-        if (document.productModifyForm.imageSelect.files.length != 0 && document.productAddForm.imageSelect.files[0].type != 'image/png' && document.productAddForm.imageSelect.files[0].type != 'image/jpeg') {
+        if (document.productAddForm.imageSelect.files.length != 0 && document.productAddForm.imageSelect.files[0].type != 'image/png' && document.productAddForm.imageSelect.files[0].type != 'image/jpeg') {
             alert("'jpg', 'png' 타입의 파일을 넣어주세요")
             document.productAddForm.imageSelect.value = ""
             document.productAddForm.imageSelect.focus();

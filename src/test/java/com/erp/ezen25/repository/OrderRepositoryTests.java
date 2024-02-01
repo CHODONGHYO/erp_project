@@ -28,7 +28,7 @@ public class OrderRepositoryTests {
         IntStream.rangeClosed(1, 100).forEach(i -> {
             Order order = Order.builder()
                     .member(new Member().setMemberId(1L))
-                    .orderDate(LocalDateTime.now())
+                    .orderDate(String.valueOf(LocalDateTime.now()))
                     .product(new Product_Info().setProductId(1L))
                     .orderNum(100L)
                     .orderDescription("description" + i)
