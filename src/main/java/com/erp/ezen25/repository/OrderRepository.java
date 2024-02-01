@@ -1,16 +1,24 @@
 package com.erp.ezen25.repository;
 
 
+
 import com.erp.ezen25.dto.OrderListDTO;
 import com.erp.ezen25.dto.WithdrawalDTO;
+import com.erp.ezen25.entity.Export;
 import com.erp.ezen25.entity.Order;
-import com.erp.ezen25.queryMapping.OrderAndStockMapping;
+import com.querydsl.core.BooleanBuilder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
+import com.erp.ezen25.queryMapping.OrderAndStockMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
-
+import com.erp.ezen25.entity.Order;
+import com.erp.ezen25.queryMapping.OrderAndStockMapping;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,8 +55,13 @@ public interface OrderRepository extends JpaRepository<Order, Long> , QuerydslPr
     @Query(value = "SELECT m_category from product_info group by m_category",nativeQuery = true)
     List<String> findMCategoryList();
 
-    @Query(value = "SELECT product_id from product_info where s_category= :subcategory",nativeQuery = true)
-    List<String> findProductList(@Param("subcategory") String subcategory);
+    @Query(value = "SELECT product_id,product_name from product_info where s_category= :subcategory",nativeQuery = true)
+    List<Object[]> findProductList(@Param("subcategory") String subcategory);
+
+    @Query(value = "SELECT product_id,product_name from product_info where m_category= :upperCategory",nativeQuery = true)
+    List<Object[]> findProductListByUpCate(@Param("upperCategory") String upperCategory);
+
+
 
     @Modifying
     @Query(value="DELETE FROM ORDERING WHERE order_code= :orderCode",nativeQuery = true)
@@ -77,4 +90,3 @@ public interface OrderRepository extends JpaRepository<Order, Long> , QuerydslPr
     List<OrderListDTO> getOrderListDTO();
     long countByOrderDate(String orderDate);
 }
-
