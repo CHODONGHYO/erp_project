@@ -4,10 +4,7 @@ import com.erp.ezen25.dto.ImportCheckDTO;
 import com.erp.ezen25.dto.PageRequestDTO;
 import com.erp.ezen25.dto.PageResultDTO;
 import com.erp.ezen25.entity.*;
-import com.erp.ezen25.repository.ExportRepository;
-import com.erp.ezen25.repository.ImportCheckRepository;
-import com.erp.ezen25.repository.ImportRepository;
-import com.erp.ezen25.repository.RequestRepository;
+import com.erp.ezen25.repository.*;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +25,8 @@ public class ImportCheckServiceImpl implements ImportCheckService{
     private final RequestRepository requestRepository;
     private final ImportRepository importRepository;
     private final ExportRepository exportRepository;
+    private final StockRepository stockRepository;
+
 
     @Override
     public Long register(ImportCheckDTO importCheckDTO) {
@@ -100,6 +99,12 @@ public class ImportCheckServiceImpl implements ImportCheckService{
                         .orderCode(importCheck.getImportId().getRequestCode())
                         .build();
                 exportRepository.save(export);
+
+                Product_Stock productStock = stockRepository.findByProduct_ProductId(export.getProductId().getProductId());
+                productStock.addProductNum(export.getExportNum());
+                stockRepository.save(productStock);
+
+
             }
         }
     }
@@ -126,6 +131,10 @@ public class ImportCheckServiceImpl implements ImportCheckService{
                         .build();
 
                 exportRepository.save(export);
+
+                Product_Stock productStock = stockRepository.findByProduct_ProductId(export.getProductId().getProductId());
+                productStock.addProductNum(export.getExportNum());
+                stockRepository.save(productStock);
             }
         }
     }

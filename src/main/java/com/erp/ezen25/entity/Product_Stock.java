@@ -37,4 +37,8 @@ public class Product_Stock {
     @ColumnDefault("0")
     private Long totalPrice;
 
+    public void addProductNum(Long productNum) {
+        this.productNum = this.productNum + productNum;
+    }
+
 }

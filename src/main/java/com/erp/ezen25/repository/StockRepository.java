@@ -54,4 +54,5 @@ public interface StockRepository extends JpaRepository<Product_Stock, Long>, Que
             "WHERE EXISTS (SELECT 1 FROM Order o WHERE o.product.productId = ps.product.productId AND o.orderCode = :orderCode)")
     void updateProductNum(@Param("orderCode") String orderCode);
 */
+    Product_Stock findByProduct_ProductId(Long productId);
 }

@@ -42,7 +42,10 @@
                             <tbody>
                                 <tr th:each="dto,stat : ${exportList}">
                                     <th>[[${stat.count}]]</th>
-                                    <td>[[${dto.image}]]</td>
+                                    <td>
+                                        <img style="width:100px" class="image" th:if="${dto.image != null}" th:src="@{|/image/${dto.image.substring(0,10).replaceAll('-','/')}/${dto.image}|}" alt="이미지"/>
+                                        <img style="width:100px" class="image" th:unless="${dto.image != null}" th:src="@{/image/NoImg.png}" alt="이미지"/>
+                                    </td>
                                     <td>[[${dto.productId}]]</td>
                                     <td>[[${dto.productName}]]</td>
                                     <td>[[${dto.mCategory}]] / [[${dto.sCategory}]]</td>
